@@ -4,11 +4,11 @@ combyne.js: A template engine that *hopefully* works the way you'd expect.
 Getting started
 --------------
 
-##Browser##
+###Browser###
 
 Include either `src/combyne.js` or `src/combyne.min.js` in your project.
 
-##Node.js##
+###Node.js###
 
 To install `combyne`, you can clone this repository to your `node_modules`
 folder or use the fantastic `NPM`:
@@ -213,11 +213,11 @@ var output = tmpl.render();
 Running unit tests
 ------------------
 
-##Browser##
+###Browser###
 
 Open `test/test.html` in your browser of choice.
 
-##Node.js##
+###Node.js###
 
 Run the follow command to fetch the `Node.js` dependencies.
 
