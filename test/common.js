@@ -24,6 +24,8 @@ var helper = {
 
 exports.constructor = function( test ) {
   test.expect( 5 );
+  console.log(JSON.stringify(combyne));
+  console.log( toString.call( combyne ), '[object Function]' );
 
   // Test for constructor function
   helper.testFunction( test.equals, combyne, 'combyne' );

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Combyne.js Test Suite</title> 
+
+  <!-- Load combyne.js -->
+  <script src="../src/combyne.js"></script>
+
+  <!-- Browser compat -->
+  <script>
+    function require() {
+      return combyne;
+    }
+
+    cache = {
+      common: {},
+      properties: {},
+      comments: {},
+      filters: {},
+      expressions: {},
+      delimiters: {},
+      partials: {}
+    };
+  </script>
+
+  <!-- Nodeunit assets -->
+  <link rel="stylesheet" href="assets/nodeunit.css"> 
+  <script src="assets/nodeunit.js"></script> 
+
+  <!-- Tests -->
+  <script> exports = cache.common </script>
+  <script src="common.js"></script> 
+  <script> exports = cache.properties </script>
+  <script src="properties.js"></script> 
+  <script> exports = cache.comments </script>
+  <script src="comments.js"></script> 
+  <script> exports = cache.filters </script>
+  <script src="filters.js"></script> 
+  <script> exports = cache.expressions </script>
+  <script src="expressions.js"></script> 
+  <script> exports = cache.delimiters </script>
+  <script src="delimiters.js"></script> 
+  <script> exports = cache.partials </script>
+  <script src="partials.js"></script> 
+</head>
+
+<body>
+  <h1 id="nodeunit-header">Combyne.js Client-Side Test Suite</h1> 
+  <script> 
+    nodeunit.run({
+      'common': cache.common,
+      'properties': cache.properties,
+      'comments': cache.comments,
+      'filters': cache.filters,
+      'expressions': cache.expressions,
+      'delimiters': cache.delimiters,
+      'partials': cache.partials
+    });
+  </script> 
+</body>
+</html>

@@ -33,7 +33,7 @@ exports.delimiters = function(test){
       };
     }
 
-    var tmpl = combyne('[[new]]', {new: 'meow'});
+    var tmpl = combyne('[[New]]', {New: 'meow'});
     setDelimiters(tmpl);
     test.equals(tmpl.render(), 'meow', 'Basic Delimiters');
     
