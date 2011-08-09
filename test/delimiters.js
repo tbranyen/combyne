@@ -1,5 +1,4 @@
-var combyne = require( '../' )
-  , fs = require( 'fs' );
+var combyne = require( '../' );
 
 // Helper functions
 var helper = {

@@ -9,6 +9,7 @@
 
   <!-- Load combyne.js -->
   <script src="../src/combyne.js"></script>
+  <script src="http://code.jquery.com/jquery.js"></script>
 
   <!-- Browser compat -->
   <script>
@@ -16,22 +17,13 @@
       return combyne;
     }
 
-    cache = {
-      common: {},
-      properties: {},
-      comments: {},
-      filters: {},
-      expressions: {},
-      delimiters: {},
-      partials: {}
-    };
   </script>
 
   <!-- Nodeunit assets -->
   <link rel="stylesheet" href="assets/nodeunit.css"> 
   <script src="assets/nodeunit.js"></script> 
 
-  <!-- Tests -->
+  <!-- Tests
   <script> exports = cache.common </script>
   <script src="common.js"></script> 
   <script> exports = cache.properties </script>
@@ -46,20 +38,52 @@
   <script src="delimiters.js"></script> 
   <script> exports = cache.partials </script>
   <script src="partials.js"></script> 
+  -->
 </head>
 
 <body>
   <h1 id="nodeunit-header">Combyne.js Client-Side Test Suite</h1> 
   <script> 
-    nodeunit.run({
-      'common': cache.common,
-      'properties': cache.properties,
-      'comments': cache.comments,
-      'filters': cache.filters,
-      'expressions': cache.expressions,
-      'delimiters': cache.delimiters,
-      'partials': cache.partials
+    var cache = {
+      common: {},
+      properties: {},
+      comments: {},
+      filters: {},
+      expressions: {},
+      delimiters: {},
+      partials: {}
+    };
+
+    var scripts = [
+      [ 'common', 'common.js' ],
+      [ 'properties', 'properties.js' ],
+      [ 'comments', 'comments.js' ],
+      [ 'filters', 'filters.js' ],
+      [ 'expressions', 'expressions.js' ]
+    ];
+
+    function load(cb) { 
+      var file = scripts.shift();
+
+      exports = cache[file[0]];
+
+      $.getScript(file[1], function() {
+        if (scripts.length) {
+          return load(cb);
+        }
+
+        cb();
+      });
+
+
+    }
+
+    load(function() {
+    
+      nodeunit.run(cache);
+    
     });
+
   </script> 
 </body>
 </html>

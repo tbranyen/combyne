@@ -21,6 +21,19 @@ function proto(obj, original) {
   return f;
 }
 
+function getKeys(obj) {
+  var key;
+  var array = [];
+  
+  for(key in obj) {
+    if (!obj.hasOwnProperty(key)) continue;
+
+    array.push(key);
+  }
+
+  return array;
+}
+
 // Tokenizer
 var tokenizer = function() {
   var _tokens;
@@ -29,7 +42,7 @@ var tokenizer = function() {
     _tokens = tokens = tokens || _tokens;
 
     var captures, token, key;
-    var keys = Object.keys(tokens);
+    var keys = getKeys(tokens);
     var len = keys.length;
     var i = 0;
 
@@ -353,7 +366,7 @@ var render = function() {
         _mode = mode.get();
         mode.unset("loop");
 
-        keys = obj ? Object.keys(obj) : [];
+        keys = obj ? getKeys(obj) : [];
         if (keys.length) {
           for (i=0, iLen=keys.length; i<iLen; i++) {
             key = keys[i];
