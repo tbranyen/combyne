@@ -243,3 +243,17 @@ exports.eachLoopConditional = function( test ) {
 
   test.done();
 };
+
+exports.nestedEachLoopConditional = function( test ) {
+  test.expect(2);
+
+  // Conditional in each loop using no context
+  var tmpl = combyne('{%each demo%}{%each demo2%}{%if "lol" == "lol"%}test{%endif%}{%endeach%}{%endeach%}', { demo: [ 1, 2, 3 ], demo2: [1] });
+  test.equals( tmpl.render(), 'testtesttest', 'Conditional in each loop using no context' );
+
+  // Conditional in each loop using original context
+  var tmpl2 = combyne('{%each demo%}{%each demo2%}{%if test == "lol"%}{{val}}{%endif%}{%endeach%}{%endeach%}', { test: 'lol', val: 'hi', demo: [ 1, 2, 3 ], demo2: [1] });
+  test.equals( tmpl2.render(), 'hihihi', 'Conditional in each loop using original context' );
+
+  test.done();
+};
