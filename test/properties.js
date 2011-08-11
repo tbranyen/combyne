@@ -24,13 +24,9 @@ var helper = {
 exports.propertyReplace = function( test ) {
   test.expect(6);
 
-  console.log('here');
-
   // Simple single replace
   var tmpl = combyne('{{test}}', { test: 'hello world' });
   test.equals( tmpl.render(), 'hello world', 'Single property replace' );
-
-  console.log('here x2');
 
   // Two replaces
   var tmpl2 = combyne('{{test}} {{test1}}', { test: 'hello world', test1: 'to you' });
