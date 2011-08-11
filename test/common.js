@@ -7,7 +7,7 @@ var helper = {
     // The object reports itself as a function
     test( typeof obj, 'function', label +' reports as a function.' );
     // This ensures the repo is actually a derivative of the Function [[Class]]
-    test( toString.call( obj ), '[object Function]', label +' [[Class]] is of type function.' );
+    test( {}.toString.call( obj ), '[object Function]', label +' [[Class]] is of type function.' );
   },
   // Test code and handle exception thrown 
   testException: function( test, fun, label ) {
