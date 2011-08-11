@@ -12,6 +12,8 @@ Include: `<script src="combyne.js"></script>`
 
 Compatibility: (Desktop) IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, Safari 5+, (Mobile) Android Browser 2.3.4+, Opera 9.80+, FireFox Beta, iPad
 
+File size: 2.7KB when serving `Production version` with GZip
+
 ###Node.js###
 
 To install `combyne`, you can clone this repository to your `node_modules`
