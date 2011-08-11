@@ -34,25 +34,6 @@ function getKeys(obj) {
   return array;
 }
 
-if (!Array.isArray) {
-  Array.isArray = function() {
-    // save a reference built-in Object.prototype.toString
-    var builtInToString = Object.prototype.toString;
-    // save a reference to built-in Function.prototype.call
-    var builtInToCall = Function.prototype.call;
-    // requires a built-in bind function, not a shim
-    var callWithArgs = builtInToCall.bind(builtInToCall);
- 
-    function argToString(o) {
-      return callWithArgs(builtInToString, o);
-    }
-                     
-    return function(o) { 
-      return argToString(o) === '[object Array]';
-    };
-  }();
-}
-
 // Tokenizer
 var tokenizer = function() {
   var _tokens;
@@ -622,7 +603,7 @@ var render = function() {
               }
             }
             // Iterating an array
-            else if (Array.isArray(context[args[0]])) {
+            else if (toString.call(context[args[0]]) == "[object Array]") {
               names = {};
 
               obj = context[args[0]];
@@ -649,7 +630,7 @@ var render = function() {
 
             mode.unset("loop");
             if (!mode.exists("loop")) {
-              if (Array.isArray(obj)) {
+              if (toString.call(obj) == "[object Array]") {
                 loop.execArray(self, obj, names, context);
               }
               else {
