@@ -6,7 +6,11 @@ Getting started
 
 ###Browser###
 
-Include either `src/combyne.js` or `src/combyne.min.js` in your project.
+Download: [Production](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.min.js) or [Development](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.js)
+
+Include: `<script src="combyne.js"></script>`
+
+Compatibility: (Desktop) IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, Safari 5+, (Mobile) Android Browser 2.3.4+, Opera 9.80+, FireFox Beta, iPad
 
 ###Node.js###
 
