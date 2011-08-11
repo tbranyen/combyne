@@ -826,7 +826,7 @@ function combyne(template, context) {
   };
 }
 
-combyne.version = "0.1.4";
+combyne.version = "0.1.5";
 combyne.prototype = {
 
   render: function() {
