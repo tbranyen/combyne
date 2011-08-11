@@ -34,6 +34,8 @@ function getKeys(obj) {
   return array;
 }
 
+var toString = Object.prototype.toString;
+
 // Tokenizer
 var tokenizer = function() {
   var _tokens;
