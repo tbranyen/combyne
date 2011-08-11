@@ -3,6 +3,7 @@ NODE_LIB_PATH = ~/.node_libraries
 
 BASE = .
 INSTALL_PATH = $(NODE_LIB_PATH)/combyne
+SRC_PATH = $(BASE)/src
 
 update: uninstall install
 
@@ -21,5 +22,8 @@ uninstall:
 
 test:
 	@@$(NODE_JS) $(BASE)/test/index.js test
+
+min:
+	@@uglifyjs $(SRC_PATH)/combyne.js > $(SRC_PATH)/combyne.min.js
 
 .PHONY: test
