@@ -86,11 +86,6 @@ var render = function() {
       if (typeof arg === "function") {
         arg = arg();
       }
-
-      // Coerce all other types to string, except boolean and number and undefined/null
-      if (typeof arg !== "boolean" && typeof arg !== "number" && arg != null) {
-        arg = arg + "";
-      }
     }
 
     return arg;
