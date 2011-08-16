@@ -4,6 +4,24 @@
  */
 (function(window) {
 
+var toString = Object.prototype.toString;
+var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
+
+// Escape any delimiters assigned
+var escDelimiter = function() {
+  var cache = {};
+
+  return function(delimiter) {
+    if (cache[delimiter]) {
+      return cache[delimiter];
+    }
+
+    cache[delimiter] = delimiter.replace(specialCharsExp,"\\$&");
+    
+    return cache[delimiter];
+  };
+}();
+
 // Mutable __proto__ polyfill
 function proto(obj, original) {
   var f, i;
@@ -21,6 +39,7 @@ function proto(obj, original) {
   return f;
 }
 
+// Object.keys polyfill
 function getKeys(obj) {
   var key;
   var array = [];
@@ -67,8 +86,6 @@ if (!Array.prototype.indexOf) {
     return -1;
   }
 }
-
-var toString = Object.prototype.toString;
 
 // Tokenizer
 var tokenizer = function() {
@@ -779,11 +796,6 @@ var render = function() {
 }();
 
 var main = function() {
-  var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
-
-  function escDelimiter(delimiter) {
-    return delimiter.replace(specialCharsExp,"\\$&")
-  }
 
   return function(self, template, context, delimiters) {
     var string, sp, ep, se, ee, co, fi;
