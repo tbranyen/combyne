@@ -200,8 +200,8 @@ exports.eachLoopObject = function( test ) {
   test.equals( tmpl2.render(), 'lolyouwhat', 'Loop over the keys in an object' );
 
   // Each loop over object do nothing, should not do anything
-  var tmpl3 = combyne('{%each demo%}{{key}}{%endeach%}', { demo: { lol: 'hi', you: 'me?', what: 'test' } });
-  test.equals( tmpl3.render(), '{{key}}{{key}}{{key}}', 'Loop over an object' );
+  var tmpl3 = combyne('{%each demo%}key{%endeach%}', { demo: { lol: 'hi', you: 'me?', what: 'test' } });
+  test.equals( tmpl3.render(), 'keykeykey', 'Loop over an object' );
 
   // Each loop over object repeat property, 
   var tmpl4 = combyne('{%each demo%}{{demo.lol}}{%endeach%}', { demo: { lol: 'hi', you: 'me?', what: 'test' } });
