@@ -491,10 +491,6 @@ var render = function() {
         if (typeof obj !== "object") {
           output += obj;
         }
-        // Keep brackets
-        else {
-          output += delimiters.START_PROP + obj.prop + delimiters.END_PROP;
-        }
 
         mode.unset("prop");
 
