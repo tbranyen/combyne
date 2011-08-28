@@ -1,5 +1,5 @@
-combyne.js: A template engine that *hopefully* works the way you'd expect.
-==========================================================================
+combyne.js: A template engine that works the way you'd expect.
+==============================================================
 
 Getting started
 --------------
