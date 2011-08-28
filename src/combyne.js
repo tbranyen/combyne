@@ -308,8 +308,7 @@ var render = function() {
         throw new Error("Partial " + name + " not found");
       }
     }
-
-    if (error = tokenizer(partial.template, stack)) {
+    else if (error = tokenizer(partial.template, stack)) {
       if (self.debug) {
         throw new Error(error);
       }
@@ -326,14 +325,16 @@ var render = function() {
     mode.clear();
 
     // Parse the partial
-    innerText = render(self, partial.context, stack, _delimiters);
+    if (partial && partial.context) {
+      innerText = render(self, partial.context, stack, _delimiters);
+    }
 
     // Reset output and mode
     output = _output;
     mode.set(_mode);
     mode.unset("skip");
 
-    return innerText;
+    return innerText || "";
   }
 
   var mode = function() {
