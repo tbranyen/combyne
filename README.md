@@ -82,7 +82,7 @@ var output = tmpl.render();
 /// output = 'test'
 ```
 
-####You can also change delimiters within loops####
+####You can change the iterated name within loops as well####
 
 ``` javascript
 var template = '{%each arr as _%}{{_}}{%endeach%}';
