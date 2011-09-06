@@ -82,18 +82,6 @@ var output = tmpl.render();
 /// output = 'test'
 ```
 
-####You can change the iterated name within loops as well####
-
-``` javascript
-var template = '{%each arr as _%}{{_}}{%endeach%}';
-var context = { arr: [1,2,3] };
-
-var tmpl = combyne(template, context);
-
-var output = tmpl.render();
-/// output = '123'
-```
-
 ###Replacing template variables###
 
 ``` javascript
@@ -181,6 +169,18 @@ var tmpl = combyne(template, context);
 
 var output = tmpl.render();
 /// output == '1 2 3 4 '
+```
+
+####You can change the iterated name within loops as well####
+
+``` javascript
+var template = '{%each arr as _%}{{_}}{%endeach%}';
+var context = { arr: [1,2,3] };
+
+var tmpl = combyne(template, context);
+
+var output = tmpl.render();
+/// output = '123'
 ```
 
 ###Iterating objects###
