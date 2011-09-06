@@ -163,7 +163,7 @@ var output = tmpl.render();
 
 ``` javascript
 var template = '{%each test%}{{.}} {%endeach%}';
-var context = { lol: [1,2,3,4] };
+var context = { test: [1,2,3,4] };
 
 var tmpl = combyne(template, context);
 
