@@ -33,8 +33,8 @@ Basic usage
 -----------
 
 ``` javascript
-var tmpl = combyne('{{test}}', { test: 'lol' });
-tmpl.render(); // lol
+var tmpl = combyne('{{test}}');
+tmpl.render({ test: 'lol' }); // lol
 ```
 
 Features
@@ -72,13 +72,13 @@ var output = tmpl.render();
 var template = '[[lol]]';
 var context = { lol: 'test' };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 tmpl.delimiters = {
   START_PROP: '[[',
   END_PROP: ']]'
 };
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output = 'test'
 ```
 
@@ -88,9 +88,9 @@ var output = tmpl.render();
 var template = '{{lol}}';
 var context = { lol: 'test' };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'test'
 ```
 
@@ -100,12 +100,12 @@ var output = tmpl.render();
 var template = '{{test|reverse}}';
 var context = { lol: 'test' };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 tmpl.filters.add('reverse', function(val) {
   return val.split('').reverse().join('');
 });
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'tset'
 ```
 
@@ -115,7 +115,7 @@ var output = tmpl.render();
 var template = '{{test|reverse|toUpper}}';
 var context = { lol: 'test' };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 tmpl.filters.add('reverse', function(val) {
   return val.split('').reverse().join('');
 });
@@ -123,7 +123,7 @@ tmpl.filters.add('toUpper', function(val) {
   return val.toUpperCase();
 });
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'TSET'
 ```
 
@@ -138,9 +138,9 @@ types will be coerced to Strings except for Numbers.
 var template = '{%if not test%}why not?{%endif%}';
 var context = { test: false };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'why not?'
 ```
 
@@ -150,9 +150,9 @@ or a more complicated example...
 var template = '{%if test == "hello"%}goodbye!{%else%}hello!{%endif%}';
 var context = { test: 'hello' };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'goodbye!'
 ```
 
@@ -165,9 +165,9 @@ var output = tmpl.render();
 var template = '{%each test%}{{.}} {%endeach%}';
 var context = { test: [1,2,3,4] };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == '1 2 3 4 '
 ```
 
@@ -177,9 +177,9 @@ var output = tmpl.render();
 var template = '{%each arr as _%}{{_}}{%endeach%}';
 var context = { arr: [1,2,3] };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output = '123'
 ```
 
@@ -193,9 +193,9 @@ var context = {
   }
 };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'the hello is lol'
 ```
 
@@ -205,13 +205,13 @@ var output = tmpl.render();
 var template = '{{test}} {%partial test%}';
 var context = { test: "hello" };
 
-var tmpl = combyne(template, context);
+var tmpl = combyne(template);
 
 tmpl.partials.add('test', '{{name}}', {
   name: 'you'
 });
 
-var output = tmpl.render();
+var output = tmpl.render(context);
 /// output == 'hello you'
 ```
 

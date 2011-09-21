@@ -1,4 +1,4 @@
-/* combyne.js v0.1.6
+/* combyne.js v0.1.7
  * Copyright 2011, Tim Branyen (@tbranyen)
  * combyne.js may be freely distributed under the MIT license.
  */
@@ -864,11 +864,13 @@ function combyne(template, context) {
   };
 }
 
-combyne.version = "0.1.6";
+combyne.version = "0.1.7";
 combyne.prototype = {
-
-  render: function() {
+  render: function(context) {
     var self = this;
+
+    // Maintain backwards compatibility
+    self.context = context || self.context;
 
     // Missing template or context... can't exactly do anything here...
     if (!self.template || !self.context) {
