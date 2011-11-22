@@ -94,10 +94,10 @@ var tokenizer = function() {
   return function(template, stack, tokens) {
     _tokens = tokens = tokens || _tokens;
 
+    var i;
     var captures, token, key;
     var keys = getKeys(tokens);
     var len = keys.length;
-    var i = 0;
 
     while(template.length) {
       for (i=0; i<len; i++) {
@@ -332,7 +332,10 @@ var render = function() {
     // Reset output and mode
     output = _output;
     mode.set(_mode);
-    mode.unset("skip");
+
+    if (mode.exists("skip")) {
+      mode.unset("skip");
+    }
 
     return innerText || "";
   }
@@ -351,7 +354,7 @@ var render = function() {
         modes.splice(modes.indexOf(val), 1);
       },
       exists: function(val) {
-        return ~modes.indexOf(val);
+        return !!~modes.indexOf(val);
       },
       clear: function() {
         modes = [];
@@ -500,10 +503,6 @@ var render = function() {
       case "START_EXPR":
         mode.set("expr");
 
-        if (mode.exists("skip")) {
-          break;
-        }
-
         if (mode.exists("loop")) {
           innerText += capture;
         }
@@ -512,17 +511,21 @@ var render = function() {
 
       case "END_EXPR":
         mode.unset("expr");
+
+        if (mode.exists("loop") || mode.exists("if")) {
+          innerText += capture;
+        }
+
+        if (mode.exists("if") && mode.exists("pass")) {
+          mode.unset("if");
+        }
         
         if (mode.exists("skip")) {
-          if (obj === "--") {
+          if (obj === "--" && mode.exists("skip")) {
             mode.unset("skip");
           }
 
           break;
-        }
-
-        if (mode.exists("loop")) {
-          innerText += capture;
         }
 
         if (mode.exists("partial")) {
@@ -576,12 +579,15 @@ var render = function() {
           args = tmpVar;
 
           if (method === "if" || method === "elsif") {
-            if (!mode.exists("else") && mode.exists("skip")) {
+            mode.set("if");
+
+            if (mode.exists("fail") && mode.exists("skip")) {
+              mode.unset("fail");
               break;
             }
 
-            if (mode.exists("else")) {
-              mode.unset("else");
+            if (mode.exists("pass")) {
+              mode.unset("pass");
             }
 
             if (mode.exists("loop")) {
@@ -596,38 +602,60 @@ var render = function() {
             }
             else if (args.length === 1) {
               if (!normalizeArgument(args[0], context)) {
-                mode.set("else");
                 mode.set("skip");
-                break;
+                mode.set("fail");
+              }
+              else {
+                mode.set("pass");
+
+                if (mode.exists("skip")) {
+                  mode.unset("skip");
+                }
               }
             }
             else {
               if (!runConditional(self, args, context)) {
-                mode.set("else");
                 mode.set("skip");
+                mode.set("fail");
               }
               else {
-                mode.unset("skip");
+                mode.set("pass");
+
+                if (mode.exists("skip")) {
+                  mode.unset("skip");
+                }
               }
             }
           }
           else if (method === "else") {
-            if (mode.exists("else")) {
+            if (mode.count("if") === 1 && !mode.exists("pass") && mode.exists("skip")) {
               mode.unset("skip");
             }
             else {
-              if (!mode.exists("skip")) {
-                mode.set("skip");
+              if (!mode.exists("pass") && !mode.exists("skip")) {
+                innerText += capture;
               }
+
+              mode.unset("pass");
+              mode.set("skip");
             }
           }
           else if (method === "endif") {
-            if (mode.exists("loop")) {
-              innerText += capture;
-              break;
+            if (mode.exists("skip")) {
+              mode.unset("skip"); 
             }
 
-            mode.unset("skip"); 
+            if (mode.exists("pass")) {
+              mode.unset("pass");
+            }
+
+            if (mode.exists("fail")) {
+              mode.unset("fail");
+            }
+
+            if (mode.exists("loop")) {
+              innerText += capture;
+            }
           }
           else if (method === "each") {
             if (mode.exists("skip")) {
@@ -908,10 +936,12 @@ function _wrapFilter(func) {
   };
 }
 
+// Attempt to attach specifically for Node.js projects.
+// Allows: var combyne = require("combyne");
 if (typeof module !== "undefined" && module.exports) {
   module.exports = combyne;
 
-  //Express Support 
+  // Express Support
   module.exports.compile = function(markup) {
     return function(locals) {
       return combyne(markup, locals).render();
@@ -923,4 +953,5 @@ else {
 }
 
 
-})(this);
+// Allow attaching to exports property
+})(this.exports || this);

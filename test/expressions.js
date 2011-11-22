@@ -256,3 +256,13 @@ exports.nestedEachLoopConditional = function( test ) {
 
   test.done();
 };
+
+exports.nestedIfElseInsideEachLoopConditional = function( test ) {
+  test.expect(1);
+
+  // Conditional in each loop using no context
+  var tmpl = combyne('{%each demo as i%}{%if i == 1"%}test{%else%}{{i}}{%endif%}{%endeach%}', { demo: [ 1, 2, 3 ], demo2: [1] });
+  test.equals( tmpl.render(), 'test23', 'Conditional if/else in each loop' );
+
+  test.done();
+};

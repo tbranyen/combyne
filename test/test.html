@@ -62,20 +62,26 @@
       [ 'expressions', 'expressions.js' ]
     ];
 
+    function loadScript(src, cb) {
+      var script = document.createElement('script');
+      script.src = src;
+      document.body.appendChild(script);
+
+      script.onload = cb;
+    }
+
     function load(cb) { 
       var file = scripts.shift();
 
       exports = cache[file[0]];
 
-      $.getScript(file[1], function() {
+      loadScript(file[1], function() {
         if (scripts.length) {
           return load(cb);
         }
 
         cb();
       });
-
-
     }
 
     load(function() {

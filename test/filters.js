@@ -21,6 +21,15 @@ var helper = {
   }
 };
 
+exports.notAFilter = function( test ) {
+  test.expect(1);
+
+  var tmpl = combyne('||');
+  test.equals( tmpl.render(), '||', 'Doesn\'t attempt to render non-filters' );
+
+  test.done();
+};
+
 exports.propertyFilters = function( test ) {
   test.expect(4);
 
