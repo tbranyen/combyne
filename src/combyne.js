@@ -585,9 +585,11 @@ var render = function() {
           if (method === "if" || method === "elsif") {
             mode.set("if");
 
-            if (mode.exists("fail") && mode.exists("skip")) {
-              mode.unset("fail");
-              break;
+            if (method !== "elsif") {
+              if (mode.exists("fail") || mode.exists("skip")) {
+                mode.unset("fail");
+                break;
+              }
             }
 
             if (mode.exists("pass")) {
@@ -777,6 +779,11 @@ var render = function() {
 
         if (mode.exists("loop")) {
           innerText += capture;
+          break;
+        }
+
+        if (!mode.exists("prop") && !mode.exists("expr") && !mode.exists("string")) {
+          output += capture;
           break;
         }
 
