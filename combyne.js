@@ -1,4 +1,4 @@
-/* combyne.js v0.1.8
+/* combyne.js v0.2.0
  * Copyright 2011, Tim Branyen (@tbranyen)
  * combyne.js may be freely distributed under the MIT license.
  */
