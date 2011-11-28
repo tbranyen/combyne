@@ -393,7 +393,7 @@ var render = function() {
             stack.reverse();
 
             // Ensure these required properties cannot be overwritten
-            context = { i: i, length: iLen, original: array };
+            context = { i: i+1, length: iLen, original: array };
             context[name.index || "."] = array[i];
 
             if (typeof array[i] === "object") {
