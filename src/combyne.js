@@ -360,9 +360,13 @@ var render = function() {
         modes = [];
       },
       count: function(val) {
-        var count, lastIndex;
+        var i, count = 0;
 
-        for (count = lastIndex = 0; ~(lastIndex = modes.indexOf(val, lastIndex)); count++);
+        for (i = 0; i < modes.length; i++) {
+          if (modes[i] === val) {
+            count = count + 1;
+          }
+        }
 
         return count;
       }
@@ -393,7 +397,7 @@ var render = function() {
             stack.reverse();
 
             // Ensure these required properties cannot be overwritten
-            context = { i: i, length: iLen, original: array };
+            context = { i: i+1, length: iLen, original: array };
             context[name.index || "."] = array[i];
 
             if (typeof array[i] === "object") {
@@ -628,6 +632,7 @@ var render = function() {
             }
           }
           else if (method === "else") {
+            console.log(mode.count("if"));
             if (mode.count("if") === 1 && !mode.exists("pass") && mode.exists("skip")) {
               mode.unset("skip");
             }
