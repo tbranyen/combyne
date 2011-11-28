@@ -632,7 +632,6 @@ var render = function() {
             }
           }
           else if (method === "else") {
-            console.log(mode.count("if"));
             if (mode.count("if") === 1 && !mode.exists("pass") && mode.exists("skip")) {
               mode.unset("skip");
             }
@@ -740,7 +739,6 @@ var render = function() {
 
             obj = runPartial(self, method, args, obj, mode);
             mode.set("partial");
-            mode.set("expr");
           }
         }
         else {
