@@ -1,12 +1,9 @@
 {
   "name": "combyne",
   "description": "Templating that works *hopefully* the way you'd expect.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Tim Branyen <tim@tabdeveloper.com> (http://twitter.com/tbranyen)",
-  "main": "./src/combyne.js",
-  "directories": {
-    "src": "./src"
-  },
+  "main": "./combyne.js",
   "devDependencies": {
     "nodeunit": "*"
   },

@@ -134,7 +134,7 @@ exports.nestedIfStatements = function( test ) {
 };
 
 exports.elseStatements = function( test ) {
-  test.expect(4);
+  test.expect(5);
 
   // Else statement
   var tmpl = combyne('{%if test%}hello world{%else%}goodbye world{%endif%}', { test: false });
@@ -151,6 +151,10 @@ exports.elseStatements = function( test ) {
   // Nested else statement with false nested value
   var tmpl4 = combyne('{%if test%}{%if hello%}hello world{%else%}goodbye world{%endif%}{%endif%}', { test: true, hello: false });
   test.equals( tmpl4.render(), 'goodbye world', 'Testing nested else statements with false nested value' );
+
+  // Nested if with an else
+  var tmpl5 = combyne('{%if test%}{%if hello%}hello world{%endif%} {%else%}goodbye world{%endif%}', { test: true, hello: true });
+  test.equals( tmpl5.render(), 'hello world ', 'Testing nested else statements with truthy nested value' );
 
   test.done();
 };

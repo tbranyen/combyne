@@ -1,4 +1,4 @@
-/* combyne.js v0.2.0
+/* combyne.js v0.2.1
  * Copyright 2011, Tim Branyen (@tbranyen)
  * combyne.js may be freely distributed under the MIT license.
  */
@@ -591,9 +591,9 @@ var render = function() {
                 break;
               }
             }
-
-            if (mode.exists("pass")) {
-              mode.unset("pass");
+            else {
+              if (mode.exists("fail")) { mode.unset("fail"); }
+              if (mode.exists("pass")) { mode.unset("pass"); }
             }
 
             if (mode.exists("loop")) {
@@ -642,8 +642,14 @@ var render = function() {
                 innerText += capture;
               }
 
-              mode.unset("pass");
-              mode.set("skip");
+              if (mode.count("fail") < mode.count("pass")) {
+                mode.set("skip");
+                break;
+              }
+
+              if (mode.exists("fail") || mode.exists("pass")) {
+                mode.unset("skip");
+              }
             }
           }
           else if (method === "endif") {
