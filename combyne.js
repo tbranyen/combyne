@@ -167,14 +167,14 @@ var render = function() {
     var truthy = true;
     var compare = {
       "==": function(left, right) {
-        if (left === right) {
+        if (left == right) {
           return true;
         }
 
         return false;
       },
       "!=": function(left, right) {
-        if (left !== right) {
+        if (left != right) {
           return true;
         }
 
