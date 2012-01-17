@@ -4,6 +4,8 @@
  */
 (function(window) {
 
+"use strict";
+
 var toString = Object.prototype.toString;
 var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
 
