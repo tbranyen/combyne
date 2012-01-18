@@ -16,6 +16,7 @@ config.init({
   },
   jshint: {
     options: {
+      boss: true,
       curly: true,
       eqeqeq: true,
       immed: true,
@@ -32,4 +33,4 @@ config.init({
 });
 
 // Default task.
-task.registerTask("default", "lint test");
+task.registerTask("default", "lint min");

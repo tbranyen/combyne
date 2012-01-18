@@ -1,16 +1,14 @@
-/* combyne.js v0.2.1
- * Copyright 2011, Tim Branyen (@tbranyen)
+/* combyne.js v0.3.0
+ * Copyright 2012, Tim Branyen (@tbranyen)
  * combyne.js may be freely distributed under the MIT license.
  */
 (function(window) {
-
-"use strict";
 
 var toString = Object.prototype.toString;
 var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
 
 // Escape any delimiters assigned
-var escDelimiter = function() {
+var escDelimiter = (function() {
   var cache = {};
 
   return function(delimiter) {
@@ -22,7 +20,7 @@ var escDelimiter = function() {
     
     return cache[delimiter];
   };
-}();
+})();
 
 // Mutable __proto__ polyfill
 function proto(obj, original) {
@@ -34,7 +32,10 @@ function proto(obj, original) {
   f = new F();
 
   for (i in obj) {
-    if (!obj.hasOwnProperty(i)) continue;
+    if (!obj.hasOwnProperty(i)) {
+      continue;
+    }
+
     f[i] = obj[i];
   }
   
@@ -47,46 +48,14 @@ function getKeys(obj) {
   var array = [];
   
   for(key in obj) {
-    if (!obj.hasOwnProperty(key)) continue;
+    if (!obj.hasOwnProperty(key)) {
+      continue;
+    }
 
     array.push(key);
   }
 
   return array;
-}
-
-// From MDC
-if (!Array.prototype.indexOf) {
-  Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
-    "use strict";
-    if (this === void 0 || this === null) {
-      throw new TypeError();
-    }
-    var t = Object(this);
-    var len = t.length >>> 0;
-    if (len === 0) {
-      return -1;
-    }
-    var n = 0;
-    if (arguments.length > 0) {
-      n = Number(arguments[1]);
-      if (n !== n) { // shortcut for verifying if it's NaN
-        n = 0;
-      } else if (n !== 0 && n !== (1 / 0) && n !== -(1 / 0)) {
-        n = (n > 0 || -1) * Math.floor(Math.abs(n));
-      }
-    }
-    if (n >= len) {
-      return -1;
-    }
-    var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
-    for (; k < len; k++) {
-      if (k in t && t[k] === searchElement) {
-        return k;
-      }
-    }
-    return -1;
-  }
 }
 
 // Tokenizer
@@ -109,7 +78,9 @@ var tokenizer = function() {
           token = { name: key, captures: captures };
           template = template.replace(tokens[key], "");
 
-          captures[0] && stack.push(token);
+          if (captures[0]) {
+            stack.push(token);
+          }
         }
       }
     }
@@ -150,7 +121,7 @@ var render = function() {
     var filter = self.filters.get(method);   
 
     if (filter == null) {
-      filter = function() { return obj; }
+      filter = function() { return obj; };
 
       if (self.debug) {
         throw new Error("Filter " + method + " not found");
@@ -196,14 +167,14 @@ var render = function() {
     var truthy = true;
     var compare = {
       "==": function(left, right) {
-        if (left == right) {
+        if (left === right) {
           return true;
         }
 
         return false;
       },
       "!=": function(left, right) {
-        if (left != right) {
+        if (left !== right) {
           return true;
         }
 
@@ -849,17 +820,17 @@ var main = function() {
     co = escDelimiter(delimiters.COMMENT);
     fi = escDelimiter(delimiters.FILTER);
 
-    grammar.START_PROP = RegExp("^" + sp);
-    grammar.END_PROP = RegExp("^" + ep);
-    grammar.START_EXPR = RegExp("^" + se);
-    grammar.END_EXPR = RegExp("^" + ee);
-    grammar.COMMENT = RegExp("^" + co);
-    grammar.FILTER = RegExp("^" + fi);
+    grammar.START_PROP = new RegExp("^" + sp);
+    grammar.END_PROP = new RegExp("^" + ep);
+    grammar.START_EXPR = new RegExp("^" + se);
+    grammar.END_EXPR = new RegExp("^" + ee);
+    grammar.COMMENT = new RegExp("^" + co);
+    grammar.FILTER = new RegExp("^" + fi);
 
     string = [ sp, ep, se, ee, co, fi ].join("|");
 
-    grammar.WHITESPACE = /^[\ |\t|\r|\n]+/,
-    grammar.OTHER = RegExp("^((?!" + string + ").)*");
+    grammar.WHITESPACE = /^[\ |\t|\r|\n]+/;
+    grammar.OTHER = new RegExp("^((?!" + string + ").)*");
 
     if (error = tokenizer(template, stack, grammar)) {
       if (self.debug) {
