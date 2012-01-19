@@ -29,9 +29,47 @@
 // Actual combyne closure...
 }(this, function() {
 
-  var _tokens;
+  var _tokens, nextToken, lastToken;
   var toString = Object.prototype.toString;
   var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
+  var templateStack = [];
+
+  function render(self, context, stack, delimiters) {
+    var tmpVar, method, args;
+    var token = stack.pop();
+    var capture = token.captures[0];
+
+    switch(token.name) {
+      case "COMMENT":
+        if (lastToken === "START_EXPR") {
+          templateStack.push("\/*");
+
+        } else if (nextToken === "END_EXPR") {
+          templateStack.push("*\/");
+
+        } else {
+          templateStack.push("'" + delimiters.COMMENT + "'");
+        }
+
+          break;
+
+      case "OTHER":
+        templateStack.push("'" + capture + "'");
+
+        break;
+    }
+
+    // Parse the token stack until it's empty
+    if (stack.length) {
+      lastToken = token.name;
+      nextToken = stack[0].name;
+
+      return render(self, context, stack, delimiters);
+    }
+
+    // Return value
+    return templateStack;
+  }
 
   // Convenience method to wrap a passed filter to have the correct
   // context.
@@ -46,6 +84,22 @@
   // Escape any delimiters assigned
   function escDelimiter(delimiter) {
     return delimiter.replace(specialCharsExp,"\\$&");
+  }
+
+  // Object.keys polyfill
+  function getKeys(obj) {
+    var key;
+    var array = [];
+    
+    for (key in obj) {
+      if (!obj.hasOwnProperty(key)) {
+        continue;
+      }
+
+      array.push(key);
+    }
+
+    return array;
   }
 
   // Minimalist extend function, thanks jdalton
@@ -67,10 +121,23 @@
 
   // Highly experimental compile function
   function compile(stack) {
-    stack.unshift("with (data || {}) {");
-    stack.push("}");
 
-    return new Function("data", stack.join("\n"));
+    function func(data) {
+      var contents;
+      var tmpl = "";
+
+      try {
+        with (data || {}) {
+          if (contents = eval(stack.join("\n"))) {
+            tmpl += contents;
+          }
+        }
+      } catch (ex) {};
+
+      return tmpl;
+    }
+
+    return func;
   }
 
   // Tokenizer
@@ -95,37 +162,6 @@
         }
       }
     }
-  }
-
-  function render(self, context, stack, delimiters) {
-    var lastMode, tmpVar, method, args;
-    var token = stack.pop();
-    var capture = token.captures[0];
-
-    // Create the stack
-    var templateStack = [];
-
-    switch(token.name) {
-      case "COMMENT":
-        lastMode = "COMMENT";
-        console.log("\/*");
-
-        break;
-    }
-
-    // Parse the token stack until it's empty
-    if (stack.length) {
-      return render(self, context, stack, delimiters);
-    }
-
-    // Store output before resetting scope
-    retVal = output;
-
-    // Reset outer scope
-    mode = void 0;
-
-    // Return value
-    return retVal;
   }
 
   function main(self, template, context, delimiters) {
@@ -223,7 +259,14 @@
       });
 
       // Actually render
-      return main(self, self.template, self.context, self.delimiters);
+      var stack = main(self, self.template, self.context, self.delimiters);
+
+      // Clean up stack
+      templateStack = [];
+      nextToken = "";
+      lastToken = "";
+
+      return compile(stack)(context);
     },
 
     delimiters: {}
