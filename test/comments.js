@@ -1,8 +1,28 @@
 (function() {
 
+// Helper functions
+var helper = {
+  // Test if obj is a true function
+  testFunction: function(test, obj, label) {
+    // The object reports itself as a function
+    test(typeof obj, "function", label + " reports as a function.");
+  },
+
+  // Test code and handle exception thrown 
+  testException: function(test, fun, label) {
+    try {
+      fun.call(this);
+      test(false, label);
+
+    } catch (ex) {
+      test(true, label);
+    }
+  }
+};
+
 var combyne = require("../");
 
-exports["basicComments"] = function( test ) {
+exports["basicComments"] = function(test) {
   test.expect(4);
 
   // A block comment
@@ -19,12 +39,12 @@ exports["basicComments"] = function( test ) {
   
   // Invalid comment and expression, expected behavior is nothing shows up
   var tmpl4 = combyne("{%--", {});
-  test.equals(tmpl4.render(), "", "Invalid comment");
+  helper.testException(test.ok, tmpl4.render, "Invalid comment");
 
   test.done();
 };
 
-exports["propertyComments"] = function( test ) {
+exports["propertyComments"] = function(test) {
   test.expect(2);
 
   // Do not render the property
@@ -38,16 +58,16 @@ exports["propertyComments"] = function( test ) {
   test.done();
 };
 
-exports["commentComments"] = function( test ) {
+exports["commentComments"] = function(test) {
   test.expect(2);
 
   // Nested comments with raw value
   var tmpl = combyne("{%--{%-- lol --%}--%}har", {});
-  test.equals(tmpl.render(), "har", "Handle nested comments");
+  helper.testException(test.ok, tmpl.render, "Handle nested comments");
   
-  // Nested comments with property value
+  // Nested comments with property value, should error out
   var tmpl2 = combyne("{%--{%-- {{lol}} --%}--%}har", { lol: "hi" });
-  test.equals(tmpl2.render(), "har", "Handle nested comments with property value");
+  helper.testException(test.ok, tmpl2.render, "Handle nested comments with property value");
 
   test.done();
 };

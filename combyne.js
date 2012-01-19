@@ -40,6 +40,11 @@
     var capture = token.captures[0];
 
     switch(token.name) {
+      case "WHITESPACE":
+        templateStack.push(capture);
+
+        break;
+        
       case "COMMENT":
         if (lastToken === "START_EXPR") {
           templateStack.push("\/*");
@@ -55,7 +60,8 @@
 
       case "OTHER":
         if (lastToken === "START_PROP") {
-          templateStack.push(capture);
+          templateStack.push("typeof " + capture + " == 'function' ? " + capture
+            + "() : " + capture);
 
         } else {
           templateStack.push("'" + capture + "'");
@@ -71,6 +77,8 @@
 
       return render(self, context, stack, delimiters);
     }
+
+    console.log(templateStack);
 
     // Return value
     return templateStack;
@@ -126,23 +134,21 @@
 
   // Highly experimental compile function
   function compile(stack) {
+    return new Function("data, contents", [
 
-    function func(data) {
-      var contents;
-      var tmpl = "";
+      "var tmpl = '';",
 
-      try {
-        with (data || {}) {
-          if (contents = eval(stack.join("\n"))) {
-            tmpl += contents;
-          }
-        }
-      } catch (ex) {};
+      "try {",
+        "with (data || {}) {",
+          "if (contents = [", stack, "].join('')) {",
+            "tmpl += contents;",
+          "}",
+        "}",
+      "} catch(ex) {};",
 
-      return tmpl;
-    }
+      "return tmpl;"
 
-    return func;
+    ].join(""));;
   }
 
   // Tokenizer
