@@ -51,10 +51,15 @@
           templateStack.push("'" + delimiters.COMMENT + "'");
         }
 
-          break;
+        break;
 
       case "OTHER":
-        templateStack.push("'" + capture + "'");
+        if (lastToken === "START_PROP") {
+          templateStack.push(capture);
+
+        } else {
+          templateStack.push("'" + capture + "'");
+        }
 
         break;
     }
@@ -266,7 +271,7 @@
       nextToken = "";
       lastToken = "";
 
-      return compile(stack)(context);
+      return compile(stack)(self.context);
     },
 
     delimiters: {}
