@@ -1,3 +1,5 @@
+(function() {
+
 var combyne = require("../");
 
 exports["basicComments"] = function( test ) {
@@ -49,3 +51,5 @@ exports["propertyComments"] = function( test ) {
 //
 //  test.done();
 //};
+
+})();

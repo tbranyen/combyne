@@ -1,3 +1,5 @@
+(function() {
+
 var combyne = require("../");
 
 // Helper functions
@@ -13,13 +15,14 @@ var helper = {
     try {
       fun.call(this);
       test(false, label);
+
     } catch (ex) {
       test(true, label);
     }
   }
 };
 
-exports["constructor"] = function(test) {
+exports["ctor"] = function(test) {
   test.expect(4);
 
   // Test for constructor function
@@ -34,3 +37,5 @@ exports["constructor"] = function(test) {
 
   test.done();
 };
+
+})();
