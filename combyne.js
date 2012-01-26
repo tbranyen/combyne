@@ -41,7 +41,7 @@
 
     switch(token.name) {
       case "WHITESPACE":
-        templateStack.push(capture);
+        templateStack.push("'" + capture + "'");
 
         break;
         
@@ -77,8 +77,6 @@
 
       return render(self, context, stack, delimiters);
     }
-
-    console.log(templateStack);
 
     // Return value
     return templateStack;
@@ -134,21 +132,28 @@
 
   // Highly experimental compile function
   function compile(stack) {
+    var i;
+    var actions = "";
+
+    for (i=0; i<stack.length; i++) {
+      actions += "stack.push(" + (typeof stack[i] === "string" ? "unescape("+escape(stack[i])+")" : stack[i]) + ");";
+    }
+
+    console.log(actions);
+
     return new Function("data, contents", [
 
-      "var tmpl = '';",
+      "var stack = [];",
 
       "try {",
         "with (data || {}) {",
-          "if (contents = [", stack, "].join('')) {",
-            "tmpl += contents;",
-          "}",
+          stack.join(""),
         "}",
-      "} catch(ex) {};",
+      "} catch (ex) {};",
 
-      "return tmpl;"
+      "return stack.join('');"
 
-    ].join(""));;
+    ].join("\n"));;
   }
 
   // Tokenizer

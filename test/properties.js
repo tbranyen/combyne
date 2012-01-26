@@ -3,7 +3,7 @@
 var combyne = require("../");
 
 exports["propertyReplace"] = function(test) {
-  test.expect(5);
+  test.expect(6);
 
   // Simple single replace
   var tmpl = combyne("{{test}}", { test: "hello world" });
@@ -26,8 +26,8 @@ exports["propertyReplace"] = function(test) {
   test.equals(tmpl5.render(), "hello world\tto you\nhello world\rto you\r\nhello world   to you", "Mutliple replaces separated by various types of whitespace");
 
   // Unicode support
-  //var tmpl6 = combyne("{{test}}", { test: "\u2C64" });
-  //test.equals(tmpl6.render(), "\u2C64", "Cool R latin extended unicode support");
+  var tmpl6 = combyne("{{test}}", { test: "\u2C64" });
+  test.equals(tmpl6.render(), "\u2C64", "Cool R latin extended unicode support");
 
   test.done();
 };
