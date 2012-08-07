@@ -99,7 +99,7 @@ var output = tmpl.render(context);
 ###Using filters on variables###
 
 ``` javascript
-var template = '{{test|reverse}}';
+var template = '{{lol|reverse}}';
 var context = { lol: 'test' };
 
 var tmpl = combyne(template);
@@ -114,7 +114,7 @@ var output = tmpl.render(context);
 ####Chaining filters on variables####
 
 ``` javascript
-var template = '{{test|reverse|toUpper}}';
+var template = '{{lol|reverse|toUpper}}';
 var context = { lol: 'test' };
 
 var tmpl = combyne(template);
