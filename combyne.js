@@ -19,7 +19,7 @@
 
   // AMD. Register as an anonymous module.
   } else if (typeof define === "function" && define.amd) {
-    define([], factory);
+    define(factory);
 
   // Browser globals
   } else {
@@ -31,7 +31,7 @@
 
   var _tokens, nextToken, lastToken;
   var toString = Object.prototype.toString;
-  var specialCharsExp = /[\^$\\\/.*+?()[\]{}|]/g;
+  var specialCharsExp = /[\^$\\\/.*+?()\[\]{}|]/g;
   var templateStack = [];
 
   function render(self, context, stack, delimiters) {
@@ -60,8 +60,8 @@
 
       case "OTHER":
         if (lastToken === "START_PROP") {
-          templateStack.push("typeof " + capture + " == 'function' ? " + capture
-            + "() : " + capture);
+          templateStack.push("typeof " + capture + " == 'function' ? " +
+            capture + "() : " + capture);
 
         } else {
           templateStack.push("'" + capture + "'");
@@ -139,8 +139,6 @@
       actions += "stack.push(" + (typeof stack[i] === "string" ? "unescape("+escape(stack[i])+")" : stack[i]) + ");";
     }
 
-    console.log(actions);
-
     return new Function("data, contents", [
 
       "var stack = [];",
@@ -153,7 +151,7 @@
 
       "return stack.join('');"
 
-    ].join("\n"));;
+    ].join("\n"));
   }
 
   // Tokenizer
