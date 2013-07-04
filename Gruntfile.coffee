@@ -14,6 +14,7 @@ module.exports = ->
       options:
         boss: true
         evil: true
+        proto: true
 
     nodeunit:
       files: "test/*.js"
