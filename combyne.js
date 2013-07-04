@@ -1,4 +1,4 @@
-/* combyne.js v0.3.0
+/* combyne.js v0.3.0-wip
  * Copyright 2013, Tim Branyen (@tbranyen)
  * combyne.js may be freely distributed under the MIT license.
  */
