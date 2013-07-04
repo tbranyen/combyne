@@ -1,50 +1,98 @@
-combyne.js:
-===========
+Combyne
+=======
 
-A template engine that works the way you'd expect.
+**v0.3.0-wip** [![Build
+Status](https://travis-ci.org/tbranyen/combyne.js.png?branch=wip)](https://travis-ci.org/tbranyen/combyne.js)
+[![Dependency Status](https://gemnasium.com/tbranyen/combyne.js.png)](https://gemnasium.com/tbranyen/combyne.js)
 
-Getting started
---------------
+Maintained by Tim Branyen [@tbranyen](http://twitter.com/tbranyen) with help
+from [awesome
+contributors](https://github.com/tbranyen/combyne.js/contributors)!
 
-###Browser###
+No dependencies.  Can be loaded as browser global, AMD module, Node module and
+Browserify module.  Can be installed via NPM, Bower or JamJS.
 
-Download: [Production](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.min.js) or [Development](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.js)
+## Getting started. ##
 
-Include: `<script src="combyne.js"></script>`
+Combyne can run under a variety of JavaScript engines and loaders:
 
-Compatibility: (Desktop) IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, Safari 5+, (Mobile) Android Browser 2.3.4+, Opera 9.80+, FireFox Beta, iPad
+### Node. ###
 
-File size: 2.7KB when serving `Production version` with GZip
-
-###Node.js###
-
-To install `combyne`, you can clone this repository to your `node_modules`
-folder or use the fantastic `NPM`:
+Install via NPM:
 
 ``` bash
 npm install combyne
 ```
 
-Then simply `require` it in your projects to start using
+Require in your project:
 
 ``` javascript
-var combyne = require('combyne');
+var combyne = require("combyne");
 ```
 
-Basic usage
------------
+### AMD. ###
+
+If you install via Bower you will need to configure the path, which is the
+first step below, however if you install with JamJS you can skip that step.
+
+``` javascript
+// Configure the path if necessary.
+require.config({
+  paths: {
+    combyne: "path/to/combyne"
+  }
+});
+
+// Use in a module.
+define(function(require) {
+  "use strict";
+
+  // My module can require Combyne now.
+  var combyne = require("combyne");
+
+  // Rest of your module code...
+});
+```
+
+### Browser. ###
+
+[Include the latest
+stable](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.js) in
+your markup:
+
+``` html
+<script src="combyne.js"></script>
+```
+
+#### Compatibility. ####
+
+__Desktop:__
+
+IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
+
+
+__Mobile:__
+
+Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
+
+#### File size. ####
+
+Just 2.7KB when serving minfied and gzipped.
+
+### AMD. ###
+
+## Basic usage. ##
 
 ``` javascript
 var tmpl = combyne('{{test}}');
 tmpl.render({ test: 'lol' }); // lol
 ```
 
-Features
--------------
+## Features ##
 
-`combyne` works by parsing your template into a stack and rendering data.
+Combyne works by parsing your template into a stack and rendering data.
 
-###Single line comments###
+### Single line comments. ###
 
 ``` javascript
 var template = 'test {%-- single line comment --%}';
@@ -55,7 +103,7 @@ var output = tmpl.render();
 /// output == 'test '
 ```
 
-####Block comments####
+### Block comments. ###
 
 ``` javascript
 var template = 'test {%-- line 1\n\
@@ -68,7 +116,7 @@ var output = tmpl.render();
 /// output == 'test '
 ```
 
-###Custom delimiters###
+### Custom delimiters. ###
 
 ``` javascript
 var template = '[[lol]]';
@@ -84,7 +132,7 @@ var output = tmpl.render(context);
 /// output = 'test'
 ```
 
-###Replacing template variables###
+### Replacing template variables. ###
 
 ``` javascript
 var template = '{{lol}}';
@@ -96,7 +144,7 @@ var output = tmpl.render(context);
 /// output == 'test'
 ```
 
-###Using filters on variables###
+### Using filters on variables. ###
 
 ``` javascript
 var template = '{{lol|reverse}}';
@@ -111,7 +159,7 @@ var output = tmpl.render(context);
 /// output == 'tset'
 ```
 
-####Chaining filters on variables####
+#### Chaining filters on variables. ####
 
 ``` javascript
 var template = '{{lol|reverse|toUpper}}';
@@ -129,7 +177,7 @@ var output = tmpl.render(context);
 /// output == 'TSET'
 ```
 
-###Conditionals###
+### Conditionals. ###
 
 Instead of being *logic-less*, `combyne` doesn't make any assumptions and
 allows you to do things like `if/elsif/else` with simple conditionals,
@@ -158,7 +206,7 @@ var output = tmpl.render(context);
 /// output == 'goodbye!'
 ```
 
-###Iterating arrays###
+### Iterating arrays. ###
 
 *Will not work on array-like objects, such as arguments or NodeList, coerce with
 `Array.prototype.slice.call(obj);`*
@@ -173,7 +221,7 @@ var output = tmpl.render(context);
 /// output == '1 2 3 4 '
 ```
 
-####You can change the iterated name within loops as well####
+#### Change the iterated identifer within loops. ####
 
 ``` javascript
 var template = '{%each arr as _%}{{_}}{%endeach%}';
@@ -185,7 +233,7 @@ var output = tmpl.render(context);
 /// output = '123'
 ```
 
-###Iterating objects###
+### Iterating objects. ###
 
 ``` javascript
 var template = '{%each test as key val%}the {{key}} is {{val}}{%endeach%}';
@@ -201,7 +249,7 @@ var output = tmpl.render(context);
 /// output == 'the hello is lol'
 ```
 
-###Partials###
+### Partials. ###
 
 ``` javascript
 var template = '{{test}} {%partial test%}';
@@ -217,8 +265,7 @@ var output = tmpl.render(context);
 /// output == 'hello you'
 ```
 
-
-## Unit tests ##
+## Unit tests. ##
 
 ### Browser ###
 
@@ -235,5 +282,5 @@ npm install
 Then run the following command
 
 ``` bash
-make test
+grunt nodeunit
 ```
