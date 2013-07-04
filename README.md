@@ -79,8 +79,6 @@ Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
 
 Just 2.7KB when serving minfied and gzipped.
 
-### AMD. ###
-
 ## Basic usage. ##
 
 ``` javascript
