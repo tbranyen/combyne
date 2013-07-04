@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
 
 // Helper functions
 var helper = {
@@ -22,7 +22,7 @@ var helper = {
 
 var combyne = require("../");
 
-exports["basicComments"] = function(test) {
+exports.basicComments = function(test) {
   test.expect(4);
 
   // A block comment
@@ -44,7 +44,7 @@ exports["basicComments"] = function(test) {
   test.done();
 };
 
-exports["propertyComments"] = function(test) {
+exports.propertyComments = function(test) {
   test.expect(2);
 
   // Do not render the property
@@ -58,7 +58,7 @@ exports["propertyComments"] = function(test) {
   test.done();
 };
 
-exports["commentComments"] = function(test) {
+exports.commentComments = function(test) {
   test.expect(2);
 
   // Nested comments with raw value
@@ -71,3 +71,5 @@ exports["commentComments"] = function(test) {
 
   test.done();
 };
+
+})(typeof global !== "undefined" ? global : this);

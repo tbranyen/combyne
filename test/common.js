@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
 
 var combyne = require("../");
 
@@ -22,7 +22,7 @@ var helper = {
   }
 };
 
-exports["ctor"] = function(test) {
+exports.ctor = function(test) {
   test.expect(4);
 
   // Test for constructor function
@@ -38,4 +38,4 @@ exports["ctor"] = function(test) {
   test.done();
 };
 
-})();
+})(typeof global !== "undefined" ? global : this);

@@ -5,15 +5,16 @@
   "author": "Tim Branyen <tim@tabdeveloper.com> (http://twitter.com/tbranyen)",
   "main": "combyne.js",
   "devDependencies": {
-    "nodeunit": "*"
+    "nodeunit": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0"
   },
   "engines": {
     "node": "*"
   },
-  
   "jam": {
-    "shim": {
-      "exports": "combyne"
-    }
+    "main": "combyne.js",
+    "include": ["combyne.js"]
   }
 }

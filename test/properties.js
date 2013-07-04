@@ -1,8 +1,8 @@
-(function() {
+(function(window) {
 
 var combyne = require("../");
 
-exports["propertyReplace"] = function(test) {
+exports.propertyReplace = function(test) {
   test.expect(6);
 
   // Simple single replace
@@ -32,7 +32,7 @@ exports["propertyReplace"] = function(test) {
   test.done();
 };
 
-exports["objectReplace"] = function(test) {
+exports.objectReplace = function(test) {
   test.expect(1);
 
   // Simple object replace
@@ -42,4 +42,4 @@ exports["objectReplace"] = function(test) {
   test.done();
 };
 
-})();
+})(typeof global !== "undefined" ? global : this);
