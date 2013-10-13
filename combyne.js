@@ -555,10 +555,6 @@ var render = function() {
           }
 
           obj = normalizeArgument(capture, context)
-
-          if (obj == null) {
-            obj = { prop: capture }; 
-          }
         }
         else if (mode.exists("filter")) {
           if (mode.exists("skip")) {
