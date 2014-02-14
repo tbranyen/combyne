@@ -28,31 +28,6 @@
   // Set window to always equal the global object.
   var window = this;
 
-  combyne['utils/type'] = (function() {
-    var module = { exports: {} };
-
-    var retVal = (function(require, exports, module) {
-      "use strict";
-
-      // Cache this method for easier reusability.
-      var toString = Object.prototype.toString;
-
-      /**
-       * Determine the type of a given value.
-       *
-       * @param {*} value to test.
-       * @return {Boolean} that indicates the value's type.
-       */
-      function type(value) {
-        return toString.call(val).split(" ")[1].slice(0, -1).toLowerCase();
-      }
-
-      module.exports = type;
-    })(null, module.exports, module);
-
-    return retVal || module.exports;
-  })();
-
   combyne['utils/escape_delimiter'] = (function() {
     var module = { exports: {} };
 
@@ -84,7 +59,6 @@
       "use strict";
 
       // Utils.
-      var type = combyne['utils/type'];
       var escapeDelimiter = combyne['utils/escape_delimiter'];
 
       function Grammar(delimiters) {
@@ -114,7 +88,7 @@
 
         grammar.push({
           name: "OTHER",
-          test: RegExp("^((?!" + string + ").)*")
+          test: new RegExp("^((?!" + string + ").)*")
         });
 
         return grammar;
@@ -145,6 +119,25 @@
         this.stack = [];
       }
 
+      function parseNextToken(template, grammar, stack) {
+
+        // Loop through each item in the grammar.
+        grammar.forEach(function(token) {
+          var capture = token.test.exec(template);
+
+          // If the grammar regex matches the template, token it.
+          if (capture && capture[0]) {
+            // Remove from the template.
+            template = template.replace(token.test, "");
+
+            // Push the capture.
+            stack.push({ name: token.name, capture: capture });
+          }
+        });
+
+        return template;
+      }
+
       /**
        * Parses the template into a series of tokens.
        *
@@ -153,25 +146,14 @@
       Tokenizer.prototype.parse = function() {
         var template = this.template;
         var grammar = this.grammar;
+        var stack = this.stack;
 
         // While the template still needs to be parsed, loop.
         while (template.length) {
-          // Loop through each item in the grammar.
-          grammar.forEach(function(token) {
-            var capture = token.test.exec(template);
-
-            // If the grammar regex matches the template, token it.
-            if (capture && capture[0]) {
-              // Remove from the template.
-              template = template.replace(token.test, "");
-
-              // Push the capture.
-              this.stack.push({ name: token.name, capture: capture });
-            }
-          }, this);
+          template = parseNextToken(template, grammar, stack);
         }
 
-        return this.stack;
+        return stack;
       };
 
       module.exports = Tokenizer;
@@ -206,6 +188,31 @@
     return retVal || module.exports;
   })();
 
+  combyne['utils/type'] = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      // Cache this method for easier reusability.
+      var toString = Object.prototype.toString;
+
+      /**
+       * Determine the type of a given value.
+       *
+       * @param {*} value to test.
+       * @return {Boolean} that indicates the value's type.
+       */
+      function type(value) {
+        return toString.call(value).split(" ")[1].slice(0, -1).toLowerCase();
+      }
+
+      module.exports = type;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
   combyne.index = (function() {
     var module = { exports: {} };
 
@@ -225,7 +232,7 @@
        * @constructor
        * @param {String} template to compile.
        */
-      function Combyne(template, delimiters) {
+      function Combyne(template) {
         // Allow this method to run standalone.
         if (!(this instanceof Combyne)) {
           return new Combyne(template);
