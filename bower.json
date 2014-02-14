@@ -1,5 +1,8 @@
 {
   "name": "combyne",
   "version": "0.3.0-wip",
-  "main": "combyne.js"
+  "main": "combyne.js",
+  "devDependencies": {
+    "mocha": "1.14.0"
+  }
 }

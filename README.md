@@ -1,6 +1,8 @@
 Combyne
 =======
 
+> A template engine that works the way you'd expect.
+
 **v0.3.0-wip** [![Build
 Status](https://travis-ci.org/tbranyen/combyne.js.png?branch=wip)](https://travis-ci.org/tbranyen/combyne.js)
 [![Dependency Status](https://gemnasium.com/tbranyen/combyne.js.png)](https://gemnasium.com/tbranyen/combyne.js)

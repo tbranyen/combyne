@@ -1,24 +1,16 @@
 {
   "name": "combyne",
   "description": "Templating that works *hopefully* the way you'd expect.",
-  "version": "0.3.0-wip",
-  "author": "Tim Branyen <tim@tabdeveloper.com> (http://twitter.com/tbranyen)",
+  "version": "0.3.0",
+  "author": "Tim Branyen (@tbranyen)",
   "main": "combyne.js",
   "devDependencies": {
-    "nodeunit": "*",
-    "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.0",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-nodeunit": "~0.2.0"
-  },
-  "engines": {
-    "node": "*"
+    "grunt": "~0.4.2",
+    "grunt-jscs-checker": "~0.3.2"
   },
   "scripts": {
-    "test": "grunt"
-  },
-  "jam": {
-    "main": "combyne.js",
-    "include": ["combyne.js"]
+    "ci": "npm run lint && npm run test",
+    "test": "mocha --reporter spec --ui tdd test/tests/*",
+    "lint": "jshint lib/ test/tests/*.js"
   }
 }

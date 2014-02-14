@@ -1,281 +1,300 @@
-/* combyne.js v0.3.0-wip
- * Copyright 2013, Tim Branyen (@tbranyen)
- * combyne.js may be freely distributed under the MIT license.
- */
-(function(window) {
-"use strict";
+(function(window, factory) {
+  "use strict";
 
-// Normalize the `define` and `require` calls.
-var require = window.require || function() {};
-// Call the exports function or the crafted one with the Node.js `require`.
-var define = window.define || function(cb) {
-  window.combyne = cb.call(this, require);
-};
-
-// Define the module contents.
-define(function(require) {
-
-var _tokens, nextToken, lastToken;
-var toString = Object.prototype.toString;
-var specialCharsExp = /[\^$\\\/.*+?()\[\]{}|]/g;
-var templateStack = [];
-
-function render(self, context, stack, delimiters) {
-  var tmpVar, method, args;
-  var token = stack.pop();
-  var capture = token.captures[0];
-
-  switch(token.name) {
-    case "WHITESPACE":
-      templateStack.push("'" + capture + "'");
-
-      break;
-      
-    case "COMMENT":
-      if (lastToken === "START_EXPR") {
-        templateStack.push("\/*");
-
-      } else if (nextToken === "END_EXPR") {
-        templateStack.push("*\/");
-
-      } else {
-        templateStack.push("'" + delimiters.COMMENT + "'");
-      }
-
-      break;
-
-    case "OTHER":
-      if (lastToken === "START_PROP") {
-        templateStack.push("typeof " + capture + " == 'function' ? " +
-          capture + "() : " + capture);
-
-      } else {
-        templateStack.push("'" + capture + "'");
-      }
-
-      break;
-  }
-
-  // Parse the token stack until it's empty
-  if (stack.length) {
-    lastToken = token.name;
-    nextToken = stack[0].name;
-
-    return render(self, context, stack, delimiters);
-  }
-
-  // Return value
-  return templateStack;
-}
-
-// Convenience method to wrap a passed filter to have the correct context.
-function _wrapFilter(self, func) {
-  return function() {
-    return func.apply({ original: self.template }, arguments);
-  };
-}
-
-// Escape any delimiters assigned
-function escDelimiter(delimiter) {
-  return delimiter.replace(specialCharsExp,"\\$&");
-}
-
-// Object.keys polyfill
-function getKeys(obj) {
-  var key;
-  var array = [];
-  
-  for (key in obj) {
-    if (!obj.hasOwnProperty(key)) {
-      continue;
-    }
-
-    array.push(key);
-  }
-
-  return array;
-}
-
-// Minimalist extend function, thanks jdalton
-function extend(destination) { 
-  var prop, source;
-  var index = 0;
-  var length = arguments.length;
-
-  while (++index < length) {
-    source = arguments[index];
-
-    for (prop in source) {
-      destination[prop] = source[prop];
-    }
-  }
-
-  return destination;
-}
-
-// Highly experimental compile function
-function compile(stack) {
-  var i;
-  var actions = "";
-
-  for (i=0; i<stack.length; i++) {
-    actions += "stack.push(" + (typeof stack[i] === "string" ? "unescape("+escape(stack[i])+")" : stack[i]) + ");";
-  }
-
-  return new Function("data, contents", [
-
-    "var stack = [];",
-
-    "try {",
-      "with (data || {}) {",
-        stack.join(""),
-      "}",
-    "} catch (ex) {};",
-
-    "return stack.join('');"
-
-  ].join("\n"));
-}
-
-// Tokenizer
-function tokenizer(template, stack, tokens) {
-  _tokens = tokens = tokens || _tokens;
-
-  var i, captures, token, key;
-  var keys = getKeys(tokens);
-  var len = keys.length;
-
-  while (template.length) {
-    for (i=0; i<len; i++) {
-      key = keys[i];
-
-      if (captures = tokens[key].exec(template)) {
-        token = { name: key, captures: captures };
-        template = template.replace(tokens[key], "");
-
-        if (captures[0]) {
-          stack.push(token);
-        }
-      }
-    }
-  }
-}
-
-function main(self, template, context, delimiters) {
-  var string, sp, ep, se, ee, co, fi;
-  var error = 0;
-  var stack = [];
-  var grammar = {};
-
-  sp = escDelimiter(delimiters.START_PROP);
-  ep = escDelimiter(delimiters.END_PROP);
-  se = escDelimiter(delimiters.START_EXPR);
-  ee = escDelimiter(delimiters.END_EXPR);
-  co = escDelimiter(delimiters.COMMENT);
-  fi = escDelimiter(delimiters.FILTER);
-
-  grammar.START_PROP = new RegExp("^" + sp);
-  grammar.END_PROP = new RegExp("^" + ep);
-  grammar.START_EXPR = new RegExp("^" + se);
-  grammar.END_EXPR = new RegExp("^" + ee);
-  grammar.COMMENT = new RegExp("^" + co);
-  grammar.FILTER = new RegExp("^" + fi);
-
-  string = [ sp, ep, se, ee, co, fi ].join("|");
-
-  grammar.WHITESPACE = /^[\ |\t|\r|\n]+/;
-  grammar.OTHER = new RegExp("^((?!" + string + ").)*");
-
-  if (error = tokenizer(template, stack, grammar)) {
-    if (self.debug) {
-      throw new Error(error);
-    }
-  }
-
-  stack.reverse();
-
-  return render(self, context, stack, delimiters);
-}
-
-function Combyne(template, context) {
-  if (!(this instanceof Combyne)) {
-    return new Combyne(template, context);
-  }
-
-  this.template = template;
-  this.context = context || {};
-
-  function addon() {
-    return {
-      _cache: {},
-      // Read
-      get: function(name) {
-        return this._cache[name];
-      },
-      // Delete
-      remove: function(name) {
-        delete this._cache[name];
-      }
-    };
-  }
-
-  this.filters = addon();
-  this.filters.add = function(name, cb) {
-    this._cache[name] = _wrapFilter(this, cb);
-  };
-
-  this.partials = addon();
-  this.partials.add = function(name, template, context) {
-    this._cache[name] = { template: template, context: context };
-  };
-
-  // Create a reusable render method.
-  var render = function(context) {
-    return this.render(context);
-  }.bind(this);
-
-  // Ensure `instanceof` still works.
-  render.__proto__ = this;
-
-  return render;
-}
-
-Combyne.VERSION = "0.3.0";
-Combyne.prototype = {
-  render: function(context) {
-    // Missing template or context... can't exactly do anything here...
-    if (!this.template || !this.context) {
-      if (this.debug) {
-        throw new Error("Missing template or context");
-      }
-    } 
-
-    // Override delimiters
-    this.delimiters = extend({}, this.delimiters, {
-      START_PROP: "{{",
-      END_PROP: "}}",
-      START_EXPR: "{%",
-      END_EXPR: "%}",
-      COMMENT: "--",
-      FILTER: "|"
+  // AMD. Register as an anonymous module.  Wrap in function so we have access
+  // to root via `this`.
+  if (typeof define === "function" && define.amd) {
+    return define([], function() {
+      return factory.apply(window, arguments);
     });
+  }
+  
+  // Node. Does not work with strict CommonJS, but only CommonJS-like
+  // enviroments that support module.exports, like Node.
+  else if (typeof exports === "object") {
+    module.exports = factory();
+  }
 
-    // Actually render
-    var stack = main(this, this.template, this.context, this.delimiters);
+  // Browser globals.
+  else {
+    window.combyne = factory.call(window);
+  }
+}(typeof global === "object" ? global : this, function() {
+  "use strict";
 
-    // Clean up stack
-    templateStack = [];
-    nextToken = "";
-    lastToken = "";
+  // The exports object that contains all modules.
+  var combyne = {};
 
-    return compile(stack)(this.context);
-  },
+  // Set window to always equal the global object.
+  var window = this;
 
-  delimiters: {}
-};
+  combyne['utils/type'] = (function() {
+    var module = { exports: {} };
 
-return Combyne;
+    var retVal = (function(require, exports, module) {
+      "use strict";
 
-});
+      // Cache this method for easier reusability.
+      var toString = Object.prototype.toString;
 
-})(typeof global !== "undefined" ? global : this);
+      /**
+       * Determine the type of a given value.
+       *
+       * @param {*} value to test.
+       * @return {Boolean} that indicates the value's type.
+       */
+      function type(value) {
+        return toString.call(val).split(" ")[1].slice(0, -1).toLowerCase();
+      }
+
+      module.exports = type;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  combyne['utils/escape_delimiter'] = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      var specialCharsExp = /[\^$\\\/.*+?()\[\]{}|]/g;
+
+      /**
+       * Escape special characters that may interfere with RegExp building.
+       *
+       * @param {String} delimiter value to escape.
+       * @return {String} safe value for RegExp building.
+       */
+      function escapeDelimiter(delimiter) {
+        return delimiter.replace(specialCharsExp,"\\$&");
+      }
+
+      module.exports = escapeDelimiter;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  combyne.grammar = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      // Utils.
+      var type = combyne['utils/type'];
+      var escapeDelimiter = combyne['utils/escape_delimiter'];
+
+      function Grammar(delimiters) {
+        this.delimiters = delimiters;
+      }
+
+      Grammar.prototype.escape = function() {
+        var keys = Object.keys(this.delimiters);
+        var grammar = [];
+
+        var string = keys.map(function(key) {
+          var escaped = escapeDelimiter(this.delimiters[key]);
+
+          // Add to the grammar list.
+          grammar.push({
+            name: key,
+            test: new RegExp("^" + escaped)
+          });
+
+          return escaped;
+        }, this).join("|");
+
+        grammar.push({
+          name: "WHITESPACE",
+          test: /^[\ |\t|\r|\n]+/
+        });
+
+        grammar.push({
+          name: "OTHER",
+          test: RegExp("^((?!" + string + ").)*")
+        });
+
+        return grammar;
+      };
+
+      module.exports = Grammar;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  combyne.tokenizer = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      /**
+       * Represents a Tokenizer.
+       *
+       * @constructor
+       * @param {String} template to tokenize.
+       * @param {Array} grammar to match against.
+       */
+      function Tokenizer(template, grammar) {
+        this.template = template;
+        this.grammar = grammar;
+        this.stack = [];
+      }
+
+      /**
+       * Parses the template into a series of tokens.
+       *
+       * @return {Array} tokens as a stack.
+       */
+      Tokenizer.prototype.parse = function() {
+        var template = this.template;
+        var grammar = this.grammar;
+
+        // While the template still needs to be parsed, loop.
+        while (template.length) {
+          // Loop through each item in the grammar.
+          grammar.forEach(function(token) {
+            var capture = token.test.exec(template);
+
+            // If the grammar regex matches the template, token it.
+            if (capture && capture[0]) {
+              // Remove from the template.
+              template = template.replace(token.test, "");
+
+              // Push the capture.
+              this.stack.push({ name: token.name, capture: capture });
+            }
+          }, this);
+        }
+
+        return this.stack;
+      };
+
+      module.exports = Tokenizer;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  combyne.parser = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      /**
+       *
+       *
+       */
+      function Parser(stack) {
+        this.stack = stack;
+      }
+
+      Parser.prototype.toJavaScript = function() {
+        var output = "console.log('turd');";
+
+        return new Function(output);
+      };
+
+      module.exports = Parser;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  combyne.index = (function() {
+    var module = { exports: {} };
+
+    var retVal = (function(require, exports, module) {
+      "use strict";
+
+      var Grammar = combyne.grammar;
+      var Tokenizer = combyne.tokenizer;
+      var Parser = combyne.parser;
+
+      // Utils.
+      var type = combyne['utils/type'];
+
+      /**
+       * Represents a Combyne template.
+       *
+       * @constructor
+       * @param {String} template to compile.
+       */
+      function Combyne(template, delimiters) {
+        // Allow this method to run standalone.
+        if (!(this instanceof Combyne)) {
+          return new Combyne(template);
+        }
+
+        // Expose the template for easier accessing and mutation.
+        this.template = template;
+        // Default the data to an empty object.
+        this.data = {};
+
+        // Ensure the template is a String.
+        if (type(this.template) !== "string") {
+          throw new Error("Template must be a String.");
+        }
+
+        // Create a new grammar with the following values.
+        var grammar = new Grammar(Combyne.templateSettings.delimiters);
+        // Break down the template into a series of tokens.
+        var tokenizer = new Tokenizer(this.template, grammar.escape());
+        // Parse the template into a stack of tokens.
+        var stack = tokenizer.parse();
+        // Use the stack to parse into beautiful JavaScript.
+        var parser = new Parser(stack);
+
+        // Generate the template function from the stack.
+        this.templateFunction = parser.toJavaScript();
+      }
+
+      /**
+       * Expose the global template settings.
+       *
+       * @api public
+       */
+      Combyne.templateSettings = {
+        // Custom delimiters may be changed here.
+        delimiters: {
+          START_PROP: "{{",
+          END_PROP: "}}",
+          START_EXPR: "{%",
+          END_EXPR: "%}",
+          COMMENT: "--",
+          FILTER: "|"
+        }
+      };
+
+      /**
+       *
+       */
+      Combyne.prototype.render = function(data) {
+        // Override the template data if provided.
+        this.data = data || this.data;
+
+        // Ensure the data is an Object.
+        if (type(this.data) !== "object") {
+          throw new Error("Template data must be an Object.");
+        }
+
+        // Execute the template function with the correct data.
+        return this.templateFunction(this.data);
+      };
+
+      // Attach the version number.
+      Combyne.VERSION = "0.3.0";
+
+      module.exports = Combyne;
+    })(null, module.exports, module);
+
+    return retVal || module.exports;
+  })();
+
+  return combyne.index;
+}));
