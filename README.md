@@ -1,18 +1,18 @@
 Combyne
 =======
 
-> A template engine that works the way you'd expect.
+> A template engine that works the way you expect.
 
-**v0.3.0-wip** [![Build
-Status](https://travis-ci.org/tbranyen/combyne.js.png?branch=wip)](https://travis-ci.org/tbranyen/combyne.js)
-[![Dependency Status](https://gemnasium.com/tbranyen/combyne.js.png)](https://gemnasium.com/tbranyen/combyne.js)
+**Stable:** 0.3.0 [![Build
+Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
+[![Dependency Status](https://gemnasium.com/tbranyen/combyne.png)](https://gemnasium.com/tbranyen/combyne)
 
 Maintained by Tim Branyen [@tbranyen](http://twitter.com/tbranyen) with help
 from [awesome
-contributors](https://github.com/tbranyen/combyne.js/contributors)!
+contributors](https://github.com/tbranyen/combyne/contributors)!
 
 No dependencies.  Can be loaded as browser global, AMD module, Node module and
-Browserify module.  Can be installed via NPM, Bower or JamJS.
+Browserify module.  Can be installed via NPM, Bower, or JamJS.
 
 ## Getting started. ##
 
@@ -38,7 +38,7 @@ If you install via Bower you will need to configure the path, which is the
 first step below, however if you install with JamJS you can skip that step.
 
 ``` javascript
-// Configure the path if necessary.
+// Configure the path, if necessary.
 require.config({
   paths: {
     combyne: "path/to/combyne"
@@ -46,20 +46,13 @@ require.config({
 });
 
 // Use in a module.
-define(function(require) {
-  "use strict";
-
-  // My module can require Combyne now.
-  var combyne = require("combyne");
-
-  // Rest of your module code...
-});
+define(["combyne"], function(combyne) {});
 ```
 
 ### Browser. ###
 
 [Include the latest
-stable](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.js) in
+stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js) in
 your markup:
 
 ``` html
@@ -68,14 +61,10 @@ your markup:
 
 #### Compatibility. ####
 
-__Desktop:__
-
-IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
+__Desktop:__ IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
 
 
-__Mobile:__
-
-Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
+__Mobile:__ Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
 
 #### File size. ####
 
