@@ -7,4 +7,4 @@ module.exports = ->
 
     build:
       files:
-        "combyne.js": "lib/index.js"
+        "dist/combyne.js": "lib/index.js"
