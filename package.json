@@ -7,7 +7,8 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-jscs-checker": "~0.3.2",
-    "grunt-contrib-jshint": "~0.8.0"
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
     "ci": "npm run lint && npm run test",
