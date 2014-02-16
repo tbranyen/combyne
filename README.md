@@ -7,10 +7,6 @@ Combyne
 Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
 [![Dependency Status](https://gemnasium.com/tbranyen/combyne.png)](https://gemnasium.com/tbranyen/combyne)
 
-Maintained by Tim Branyen [@tbranyen](http://twitter.com/tbranyen) with help
-from [awesome
-contributors](https://github.com/tbranyen/combyne/contributors)!
-
 No dependencies.  Can be loaded as browser global, AMD module, Node module and
 Browserify module.  Can be installed via NPM, Bower, or JamJS.
 
@@ -49,7 +45,7 @@ require.config({
 define(["combyne"], function(combyne) {});
 ```
 
-### Browser. ###
+### Browser global. ###
 
 [Include the latest
 stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js) in
@@ -58,6 +54,8 @@ your markup:
 ``` html
 <script src="combyne.js"></script>
 ```
+
+### Additional details. ###
 
 #### Compatibility. ####
 
@@ -73,52 +71,48 @@ Just 2.7KB when serving minfied and gzipped.
 ## Basic usage. ##
 
 ``` javascript
-var tmpl = combyne('{{test}}');
-tmpl.render({ test: 'lol' }); // lol
+var tmpl = combyne("hello {{msg}}!");
+tmpl.render({ msg: "world" });
+
+// => hello world!
 ```
 
-## Features ##
+## Features. ##
 
 Combyne works by parsing your template into a stack and rendering data.
 
-### Single line comments. ###
+Combyne works by parsing your template into an AST.  This provides mechanisms
+for intelligent compilation and optimization.  The template is converted to
+JavaScript and invoked upon calling render.
+
+### Comments. ###
+
+Comments are useful for ignoring anything between the open and close.  They can
+be nested.
 
 ``` javascript
-var template = 'test {%-- single line comment --%}';
+var tmpl = combyne("test {%-- not parsed --%}");
+tmpl.render();
 
-var tmpl = combyne(template);
-
-var output = tmpl.render();
-/// output == 'test '
-```
-
-### Block comments. ###
-
-``` javascript
-var template = 'test {%-- line 1\n\
-                          line 2\n\
-                     --%}';
-
-var tmpl = combyne(template);
-
-var output = tmpl.render();
-/// output == 'test '
+// => test 
 ```
 
 ### Custom delimiters. ###
 
-``` javascript
-var template = '[[lol]]';
-var context = { lol: 'test' };
+If you are not happy with the default Mustache-like syntax, you can trivially
+change the delimiters to suit your needs.  The delimiters may be changed at a
+local or global level.
 
-var tmpl = combyne(template);
-tmpl.delimiters = {
-  START_PROP: '[[',
-  END_PROP: ']]'
+``` javascript
+combyne.templateSettings.delimiters = {
+  START_PROP: "[[",
+  END_PROP: "]]"
 };
 
-var output = tmpl.render(context);
-/// output = 'test'
+var tmpl = combyne("[[msg]]", { msg: "hello world" });
+
+tmpl.render();
+// => hello world
 ```
 
 ### Replacing template variables. ###
@@ -256,20 +250,24 @@ var output = tmpl.render(context);
 
 ## Unit tests. ##
 
-### Browser ###
+### Browser: ###
 
-Open `test/test.html` in your browser of choice.
+Open **test/test.html** in your web browser.
 
-### Node.js ###
+### Node: ###
 
-Run the follow command to fetch the `Node.js` dependencies.
+Run the following command to install the Node dependencies.
 
 ``` bash
 npm install
+
+# Install the grunt-cli if you haven't already.  This command may require
+# elevated privileges.
+npm install -g grunt-cli
 ```
 
 Then run the following command
 
 ``` bash
-grunt nodeunit
+grunt
 ```
