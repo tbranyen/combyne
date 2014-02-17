@@ -3,94 +3,142 @@ define(function(require, exports, module) {
 
   var combyne = require("lib/index");
 
-  describe("Expressions", function() {});
+  describe("Expressions", function() {
+    describe("Conditionals", function() {
+      it("can evaluate basic truthy", function() {
+        var tmpl = combyne("{%if test%}hello world{%endif%}");
+        var output = tmpl.render({ test: true })
+
+        expect(output).to.equal("hello world");
+      });
+
+      it("can evaluate basic falsy", function() {
+        var tmpl = combyne("{%if test%}hello world{%endif%}");
+        var output = tmpl.render({ test: false });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate missing properties", function() {
+        var tmpl = combyne("{%if test%}hello world{%endif%}");
+        var output = tmpl.render({});
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate nested truthy conditionals", function() {
+        var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
+        var output = tmpl.render({ test: true, hi: true });
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate nested conditionals with falsy root value", function() {
+        var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
+        var output = tmpl.render({ test: false, hi: true });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate nested if statement with falsy values", function() {
+        var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
+        var output = tmpl.render({ test: false, hi: false });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate truthy dot notation", function() {
+        var tmpl = combyne("{%if test.prop%}hello{%endif%}");
+        var output = tmpl.render({ test: { prop: true } });
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate falsy dot notation", function() {
+        var tmpl = combyne("{%if test.prop%}hello{%endif%}");
+        var output = tmpl.render({ test: { prop: false } });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate truthy deep dot notation", function() {
+        var tmpl = combyne("{%if test.prop.hi%}hello{%endif%}");
+        var output = tmpl.render({ test: { prop: { hi: true } } });
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate falsy deep dot notation", function() {
+        var tmpl = combyne("{%if test.prop.hi%}hello{%endif%}");
+        var output = tmpl.render({ test: { prop: { hi: false } } });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate not conditional with falsy value", function() {
+        var tmpl = combyne("{%if not test%}hello{%endif%}");
+        var output = tmpl.render({ test: false });
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate not conditional with truthy value", function() {
+        var tmpl = combyne("{%if not test%}hello{%endif%}");
+        var output = tmpl.render({ test: true });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate conditional truthy string values", function() {
+        var tmpl = combyne("{%if 'test' == 'test'%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate conditional falsy string values", function() {
+        var tmpl = combyne("{%if 'test' != 'test'%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate numerical greater than", function() {
+        var tmpl = combyne("{%if 5 > 4%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate numerical greater than or equal", function() {
+        var tmpl = combyne("{%if 5 >= 4%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate numerical less than", function() {
+        var tmpl = combyne("{%if 4 < 5%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate numerical less than or equal", function() {
+        var tmpl = combyne("{%if 4 <= 5%}hello{%endif%}");
+        var output = tmpl.render();
+
+        expect(output).to.equal("hello");
+      });
+    });
+
+    describe("Loops", function() {
+
+    });
+  });
 });
 
 /*
-exports.ifStatements = function( test ) {
-  test.expect(10);
-
-  // Basic true if statement
-  var tmpl = combyne('{%if test%}hello world{%endif%}', { test: true });
-  test.equals( tmpl.render(), 'hello world', 'Truthy if conditional' );
-
-  // Basic false if statement
-  var tmpl2 = combyne('{%if test%}hello world{%endif%}', { test: false });
-  test.equals( tmpl2.render(), '', 'Falsy if conditional' );
- 
-  // Property not in context (falsy)
-  var tmpl3 = combyne('{%if test%}hello world{%endif%}', {});
-  test.equals( tmpl3.render(), '', 'Property missing (falsy) if conditional' );
-
-  // Nested if statement, with truthy values
-  var tmpl4 = combyne('{%if test%}{%if hi%}hello{%endif%}{%endif%}', { test: true, hi: true });
-  test.equals( tmpl4.render(), 'hello', 'Testing nested if statements with truthy values' );
-
-  // Nested if statement, with false root value
-  var tmpl5 = combyne('{%if test%}{%if hi%}hello{%endif%}{%endif%}', { test: false, hi: true });
-  test.equals( tmpl5.render(), '', 'Testing nested if statements with false root value' );
-
-  // Nested if statement, with false values
-  var tmpl6 = combyne('{%if test%}{%if hi%}hello{%endif%}{%endif%}', { test: false, hi: false });
-  test.equals( tmpl6.render(), '', 'Testing nested if statements with false values' );
-
-  // Single nested dot notation - truthy
-  var tmpl7 = combyne('{%if test.lol%}hello{%endif%}', { test: { lol: true } });
-  test.equals( tmpl7.render(), 'hello', 'Single nested dot notation - truthy' );
-
-  // Single nested dot notation - falsy
-  var tmpl8 = combyne('{%if test.lol%}hello{%endif%}', { test: { lol: false } });
-  test.equals( tmpl8.render(), '', 'Single nested dot notation - falsy' );
-
-  // Deep nested dot notation - truthy
-  var tmpl9 = combyne('{%if test.lol.hi%}hello{%endif%}', { test: { lol: { hi: true } } });
-  test.equals( tmpl9.render(), 'hello', 'Testing deep nested if statements with truthy values' );
-
-  // Deep nested dot notation - falsy
-  var tmpl10 = combyne('{%if test.lol.hi%}hello{%endif%}', { test: { lol: { hi: false } } });
-  test.equals( tmpl10.render(), '', 'Testing deep nested if statements with falsy values' );
-
-  test.done();
-};
-
-exports.complexIfStatements = function( test ) {
-  test.expect(8);
-
-  // Not if, falsly value
-  var tmpl = combyne('{%if not test%}hello{%endif%}{%if test%}goodbye{%endif%}', { test: false });
-  test.equals( tmpl.render(), 'hello', 'Testing not conditional with falsy value' );
-
-  // Not if
-  var tmpl2 = combyne('{%if not test%}hello{%endif%}{%if test%}goodbye{%endif%}', { test: true });
-  test.equals( tmpl2.render(), 'goodbye', 'Testing not conditional with truthy value' );
-
-  // Truthy conditional strings
-  var tmpl3 = combyne('{%if "test" == "test"%}hello{%endif%}');
-  test.equals( tmpl3.render(), 'hello', 'Truthy conditional strings' );
-
-  // Falsy conditional strings
-  var tmpl4 = combyne('{%if "test" != "test"%}hello{%endif%}');
-  test.equals( tmpl4.render(), '', 'Falsy conditional strings' );
-
-  // Truthy number greater than number
-  var tmpl5 = combyne('{%if 5 > 4%}hello{%endif%}');
-  test.equals( tmpl5.render(), 'hello', 'Truthy number greater than number' );
-
-  // Falsy number greater than number
-  var tmpl6 = combyne('{%if 5 > 4%}hello{%endif%}');
-  test.equals( tmpl6.render(), 'hello', 'Falsy number greater than number' );
-
-  // Truthy number less than number
-  var tmpl7 = combyne('{%if 3 < 4%}hello{%endif%}');
-  test.equals( tmpl7.render(), 'hello', 'Truthy number less than number' );
-
-  // Falsy number less than number
-  var tmpl8 = combyne('{%if 5 < 4%}hello{%endif%}');
-  test.equals( tmpl8.render(), '', 'Falsy number less than number' );
-
-  test.done();
-};
-
 exports.elseIfStatements = function( test ) {
   test.expect(1);
 
