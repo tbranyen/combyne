@@ -3,9 +3,10 @@ Combyne
 
 > A template engine that works the way you expect.
 
-**Stable:** 0.3.0 [![Build
-Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
+**Stable:** 0.3.0
+[![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
 [![Dependency Status](https://gemnasium.com/tbranyen/combyne.png)](https://gemnasium.com/tbranyen/combyne)
+[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png)](https://coveralls.io/r/tbranyen/combyne)
 
 No dependencies.  Can be loaded as browser global, AMD module, Node module and
 Browserify module.  Can be installed via NPM, Bower, or JamJS.
@@ -47,9 +48,8 @@ define(["combyne"], function(combyne) {});
 
 ### Browser global. ###
 
-[Include the latest
-stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js) in
-your markup:
+[Include the latest stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js)
+in your markup:
 
 ``` html
 <script src="combyne.js"></script>

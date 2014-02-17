@@ -1,5 +1,5 @@
 module.exports = ->
-  @loadNpmTasks "grunt-synchronizer"
+  #@loadNpmTasks "grunt-synchronizer"
 
   @config "synchronizer",
     options:
