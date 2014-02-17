@@ -3,11 +3,23 @@ define(function(require, exports, module) {
 
   var combyne = require("lib/index");
 
-  describe("Combyne template's", function() {
+  describe("Properties", function() {
     it("can replace a single value", function() {
       var output = combyne("{{test}}", { test: "hello world" }).render();
 
       expect(output).to.equal("hello world");
+    });
+
+    it("ignores whitespace between the delimiters", function() {
+      var output = combyne("{{ test       }}").render({ test: "hello world" });
+
+      expect(output).to.equal("hello world");
+    });
+
+    it("will error if the property delimiter is unterminated", function() {
+      expect(function() {
+        combyne("{{ test").render({ test: "hello world" })
+      }).to.throw(Error);
     });
 
     it("can replace many values", function() {
