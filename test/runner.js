@@ -15,17 +15,13 @@
     baseUrl: "/base/"
   });
 
-  require([
-    "bower_components/lodash/dist/lodash.underscore"
-  ],
-
-  function(_) {
+  require(["bower_components/lodash/dist/lodash"], function(_) {
     var tests = _.chain(karma.files)
       // Convert the files object to an array of file paths.
       .map(function(id, file) { return file; })
       // Load tests automatically.
       .filter(function(file) {
-        return /^\/base\/(test)\/.*\.js$/.test(file);
+        return /^\/base\/(test)\/tests\/.*\.js$/.test(file);
       })
       .value();
 
