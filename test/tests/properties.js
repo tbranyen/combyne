@@ -18,40 +18,57 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("hello world to you");
     });
+
+    it("can replace function invocations", function() {
+      var output = combyne("{{test}} {{test2}}").render({
+        test: "hello world",
+        test2: function() {
+          return "lol";
+        }
+      });
+
+      expect(output).to.equal("hello world lol");
+    });
+
+    it("can work with null bytes", function() {
+      var output = combyne("{{test}}\0{{test1}}").render({
+        test: "hello world",
+        test1: "to you" 
+      });
+
+      expect(output).to.equal("hello world\0to you");
+    });
+
+    it("can handle various types of whitespace", function() {
+      var output = combyne("test\ttest\ntest\rtest\r\ntest   test").render();
+
+      expect(output).to.equal("test\ttest\ntest\rtest\r\ntest   test");
+    });
+
+    it("can handle unicode characters", function() {
+      var output = combyne("{{test}}").render({ test: "\u2C64" });
+
+      expect(output).to.equal("\u2C64");
+    });
+
+    it("can do a simple object replace", function() {
+      var output = combyne("{{test.prop}}").render({
+        test: {
+          prop: "hello world"
+        }
+      });
+
+      expect(output).to.equal("hello world");
+    });
+
+    it("can do dot notation that is invalid JavaScript", function() {
+      var output = combyne("{{test-that.prop}}").render({
+        "test-that": {
+          prop: "hello world"
+        }
+      });
+
+      expect(output).to.equal("hello world");
+    });
   });
 });
-
-//exports.propertyReplace = function(test) {
-//  // Two replaces
-//
-//  // Function property
-//  var tmpl3 = combyne("{{test}} {{test2}}", { test: "hello world", test2: function() { return "lol"; } });
-//  test.equals(tmpl3.render(), "hello world lol", "Two property replaces, but one replace with function property");
-//
-//  // Null byte
-//  var tmpl4 = combyne("{{test}}\00{{test1}}", { test: "hello world", test1: "to you" });
-//  test.equals(tmpl4.render(), "hello world\0to you", "Two property replaces divided with null byte");
-//
-//  // Handling various types of whitespace
-//  var tmpl5 = combyne("{{test}}\t{{test1}}\n{{test}}\r{{test1}}\r\n{{test}}   {{test1}}", { test: "hello world", test1: "to you" });
-//  test.equals(tmpl5.render(), "hello world\tto you\nhello world\rto you\r\nhello world   to you", "Mutliple replaces separated by various types of whitespace");
-//
-//  // Unicode support
-//  var tmpl6 = combyne("{{test}}", { test: "\u2C64" });
-//  test.equals(tmpl6.render(), "\u2C64", "Cool R latin extended unicode support");
-//
-//  test.done();
-//};
-//
-//exports.objectReplace = function(test) {
-//  test.expect(1);
-//
-//  // Simple object replace
-//  var tmpl = combyne("{{test.lol}}", { test: { lol: "hello world" } });
-//  test.equals(tmpl.render(), "hello world", "Single object property replace");
-//
-//  test.done();
-//};
-//
-//})(typeof global !== "undefined" ? global : this);
-//

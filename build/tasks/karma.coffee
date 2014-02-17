@@ -39,6 +39,13 @@ module.exports = ->
         { pattern: "test/**/*.js", included: false }
       ]
 
-    test:
+    # This creates a server that will automatically run your tests when you
+    # save a file and display results in the terminal.
+    daemon:
+      options:
+        singleRun: false
+
+    # This is useful for running the tests just once.
+    run:
       options:
         singleRun: true
