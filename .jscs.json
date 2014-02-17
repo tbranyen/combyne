@@ -10,7 +10,6 @@
 
   "validateLineBreaks": "LF",
   "validateQuoteMarks": true,
-  "validateIndentation": 2,
 
   "requireCurlyBraces": [
     "if",

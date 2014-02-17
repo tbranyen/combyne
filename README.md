@@ -102,7 +102,7 @@ change the delimiters to suit your needs.  The delimiters may be changed at a
 local or global level.
 
 ``` javascript
-combyne.templateSettings.delimiters = {
+combyne.options.delimiters = {
   START_PROP: "[[",
   END_PROP: "]]"
 };

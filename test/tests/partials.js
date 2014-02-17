@@ -3,37 +3,50 @@ define(function(require, exports, module) {
 
   var combyne = require("lib/index");
 
-  describe("Partials", function() {});
+  describe("Partials", function() {
+    it("can inject without clobbering the parent", function() {
+      var tmpl = combyne("{{test}} {%partial test%}");
+
+      tmpl.registerPartial("test", "{{test}}", { test: "to you" });
+
+      var output = tmpl.render({ test: "hello world" });
+
+      expect(output).to.equal("hello world to you");
+    });
+
+    it("can accept an object to use as context", function() {
+      var tmpl = combyne("{{test}} {%partial test prop%}");
+
+      tmpl.registerPartial("test", "{{test}}");
+
+      var output = tmpl.render({
+        test: "hello world",
+        prop: {
+          test: "to you"
+        }
+      });
+
+      expect(output).to.equal("hello world to you");
+    });
+
+    it("can render text with an empty context", function() {
+      var tmpl = combyne("{{test}} {%partial test%}");
+
+      tmpl.registerPartial("test", "prop", {});
+
+      var output = tmpl.render({ test: "hello world" });
+
+      expect(output).to.equal("hello world prop");
+    });
+
+    it("can handle partials in the middle of templates", function() {
+      var tmpl = combyne("{{test}} {%partial test%} 123");
+
+      tmpl.registerPartial("test", "prop", {});
+
+      var output = tmpl.render({ test: "hello world" });
+
+      expect(output).to.equal("hello world prop 123");
+    });
+  });
 });
-
-/*
-exports.partials = function( test ) {
-  test.expect(4);
-
-  // Simple single replace with same key name
-  var tmpl = combyne('{{test}} {%partial test%}', { test: 'hello world' });
-  tmpl.partials.add('test', '{{name}}', {
-    name: 'lol'
-  });
-  test.equals( tmpl.render(), 'hello world lol', 'Simple single replace with same key name' );
-
-  // Simple single replace with same key name
-  var tmpl2 = combyne('{{test}} {%partial test%}', { test: 'hello world' });
-  tmpl2.partials.add('test', '{{name}}', {
-    name: 'lol'
-  });
-  test.equals( tmpl2.render(), 'hello world lol', 'Simple single replace with same key name' );
-
-  // Empty partial context
-  var tmpl3 = combyne('{{test}} {%partial test%}', { test: 'hello world' });
-  tmpl3.partials.add('test', 'lol', {});
-  test.equals( tmpl3.render(), 'hello world lol', 'Empty partial context' );
-
-  // Empty partial context with trailing template data
-  var tmpl4 = combyne('{{test}} {%partial test%} 123', { test: 'hello world' });
-  tmpl4.partials.add('test', 'lol', {});
-  test.equals( tmpl4.render(), 'hello world lol 123', 'Empty partial context with trailing template data' );
-
-  test.done();
-};
-*/
