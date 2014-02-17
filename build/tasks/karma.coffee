@@ -30,11 +30,12 @@ module.exports = ->
         dir: "dist/coverage"
 
       files: [
-        "vendor/bower/chai/chai.js"
-        "vendor/bower/requirejs/require.js"
+        "bower_components/chai/chai.js"
+        "bower_components/requirejs/require.js"
         "test/runner.js"
 
         { pattern: "lib/**/*.*", included: false }
+        { pattern: "bower_components/**/*.*", included: false }
         { pattern: "test/**/*.js", included: false }
       ]
 

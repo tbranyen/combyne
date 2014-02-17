@@ -4,6 +4,9 @@
   "main": "combyne.js",
   "devDependencies": {
     "mocha": "1.14.0",
-    "chai": "~1.9.0"
+    "chai": "~1.9.0",
+    "underscore": "~1.6.0",
+    "requirejs": "~2.1.10",
+    "lodash": "~2.4.1"
   }
 }

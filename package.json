@@ -22,7 +22,8 @@
     "karma": "~0.10.9",
     "karma-mocha": "~0.1.1",
     "karma-coverage": "~0.2.0",
-    "grunt-karma": "~0.6.2"
+    "grunt-karma": "~0.6.2",
+    "grunt-karma-coveralls": "~2.3.0"
   },
   "scripts": {
     "test": "grunt"
