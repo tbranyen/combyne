@@ -26,6 +26,6 @@
     "grunt-karma-coveralls": "~2.3.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt test"
   }
 }
