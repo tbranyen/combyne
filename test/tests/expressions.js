@@ -151,7 +151,7 @@ define(function(require, exports, module) {
       //});
     });
 
-    describe("Loops", function() {
+    describe("Array loops", function() {
       it("can loop a simple array", function() {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
         var output = tmpl.render({ test: new Array(5) });
@@ -173,14 +173,14 @@ define(function(require, exports, module) {
             31,
 
             function() {
-              return "fart";
+              return "prop";
             },
 
             5
           ]
         });
 
-        expect(output).to.equal("Index at: 0,  1Index at: 1,  trueIndex at: 2,  31Index at: 3,  fartIndex at: 4,  5");
+        expect(output).to.equal("Index at: 0,  1Index at: 1,  trueIndex at: 2,  31Index at: 3,  propIndex at: 4,  5");
       });
 
       it("can have exist before iteration", function() {
@@ -196,6 +196,22 @@ define(function(require, exports, module) {
         var output = tmpl.render({ prop: [1,2,3] });
 
         expect(output).to.equal("123");
+      });
+    });
+
+    describe("Object loops", function() {
+      it("can iterate", function() {
+        var tmpl = combyne("{%each demo as v k%}{{k}}:{{v}} {%endeach%}");
+
+        var output = tmpl.render({
+          demo: {
+            lol: "hi",
+            you: "me?",
+            what: "test"
+          }
+        });
+
+        expect(output).to.equal("lol:hi you:me? what:test ");
       });
     });
   });
@@ -266,8 +282,6 @@ exports.eachLoopObject = function( test ) {
   test.expect(6);
 
   // Each loop over object
-  var tmpl = combyne("{%each demo as key val%}{{key}}:{{val}} {%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
-  test.equals( tmpl.render(), "lol:hi you:me? what:test ", "Loop over the keys and values in an object" );
 
   // Each loop over object, just keys
   var tmpl2 = combyne("{%each demo as key%}{{key}}{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
