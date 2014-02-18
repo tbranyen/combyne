@@ -140,6 +140,20 @@ var output = tmpl.render(context);
 /// output == 'tset'
 ```
 
+#### Passing arguments to filters. ####
+
+You may find that the property value is not enough information for the filter
+function, in which case you can send additional arguments.
+
+``` javascript
+var tmpl = combyne("{{ code|highlight "javascript" }}");
+
+tmpl.registerFilter("highlight", function(code, language) {
+  // Magic highlight function that takes code and language.
+  return highlight(code, language);
+});
+```
+
 #### Chaining filters on variables. ####
 
 ``` javascript
