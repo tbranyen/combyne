@@ -175,6 +175,14 @@ define(function(require, exports, module) {
 
         expect(output).to.equal("test 5");
       });
+
+      it("can have it's delimiter changed", function() {
+        // Change delimiter
+        var tmpl = combyne("{%each prop as _%}{{_}}{%endeach%}");
+        var output = tmpl.render({ prop: [1,2,3] });
+
+        expect(output).to.equal("123");
+      });
     });
   });
 });
@@ -236,9 +244,6 @@ exports.eachLoopArray = function( test ) {
   var tmpl5 = combyne("{%each lol%}{{key}}{%endeach%}", { lol: [{key:"value"}] });
   test.equals( tmpl5.render(), "value", "Ensure arrays full of objects will work" );
 
-  // Change delimiter
-  var tmpl6 = combyne("{%each lol as _%}{{_}}{%endeach%}", { lol: [1,2,3] });
-  test.equals( tmpl6.render(), "123", "Change the delimiter" );
 
   test.done();
 };
