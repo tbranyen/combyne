@@ -70,25 +70,27 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("test");
     });
+
+
+    it("support being chained", function() {
+      var tmpl = combyne("{{test|addWord 'try'|reverse}}");
+
+      tmpl.registerFilter("addWord", function(val, word) {
+        return val + word;
+      });
+
+      tmpl.registerFilter("reverse", function(val) {
+        return [].slice.call(val).reverse().join("");
+      });
+
+      var output = tmpl.render({ test: "prop" });
+
+      expect(output).to.equal("yrtporp");
+    });
   });
 });
 
 /*
-exports.chainedFilters = function( test ) {
-  test.expect(1);
-
-  // Basic chainable functions
-  var tmpl = combyne("{{test|addWord "fart"|reverse}}", { test: "hi" });
-  tmpl.filters.add("addWord", function( val, word ) {
-    return val + word;
-  });
-  tmpl.filters.add("reverse", function( val ) {
-    return Array.prototype.slice.call(val).reverse().join("");
-  });
-  test.equals( tmpl.render(), "trafih", "Basic chainable functions" );
-
-  test.done();
-};
 
 exports.typedFilters = function( test ) {
   test.expect(1);
