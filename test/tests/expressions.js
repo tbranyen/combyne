@@ -5,6 +5,20 @@ define(function(require, exports, module) {
 
   describe("Expressions", function() {
     describe("Conditionals", function() {
+      it("can support whitespace", function() {
+        var tmpl = combyne("{%    if test  %}hello world{%  endif%}");
+        var output = tmpl.render({ test: true })
+
+        expect(output).to.equal("hello world");
+      });
+
+      it("must have at least one condition", function() {
+        expect(function() {
+          var tmpl = combyne("{%if%}{%endif%}");
+          var output = tmpl.render();
+        }).to.throw(Error);
+      });
+
       it("can evaluate basic truthy", function() {
         var tmpl = combyne("{%if test%}hello world{%endif%}");
         var output = tmpl.render({ test: true })
