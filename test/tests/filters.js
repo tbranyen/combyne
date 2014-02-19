@@ -11,6 +11,14 @@ define(function(require, exports, module) {
       expect(output).to.equal("|| |    |");
     });
 
+    it("will error if invalid tokens are present", function() {
+      expect(function() {
+        var tmpl = combyne("{{test|< 5}");
+        tmpl.registerFilter("filter", function() {});
+        var output = tmpl.render();
+      }).to.throw(Error);
+    });
+
     it("can execute basic functions", function() {
       var tmpl = combyne("{{test|mod6}}");
 

@@ -48,5 +48,12 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("hello world prop 123");
     });
+
+    it("will error if invalid tokens are present", function() {
+      expect(function() {
+        var tmpl = combyne("{%partial 5 > 4%}");
+        var output = tmpl.render();
+      }).to.throw(Error);
+    });
   });
 });
