@@ -10,12 +10,10 @@
   // Use chai with Mocha.
   window.expect = window.chai.expect;
 
-  // Set the application endpoint and load the configuration.
-  require.config({
+  // Set the baseUrl to `/base/` where Karma serves from.
+  require({
     baseUrl: "/base/"
-  });
-
-  require(["bower_components/lodash/dist/lodash"], function(_) {
+  }, ["bower_components/lodash/dist/lodash"], function(_) {
     var tests = _.chain(karma.files)
       // Convert the files object to an array of file paths.
       .map(function(id, file) { return file; })
@@ -25,7 +23,7 @@
       })
       .value();
 
-    // Load all specs and start Karma.
+    // Load all tests and start Karma.
     require(tests, karma.start);
   });
 })(this);

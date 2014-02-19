@@ -52,5 +52,12 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("har");
     });
+
+    it("can comment out end expressions", function() {
+      var tmpl = combyne("{%-- %} --%}");
+      var output = tmpl.render();
+
+      expect(output).to.equal("");
+    });
   });
 });
