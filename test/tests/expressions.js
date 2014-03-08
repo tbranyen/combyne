@@ -4,14 +4,21 @@ define(function(require, exports, module) {
   var combyne = require("lib/index");
 
   describe("Expressions", function() {
-    describe("Conditionals", function() {
-      it("can support whitespace", function() {
-        var tmpl = combyne("{%    if test  %}hello world{%  endif%}");
-        var output = tmpl.render({ test: true })
+    it("can support whitespace", function() {
+      var tmpl = combyne("{%    if test  %}hello world{%  endif%}");
+      var output = tmpl.render({ test: true })
 
-        expect(output).to.equal("hello world");
-      });
+      expect(output).to.equal("hello world");
+    });
 
+    it("will error when invalid expressions are used", function() {
+      expect(function() {
+        var tmpl = combyne("{%error%}{%error%}");
+        var output = tmpl.render();
+      }).to.throw(Error);
+    });
+
+    describe("if statements", function() {
       it("must have at least one condition", function() {
         expect(function() {
           var tmpl = combyne("{%if%}{%endif%}");
@@ -22,6 +29,20 @@ define(function(require, exports, module) {
       it("can evaluate basic truthy", function() {
         var tmpl = combyne("{%if test%}hello world{%endif%}");
         var output = tmpl.render({ test: true })
+
+        expect(output).to.equal("hello world");
+      });
+
+      it("can compare numbers", function() {
+        var tmpl = combyne("{%if 5==test%}hello world{%endif%}");
+        var output = tmpl.render({ test: 5 })
+
+        expect(output).to.equal("hello world");
+      });
+
+      it("can compare equal booleans", function() {
+        var tmpl = combyne("{%if false==test%}hello world{%endif%}");
+        var output = tmpl.render({ test: false })
 
         expect(output).to.equal("hello world");
       });
@@ -151,6 +172,22 @@ define(function(require, exports, module) {
       //});
     });
 
+    //describe("else statements", function() {
+    //  it("are supported", function() {
+    //    var tmpl = combyne("{%if test%}hello{%else%}goodbye{%endif%} world");
+
+    //    console.log(JSON.stringify(tmpl.tree, null, 2));
+
+    //    var output = tmpl.render({ test: false });
+
+    //    expect(output).to.equal("goodbye world");
+    //  });
+    //});
+
+    //describe("elsif statements", function() {
+
+    //});
+
     describe("Array loops", function() {
       it("can loop a simple array", function() {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
@@ -213,6 +250,24 @@ define(function(require, exports, module) {
 
         expect(output).to.equal("lol:hi you:me? what:test ");
       });
+
+      it("will ignore properties on the prototype", function() {
+        var tmpl = combyne("{%each demo as v k%}{{k}}:{{v}} {%endeach%}");
+
+        var context = {
+          demo: {
+            lol: "hi",
+            you: "me?",
+            what: "test"
+          }
+        };
+
+        context.demo.__proto__.me = "break";
+
+        var output = tmpl.render(context);
+
+        expect(output).to.equal("lol:hi you:me? what:test ");
+      });
     });
   });
 });
@@ -239,9 +294,6 @@ exports.nestedIfStatements = function( test ) {
 exports.elseStatements = function( test ) {
   test.expect(5);
 
-  // Else statement
-  var tmpl = combyne("{%if test%}hello world{%else%}goodbye world{%endif%}", { test: false });
-  test.equals( tmpl.render(), "goodbye world", "Testing else statements" );
 
   // Nested else statement with truthy values
   var tmpl2 = combyne("{%if test%}{%if hello%}hello world{%else%}goodbye world{%endif%}{%endif%}", { test: true, hello: true });

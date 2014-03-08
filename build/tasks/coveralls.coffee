@@ -3,4 +3,4 @@ module.exports = ->
 
   @config "coveralls",
     options:
-      coverage_dir: "dist/coverage/"
+      coverage_dir: "test/coverage/"

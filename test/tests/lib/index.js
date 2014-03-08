@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 
   var combyne = require("lib/index");
 
-  describe("The exported Combyne function", function() {
+  describe("The exported Combyne module", function() {
     it("is a function", function() {
       expect(combyne).to.be.a("function");
     });

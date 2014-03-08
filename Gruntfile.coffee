@@ -1,5 +1,4 @@
 module.exports = ->
-
   @loadTasks "build/tasks"
 
   @registerTask "test", [
@@ -11,6 +10,6 @@ module.exports = ->
   @registerTask "default", [
     "jshint"
     "jscs"
-    #"synchronizer"
+    "synchronizer"
     "karma:daemon"
   ]

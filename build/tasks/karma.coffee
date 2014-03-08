@@ -1,8 +1,6 @@
 module.exports = ->
   @loadNpmTasks "grunt-karma"
 
-  # Unit testing is provided by Karma.  Change the two commented locations
-  # below to either: mocha, jasmine, or qunit.
   @config "karma",
     options:
       basePath: process.cwd()
@@ -27,7 +25,7 @@ module.exports = ->
 
       coverageReporter:
         type: "lcov"
-        dir: "dist/coverage"
+        dir: "test/coverage"
 
       files: [
         "bower_components/chai/chai.js"
@@ -39,13 +37,10 @@ module.exports = ->
         { pattern: "test/**/*.js", included: false }
       ]
 
-    # This creates a server that will automatically run your tests when you
-    # save a file and display results in the terminal.
     daemon:
       options:
         singleRun: false
 
-    # This is useful for running the tests just once.
     run:
       options:
         singleRun: true

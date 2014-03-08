@@ -95,6 +95,18 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("yrtporp");
     });
+
+    it("supports dots in filter names", function() {
+      var tmpl = combyne("{{'test.txt'|removeExt}}");
+
+      tmpl.registerFilter("removeExt", function(val) {
+        return val.split(".").slice(0, -1).join(".");
+      });
+
+      var output = tmpl.render();
+
+      expect(output).to.equal("test");
+    });
   });
 });
 

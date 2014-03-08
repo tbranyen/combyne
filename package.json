@@ -5,13 +5,14 @@
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-jscs-checker": "~0.3.2",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-karma": "~0.6.2",
-    "grunt-karma-coveralls": "~2.3.0",
-    "karma-mocha": "~0.1.1",
-    "karma-coverage": "~0.2.0"
+    "grunt": "~0.4.4",
+    "grunt-jscs-checker": "~0.4.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-karma": "~0.8.2",
+    "grunt-karma-coveralls": "~2.4.4",
+    "karma-mocha": "~0.1.0",
+    "karma-coverage": "~0.2.1",
+    "karma-phantomjs-launcher": "~0.1.4"
   },
   "scripts": {
     "test": "grunt --stack test coveralls"
