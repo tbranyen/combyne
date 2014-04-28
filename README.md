@@ -3,8 +3,8 @@ Combyne
 
 > A template engine that works the way you expect.
 
-[![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
-[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=wip)](https://coveralls.io/r/tbranyen/combyne?branch=wip)
+[![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
+[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
 
 No dependencies.  Can be loaded as browser global, AMD module, Node module, and
 Browserify module.  Can be installed via NPM, Bower, or JamJS.
