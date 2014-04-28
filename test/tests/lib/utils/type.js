@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var type = require("lib/utils/type");
+  var type = require("../../../../lib/utils/type");
 
   describe("Type", function() {
     it("is a function", function() {

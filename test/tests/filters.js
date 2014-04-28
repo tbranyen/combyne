@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var combyne = require("lib/index");
+  var combyne = require("../../lib/index");
 
   describe("Filters", function() {
     it("will not function on non filters", function() {

@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var combyne = require("lib/index");
+  var combyne = require("../../lib/index");
 
   describe("Delimiters", function() {
     it("can be changed on a template", function() {

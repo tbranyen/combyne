@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var combyne = require("lib/index");
+  var combyne = require("../../lib/index");
 
   describe("Comments", function() {
     it("can ignore basic text", function() {

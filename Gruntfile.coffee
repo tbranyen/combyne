@@ -4,6 +4,7 @@ module.exports = ->
   @registerTask "test", [
     "jshint"
     "jscs"
+    "simplemocha"
     "karma:run"
   ]
 

@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var combyne = require("lib/index");
+  var combyne = require("../../lib/index");
 
   describe("Properties", function() {
     it("can replace a single value", function() {

@@ -262,24 +262,45 @@ var output = tmpl.render(context);
 
 ## Unit tests. ##
 
-### Browser: ###
+There are many ways to run the unit tests as this library can operate in
+various environments.
 
-Open **test/test.html** in your web browser.
+### Browser ###
 
-### Node: ###
+Open test/index.html in your web browser.
 
-Run the following command to install the Node dependencies.
+### Node ###
 
-``` bash
-npm install
-
-# Install the grunt-cli if you haven't already.  This command may require
-# elevated privileges.
-npm install -g grunt-cli
-```
-
-Then run the following command
+Run the tests inside the Node runtime and within PhantomJS:
 
 ``` bash
-grunt
+grunt test
 ```
+
+### Continuous testing ###
+
+To keep the PhantomJS tests running continuously, run:
+
+``` bash
+grunt karma:daemon
+```
+
+The tests will automatically run whenever files change.
+
+#### Code coverage ####
+
+If you run the tests through Karma, a test/coverage directory will be created
+containing folders that correspond with the environment where the tests were
+run.
+
+If you are running the defaults you should see something that looks like:
+
+``` unicode
+.
+└── coverage
+    ├── Chrome 33.0.1750 (Linux)
+    └── PhantomJS 1.9.7 (Linux)
+```
+
+Inside PhantomJS contains the HTML output that can be opened in a browser to
+inspect the source coverage from running the tests.

@@ -5,25 +5,31 @@
   var karma = window.__karma__;
 
   // Source endpoint.
-  var baseUrl = karma ? "/base/" : "../";
+  var baseUrl = karma ? "/base/test/tests/" : "../test/tests/";
 
   // Tests to run.
   var tests = [
-    "test/tests/lib/utils/escape_delimiter",
-    "test/tests/lib/utils/type",
-    "test/tests/lib/compiler",
-    "test/tests/lib/grammar",
-    "test/tests/lib/index",
-    "test/tests/lib/tokenizer",
-    "test/tests/lib/tree",
-    "test/tests/comments",
-    "test/tests/delimiters",
-    "test/tests/expressions",
-    "test/tests/filters",
-    "test/tests/html",
-    "test/tests/partials",
-    "test/tests/properties",
+    "lib/utils/escape_delimiter",
+    "lib/utils/type",
+    "lib/compiler",
+    "lib/grammar",
+    "lib/index",
+    "lib/tokenizer",
+    "lib/tree",
+    "comments",
+    "delimiters",
+    "expressions",
+    "filters",
+    "html",
+    "partials",
+    "properties",
   ];
+
+  // Operating within Node, setup the AMD intercept and abort.
+  if (typeof module === "object") {
+    global.expect = require("chai").expect;
+    return require("amdefine/intercept");
+  }
 
   // Put Karma into an asynchronous waiting mode until we have loaded our
   // tests.
@@ -35,6 +41,9 @@
   // Use chai with Mocha.
   window.expect = window.chai.expect;
 
+  // Modify the configuration to point to the correct source base.
+  require.config({ baseUrl: baseUrl }); 
+
   // Load all tests and start Karma.
-  require({ baseUrl: baseUrl }, tests, karma ? karma.start : function() { mocha.run(); });
+  require(tests, karma ? karma.start : function() { mocha.run(); });
 })(this);
