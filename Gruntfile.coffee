@@ -11,6 +11,6 @@ module.exports = ->
   @registerTask "default", [
     "jshint"
     "jscs"
-    "synchronizer"
+    #"synchronizer"
     "karma:daemon"
   ]
