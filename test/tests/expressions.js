@@ -204,9 +204,14 @@ define(function(require, exports, module) {
       });
     });
 
-    //describe("elsif statements", function() {
+    describe("elsif statement", function() {
+      it("is supported", function() {
+        var tmpl = combyne("{%if test%}good{%elsif not test%}bad{%endif%}");
+        var output = tmpl.render({ test: false });
 
-    //});
+        expect(output).to.equal("bad");
+      });
+    });
 
     describe("array loop", function() {
       it("can iterate a simple array", function() {
