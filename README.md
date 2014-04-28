@@ -116,28 +116,28 @@ tmpl.render();
 ### Replacing template variables. ###
 
 ``` javascript
-var template = '{{lol}}';
-var context = { lol: 'test' };
+var template = "{{lol}}";
+var context = { lol: "test" };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == 'test'
+/// output == "test"
 ```
 
 ### Using filters on variables. ###
 
 ``` javascript
-var template = '{{lol|reverse}}';
-var context = { lol: 'test' };
+var template = "{{lol|reverse}}";
+var context = { lol: "test" };
 
 var tmpl = combyne(template);
-tmpl.filters.add('reverse', function(val) {
-  return val.split('').reverse().join('');
+tmpl.filters.add("reverse", function(val) {
+  return val.split("").reverse().join("");
 });
 
 var output = tmpl.render(context);
-/// output == 'tset'
+/// output == "tset"
 ```
 
 #### Passing arguments to filters. ####
@@ -146,7 +146,7 @@ You may find that the property value is not enough information for the filter
 function, in which case you can send additional arguments.
 
 ``` javascript
-var tmpl = combyne("{{ code|highlight "javascript" }}");
+var tmpl = combyne("{{ code|highlight 'javascript' }}");
 
 tmpl.registerFilter("highlight", function(code, language) {
   // Magic highlight function that takes code and language.
@@ -157,19 +157,19 @@ tmpl.registerFilter("highlight", function(code, language) {
 #### Chaining filters on variables. ####
 
 ``` javascript
-var template = '{{lol|reverse|toUpper}}';
-var context = { lol: 'test' };
+var template = "{{lol|reverse|toUpper}}";
+var context = { lol: "test" };
 
 var tmpl = combyne(template);
-tmpl.filters.add('reverse', function(val) {
-  return val.split('').reverse().join('');
+tmpl.filters.add("reverse", function(val) {
+  return val.split("").reverse().join("");
 });
-tmpl.filters.add('toUpper', function(val) {
+tmpl.filters.add("toUpper", function(val) {
   return val.toUpperCase();
 });
 
 var output = tmpl.render(context);
-/// output == 'TSET'
+/// output == "TSET"
 ```
 
 ### Conditionals. ###
@@ -180,25 +180,25 @@ such as `if something == somethingElse` or `if not something`.  All data
 types will be coerced to Strings except for Numbers.
 
 ``` javascript
-var template = '{%if not test%}why not?{%endif%}';
+var template = "{%if not test%}why not?{%endif%}";
 var context = { test: false };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == 'why not?'
+/// output == "why not?"
 ```
 
 or a more complicated example...
 
 ``` javascript
-var template = '{%if test == "hello"%}goodbye!{%else%}hello!{%endif%}';
-var context = { test: 'hello' };
+var template = "{%if test == 'hello'%}goodbye!{%else%}hello!{%endif%}";
+var context = { test: "hello" };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == 'goodbye!'
+/// output == "goodbye!"
 ```
 
 ### Iterating arrays. ###
@@ -207,57 +207,57 @@ var output = tmpl.render(context);
 `Array.prototype.slice.call(obj);`*
 
 ``` javascript
-var template = '{%each test%}{{.}} {%endeach%}';
+var template = "{%each test%}{{.}} {%endeach%}";
 var context = { test: [1,2,3,4] };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == '1 2 3 4 '
+/// output == "1 2 3 4 "
 ```
 
 #### Change the iterated identifer within loops. ####
 
 ``` javascript
-var template = '{%each arr as _%}{{_}}{%endeach%}';
+var template = "{%each arr as _%}{{_}}{%endeach%}";
 var context = { arr: [1,2,3] };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output = '123'
+/// output = "123"
 ```
 
 ### Iterating objects. ###
 
 ``` javascript
-var template = '{%each test as key val%}the {{key}} is {{val}}{%endeach%}';
+var template = "{%each test as key val%}the {{key}} is {{val}}{%endeach%}";
 var context = {
   test: {
-    hello: 'lol'
+    hello: "lol"
   }
 };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == 'the hello is lol'
+/// output == "the hello is lol"
 ```
 
 ### Partials. ###
 
 ``` javascript
-var template = '{{test}} {%partial test%}';
+var template = "{{test}} {%partial test%}";
 var context = { test: "hello" };
 
 var tmpl = combyne(template);
 
-tmpl.partials.add('test', '{{name}}', {
-  name: 'you'
+tmpl.partials.add("test", "{{name}}", {
+  name: "you"
 });
 
 var output = tmpl.render(context);
-/// output == 'hello you'
+/// output == "hello you"
 ```
 
 ## Unit tests. ##
