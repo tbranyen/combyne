@@ -107,37 +107,29 @@ define(function(require, exports, module) {
 
       expect(output).to.equal("test");
     });
+
+    it("works with number types", function() {
+      var tmpl = combyne("{{test|add 5}}");
+
+      tmpl.registerFilter("add", function(val, num) {
+        return val + num;
+      });
+
+      var output = tmpl.render({ test: 1 });
+
+      expect(output).to.equal("6");
+    });
+
+    it("supports filters propagation", function() {
+      var tmpl = combyne("{%each item%} {{.|render}} {%endeach%}");
+
+      tmpl.registerFilter("render", function(val) {
+        return combyne("Name: {{name}}", { name: val }).render();
+      });
+
+      var output = tmpl.render({ item: [ "hi", "you", "own" ] });
+
+      expect(output).to.equal(" Name: hi  Name: you  Name: own ");
+    });
   });
 });
-
-/*
-
-exports.typedFilters = function( test ) {
-  test.expect(1);
-
-  // Basic chainable functions
-  var tmpl = combyne("{{test|add 5}}", { test: 1 });
-  tmpl.filters.add("add", function( val, num ) {
-    return val + num;
-  });
-  test.equals( tmpl.render(), "6", "Work with number types" );
-
-  test.done();
-};
-
-exports.nestedFilters = function( test ) {
-  test.expect(1);
-
-  var obj = { item: [ "hi", "you", "own" ] };
-  var tmpl = combyne("{%each item%} {{.|render}} {%endeach%}", obj);
-
-  tmpl.filters.add("render", function(val) {
-    return combyne("Name: {{name}}", { name: val }).render();
-  });
-
-  test.equals( tmpl.render(), " Name: hi  Name: you  Name: own ", "Render templates inside filters" );
-
-  test.done();
-};
-*/
-

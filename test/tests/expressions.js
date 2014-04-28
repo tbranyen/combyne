@@ -259,6 +259,20 @@ define(function(require, exports, module) {
 
         expect(output).to.equal("123");
       });
+
+      it("can handle a complicated nested loop", function() {
+        var tmpl = combyne("{%each lol%}{%each lol2%}{{.}}{%endeach%}{%endeach%}");
+        var output = tmpl.render({ lol: [1,2,3], lol2: [3,2,1] });
+
+        expect(output).to.equal("321321321");
+      });
+
+      it("can loop an array of objects", function() {
+        //var tmpl = combyne("{%each lol%}{{key}}{%endeach%}");
+        //var output = tmpl.render({ lol: [{key:"value"}] });
+
+        //expect(output).to.equal("value");
+      });
     });
 
     describe("object loop", function() {
@@ -293,54 +307,17 @@ define(function(require, exports, module) {
 
         expect(output).to.equal("lol:hi you:me? what:test ");
       });
-    });
-  });
-});
 
-/*
-exports.nestedIfStatements = function( test ) {
-  test.expect(3);
+      it("can loop over the object keys", function() {
+        var tmpl = combyne("{%each demo as val key%}{{key}}{%endeach%}");
+        var output = tmpl.render({
+          demo: { lol: "hi", you: "me?", what: "test" }
+        });
 
-  // Nested not if, falsly value
-  var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: false });
-  test.equals( tmpl.render(), "hello", "Testing nested not conditional with falsy value" );
+        expect(output).to.equal("lolyouwhat");
+      });
 
-  // Nested not if, truthy value
-  var tmpl2 = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: true });
-  test.equals( tmpl2.render(), "", "Testing nested not conditional with truthy value" );
-
-  // Testing two truthy nested values
-  var tmpl3 = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}", { test: true, hi: true });
-  test.equals( tmpl3.render(), "hellogoodbye", "Testing truthy nested conditionals" );
-
-  test.done();
-};
-
-exports.eachLoopArray = function( test ) {
-  test.expect(6);
-
-
-  //// More complicated, test loop within a loop
-  var tmpl4 = combyne("{%each lol%}{%each lol2%}{{.}}{%endeach%}{%endeach%}", { lol: [1,2,3], lol2: [3,2,1] });
-  test.equals( tmpl4.render(), "321321321", "Nested each loops" );
-
-  // Each loop an array full of objects
-  var tmpl5 = combyne("{%each lol%}{{key}}{%endeach%}", { lol: [{key:"value"}] });
-  test.equals( tmpl5.render(), "value", "Ensure arrays full of objects will work" );
-
-
-  test.done();
-};
-
-exports.eachLoopObject = function( test ) {
-  test.expect(6);
-
-  // Each loop over object
-
-  // Each loop over object, just keys
-  var tmpl2 = combyne("{%each demo as key%}{{key}}{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
-  test.equals( tmpl2.render(), "lolyouwhat", "Loop over the keys in an object" );
-
+      /*
   // Each loop over object do nothing, should not do anything
   var tmpl3 = combyne("{%each demo%}key{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
   test.equals( tmpl3.render(), "keykeykey", "Loop over an object" );
@@ -363,6 +340,27 @@ exports.eachLoopObject = function( test ) {
     return Array.prototype.slice.call(val).reverse().join("");
   });
   test.equals( tmpl6.render(), "ihihih", "Loop over an object property function and apply reverse filter" );
+
+  */
+    });
+  });
+});
+
+/*
+exports.nestedIfStatements = function( test ) {
+  test.expect(3);
+
+  // Nested not if, falsly value
+  var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: false });
+  test.equals( tmpl.render(), "hello", "Testing nested not conditional with falsy value" );
+
+  // Nested not if, truthy value
+  var tmpl2 = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: true });
+  test.equals( tmpl2.render(), "", "Testing nested not conditional with truthy value" );
+
+  // Testing two truthy nested values
+  var tmpl3 = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}", { test: true, hi: true });
+  test.equals( tmpl3.render(), "hellogoodbye", "Testing truthy nested conditionals" );
 
   test.done();
 };
