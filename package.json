@@ -1,6 +1,6 @@
 {
   "name": "combyne",
-  "description": "Templating that works *hopefully* the way you'd expect.",
+  "description": "A template engine that works the way you expect.",
   "version": "0.3.0",
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
@@ -15,6 +15,6 @@
     "karma-phantomjs-launcher": "~0.1.4"
   },
   "scripts": {
-    "test": "grunt --stack test coveralls"
+    "test": "grunt test coveralls"
   }
 }

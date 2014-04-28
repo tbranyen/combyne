@@ -34,7 +34,7 @@ module.exports = ->
 
         { pattern: "lib/**/*.*", included: false }
         { pattern: "bower_components/**/*.*", included: false }
-        { pattern: "test/**/*.js", included: false }
+        { pattern: "test/tests/**/*.js", included: false }
       ]
 
     daemon:

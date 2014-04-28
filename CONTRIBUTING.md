@@ -1,4 +1,4 @@
-## Contributing to Combyne.js ##
+## Contributing to Combyne ##
 
 ### Filing an issue ###
 
@@ -8,7 +8,7 @@ know.  Issues are how the project moves forward; by letting us know what's
 bothering you.
 
 * Search the [issues
-  list](https://github.com/tbranyen/combyne.js/issues)
+  list](https://github.com/tbranyen/combyne/issues)
   for existing similar issues.  Consider adding to an existing issue if you
   find one.
 * Choose an applicable title.  This will be used for a corresponding unit test.
@@ -64,8 +64,8 @@ is outdated or incorrect, please file an issue, pull request, or make the
 change yourself in the Wiki.
 
 * Add documentation to the
-  [Wiki](https://github.com/tbranyen/combyne.js/wiki) if
+  [Wiki](https://github.com/tbranyen/combyne/wiki) if
   applicable.
 * Release notes are added to the
-  [readme.md](https://github.com/tbranyen/combyne.js/blob/master/readme.md)
+  [README.md](https://github.com/tbranyen/combyne/blob/master/README.md)
   if applicable.
