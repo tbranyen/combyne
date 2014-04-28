@@ -1,13 +1,23 @@
 {
   "name": "combyne",
-  "description": "Templating that works *hopefully* the way you'd expect.",
-  "version": "0.2.1",
-  "author": "Tim Branyen <tim@tabdeveloper.com> (http://twitter.com/tbranyen)",
-  "main": "./combyne.js",
+  "description": "A template engine that works the way you expect.",
+  "version": "0.3.0",
+  "author": "Tim Branyen (@tbranyen)",
+  "main": "dist/combyne.js",
   "devDependencies": {
-    "nodeunit": "*"
+    "chai": "~1.9.1",
+    "amdefine": "~0.1.0",
+    "grunt": "~0.4.4",
+    "grunt-jscs-checker": "~0.4.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-karma": "~0.8.2",
+    "grunt-karma-coveralls": "~2.4.4",
+    "karma-mocha": "~0.1.0",
+    "karma-coverage": "~0.2.1",
+    "karma-phantomjs-launcher": "~0.1.4"
   },
-  "engines": {
-    "node": "*"
+  "scripts": {
+    "test": "grunt test coveralls"
   }
 }

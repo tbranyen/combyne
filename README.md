@@ -1,90 +1,119 @@
-combyne.js:
-===========
+Combyne
+=======
 
-A template engine that works the way you'd expect.
+> A template engine that works the way you expect.
 
-Getting started
---------------
+[![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=wip)](https://travis-ci.org/tbranyen/combyne)
+[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=wip)](https://coveralls.io/r/tbranyen/combyne?branch=wip)
 
-###Browser###
+No dependencies.  Can be loaded as browser global, AMD module, Node module, and
+Browserify module.  Can be installed via NPM, Bower, or JamJS.
 
-Download: [Production](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.min.js) or [Development](http://cloud.github.com/downloads/tbranyen/combyne.js/combyne.js)
+## Getting started. ##
 
-Include: `<script src="combyne.js"></script>`
+Combyne can run under a variety of JavaScript engines and loaders:
 
-Compatibility: (Desktop) IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, Safari 5+, (Mobile) Android Browser 2.3.4+, Opera 9.80+, FireFox Beta, iPad
+### Node. ###
 
-File size: 2.7KB when serving `Production version` with GZip
-
-###Node.js###
-
-To install `combyne`, you can clone this repository to your `node_modules`
-folder or use the fantastic `NPM`:
+Install via NPM:
 
 ``` bash
 npm install combyne
 ```
 
-Then simply `require` it in your projects to start using
+Require in your project:
 
 ``` javascript
-var combyne = require('combyne');
+var combyne = require("combyne");
 ```
 
-Basic usage
------------
+### AMD. ###
+
+If you install via Bower you will need to configure the path, which is the
+first step below, however if you install with JamJS you can skip that step.
 
 ``` javascript
-var tmpl = combyne('{{test}}');
-tmpl.render({ test: 'lol' }); // lol
+// Configure the path, if necessary.
+require.config({
+  paths: {
+    combyne: "path/to/combyne"
+  }
+});
+
+// Use in a module.
+define(["combyne"], function(combyne) {});
 ```
 
-Features
--------------
+### Browser global. ###
 
-`combyne` works by parsing your template into a stack and rendering data.
+[Include the latest stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js)
+in your markup:
 
-###Single line comments###
-
-``` javascript
-var template = 'test {%-- single line comment --%}';
-
-var tmpl = combyne(template);
-
-var output = tmpl.render();
-/// output == 'test '
+``` html
+<script src="combyne.js"></script>
 ```
 
-####Block comments####
+### Additional details. ###
+
+#### Compatibility. ####
+
+__Desktop:__ IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
+
+
+__Mobile:__ Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
+
+#### File size. ####
+
+Just 2.7KB when serving minfied and gzipped.
+
+## Basic usage. ##
 
 ``` javascript
-var template = 'test {%-- line 1\n\
-                          line 2\n\
-                     --%}';
+var tmpl = combyne("hello {{msg}}!");
+tmpl.render({ msg: "world" });
 
-var tmpl = combyne(template);
-
-var output = tmpl.render();
-/// output == 'test '
+// => hello world!
 ```
 
-###Custom delimiters###
+## Features. ##
+
+Combyne works by parsing your template into a stack and rendering data.
+
+Combyne works by parsing your template into an AST.  This provides mechanisms
+for intelligent compilation and optimization.  The template is converted to
+JavaScript and invoked upon calling render.
+
+### Comments. ###
+
+Comments are useful for ignoring anything between the open and close.  They can
+be nested.
 
 ``` javascript
-var template = '[[lol]]';
-var context = { lol: 'test' };
+var tmpl = combyne("test {%-- not parsed --%}");
+tmpl.render();
 
-var tmpl = combyne(template);
-tmpl.delimiters = {
-  START_PROP: '[[',
-  END_PROP: ']]'
+// => test 
+```
+
+### Custom delimiters. ###
+
+If you are not happy with the default Mustache-like syntax, you can trivially
+change the delimiters to suit your needs.  The delimiters may be changed at a
+local or global level.
+
+``` javascript
+combyne.options.delimiters = {
+  START_PROP: "[[",
+  END_PROP: "]]"
 };
 
-var output = tmpl.render(context);
-/// output = 'test'
+var tmpl = combyne("[[msg]]", { msg: "hello world" });
+
+tmpl.render();
+// => hello world
 ```
 
-###Replacing template variables###
+### Replacing template variables. ###
 
 ``` javascript
 var template = '{{lol}}';
@@ -96,7 +125,7 @@ var output = tmpl.render(context);
 /// output == 'test'
 ```
 
-###Using filters on variables###
+### Using filters on variables. ###
 
 ``` javascript
 var template = '{{lol|reverse}}';
@@ -111,7 +140,21 @@ var output = tmpl.render(context);
 /// output == 'tset'
 ```
 
-####Chaining filters on variables####
+#### Passing arguments to filters. ####
+
+You may find that the property value is not enough information for the filter
+function, in which case you can send additional arguments.
+
+``` javascript
+var tmpl = combyne("{{ code|highlight "javascript" }}");
+
+tmpl.registerFilter("highlight", function(code, language) {
+  // Magic highlight function that takes code and language.
+  return highlight(code, language);
+});
+```
+
+#### Chaining filters on variables. ####
 
 ``` javascript
 var template = '{{lol|reverse|toUpper}}';
@@ -129,7 +172,7 @@ var output = tmpl.render(context);
 /// output == 'TSET'
 ```
 
-###Conditionals###
+### Conditionals. ###
 
 Instead of being *logic-less*, `combyne` doesn't make any assumptions and
 allows you to do things like `if/elsif/else` with simple conditionals,
@@ -158,7 +201,7 @@ var output = tmpl.render(context);
 /// output == 'goodbye!'
 ```
 
-###Iterating arrays###
+### Iterating arrays. ###
 
 *Will not work on array-like objects, such as arguments or NodeList, coerce with
 `Array.prototype.slice.call(obj);`*
@@ -173,7 +216,7 @@ var output = tmpl.render(context);
 /// output == '1 2 3 4 '
 ```
 
-####You can change the iterated name within loops as well####
+#### Change the iterated identifer within loops. ####
 
 ``` javascript
 var template = '{%each arr as _%}{{_}}{%endeach%}';
@@ -185,7 +228,7 @@ var output = tmpl.render(context);
 /// output = '123'
 ```
 
-###Iterating objects###
+### Iterating objects. ###
 
 ``` javascript
 var template = '{%each test as key val%}the {{key}} is {{val}}{%endeach%}';
@@ -201,7 +244,7 @@ var output = tmpl.render(context);
 /// output == 'the hello is lol'
 ```
 
-###Partials###
+### Partials. ###
 
 ``` javascript
 var template = '{{test}} {%partial test%}';
@@ -217,52 +260,47 @@ var output = tmpl.render(context);
 /// output == 'hello you'
 ```
 
+## Unit tests. ##
 
-Running unit tests
-------------------
+There are many ways to run the unit tests as this library can operate in
+various environments.
 
-###Browser###
+### Browser ###
 
-Open `test/test.html` in your browser of choice.
+Open test/index.html in your web browser.
 
-###Node.js###
+### Node ###
 
-Run the follow command to fetch the `Node.js` dependencies.
-
-``` bash
-npm install
-```
-
-Then run the following command
+Run the tests inside the Node runtime and within PhantomJS:
 
 ``` bash
-make test
+grunt test
 ```
 
-License
--------
+### Continuous testing ###
 
-Copyright (c) 2011 Tim Branyen
+To keep the PhantomJS tests running continuously, run:
 
-This file is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2,
-as published by the Free Software Foundation.
+``` bash
+grunt karma:daemon
+```
 
-In addition to the permissions in the GNU General Public License,
-the authors give you unlimited permission to link the compiled
-version of this file into combinations with other programs,
-and to distribute those combinations without any restriction
-coming from the use of this file.  (The General Public License
-restrictions do apply in other respects; for example, they cover
-modification of the file, and distribution when not linked into
-a combined executable.)
+The tests will automatically run whenever files change.
 
-This file is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+#### Code coverage ####
 
-You should have received a copy of the GNU General Public License
-along with this program; see the file COPYING.  If not, write to
-the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-Boston, MA 02110-1301, USA.
+If you run the tests through Karma, a test/coverage directory will be created
+containing folders that correspond with the environment where the tests were
+run.
+
+If you are running the defaults you should see something that looks like:
+
+``` unicode
+.
+└── coverage
+    ├── Chrome 33.0.1750 (Linux)
+    └── PhantomJS 1.9.7 (Linux)
+```
+
+Inside PhantomJS contains the HTML output that can be opened in a browser to
+inspect the source coverage from running the tests.

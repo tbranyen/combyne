@@ -1,0 +1,10 @@
+{
+  "name": "combyne",
+  "version": "0.3.0",
+  "main": "combyne.js",
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1",
+    "requirejs": "~2.1.10"
+  }
+}
