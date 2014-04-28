@@ -24,7 +24,7 @@ npm install combyne
 Require in your project:
 
 ``` javascript
-var combyne = require("combyne");
+var combyne = require('combyne');
 ```
 
 ### AMD. ###
@@ -36,12 +36,12 @@ first step below, however if you install with JamJS you can skip that step.
 // Configure the path, if necessary.
 require.config({
   paths: {
-    combyne: "path/to/combyne"
+    combyne: 'path/to/combyne'
   }
 });
 
 // Use in a module.
-define(["combyne"], function(combyne) {});
+define(['combyne'], function(combyne) {});
 ```
 
 ### Browser global. ###
@@ -69,8 +69,8 @@ Just 2.7KB when serving minfied and gzipped.
 ## Basic usage. ##
 
 ``` javascript
-var tmpl = combyne("hello {{msg}}!");
-tmpl.render({ msg: "world" });
+var tmpl = combyne('hello {{msg}}!');
+tmpl.render({ msg: 'world' });
 
 // => hello world!
 ```
@@ -89,7 +89,7 @@ Comments are useful for ignoring anything between the open and close.  They can
 be nested.
 
 ``` javascript
-var tmpl = combyne("test {%-- not parsed --%}");
+var tmpl = combyne('test {%-- not parsed --%}');
 tmpl.render();
 
 // => test 
@@ -103,11 +103,11 @@ local or global level.
 
 ``` javascript
 combyne.options.delimiters = {
-  START_PROP: "[[",
-  END_PROP: "]]"
+  START_PROP: '[[',
+  END_PROP: ']]'
 };
 
-var tmpl = combyne("[[msg]]", { msg: "hello world" });
+var tmpl = combyne('[[msg]]', { msg: 'hello world' });
 
 tmpl.render();
 // => hello world
@@ -146,9 +146,9 @@ You may find that the property value is not enough information for the filter
 function, in which case you can send additional arguments.
 
 ``` javascript
-var tmpl = combyne("{{ code|highlight "javascript" }}");
+var tmpl = combyne('{{ code|highlight "javascript" }}');
 
-tmpl.registerFilter("highlight", function(code, language) {
+tmpl.registerFilter('highlight', function(code, language) {
   // Magic highlight function that takes code and language.
   return highlight(code, language);
 });
@@ -248,7 +248,7 @@ var output = tmpl.render(context);
 
 ``` javascript
 var template = '{{test}} {%partial test%}';
-var context = { test: "hello" };
+var context = { test: 'hello' };
 
 var tmpl = combyne(template);
 
