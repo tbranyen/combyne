@@ -18,7 +18,7 @@ define(function(require, exports, module) {
       }).to.throw(Error);
     });
 
-    describe("if statements", function() {
+    describe("if statement", function() {
       it("must have at least one condition", function() {
         expect(function() {
           var tmpl = combyne("{%if%}{%endif%}");
@@ -165,38 +165,58 @@ define(function(require, exports, module) {
 
         expect(output).to.equal("hello");
       });
-
-      //it("can evaluate else statement", function() {
-      //  var tmpl = combyne("{%if test == "hello"%}hello{%elsif test == "goodbye"%}world{%else%}lol{{%endif%}", { test: "goodbye" });
-      //  test.equals( tmpl.render(), "world", "Truthy else-if" );
-      //});
     });
 
-    //describe("else statements", function() {
-    //  it("are supported", function() {
-    //    var tmpl = combyne("{%if test%}hello{%else%}goodbye{%endif%} world");
+    describe("else statement", function() {
+      it("is supported", function() {
+        var tmpl = combyne("{%if test%}hello{%else%}goodbye{%endif%} world");
+        var output = tmpl.render({ test: false });
 
-    //    console.log(JSON.stringify(tmpl.tree, null, 2));
+        expect(output).to.equal("goodbye world");
+      });
 
-    //    var output = tmpl.render({ test: false });
+      it("can evaluate nested with truthy root", function() {
+        var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: true, hello: true });
 
-    //    expect(output).to.equal("goodbye world");
-    //  });
-    //});
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate nested with falsy root", function() {
+        var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: false, hello: true });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate nested with falsy nested", function() {
+        var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: true, hello: false });
+
+        expect(output).to.equal("goodbye");
+      });
+
+      it("can evaluate nested if with an else", function() {
+        var tmpl = combyne("{%if test%}{%if hello%}hello{%endif%} {%else%}goodbye{%endif%}");
+        var output = tmpl.render({ test: true, hello: true });
+
+        expect(output).to.equal("hello ");
+      });
+    });
 
     //describe("elsif statements", function() {
 
     //});
 
-    describe("Array loops", function() {
-      it("can loop a simple array", function() {
+    describe("array loop", function() {
+      it("can iterate a simple array", function() {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
         var output = tmpl.render({ test: new Array(5) });
 
         expect(output).to.equal("hellohellohellohellohello");
       });
 
-      it("can loop a moderately complicated with filter", function() {
+      it("can iterate a moderately complicated with filter", function() {
         var tmpl = combyne("{%each prop%}{{i|toString}} {{.}}{%endeach%}");
 
         tmpl.registerFilter("toString", function(val) {
@@ -236,7 +256,7 @@ define(function(require, exports, module) {
       });
     });
 
-    describe("Object loops", function() {
+    describe("object loop", function() {
       it("can iterate", function() {
         var tmpl = combyne("{%each demo as v k%}{{k}}:{{v}} {%endeach%}");
 
@@ -287,29 +307,6 @@ exports.nestedIfStatements = function( test ) {
   // Testing two truthy nested values
   var tmpl3 = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}", { test: true, hi: true });
   test.equals( tmpl3.render(), "hellogoodbye", "Testing truthy nested conditionals" );
-
-  test.done();
-};
-
-exports.elseStatements = function( test ) {
-  test.expect(5);
-
-
-  // Nested else statement with truthy values
-  var tmpl2 = combyne("{%if test%}{%if hello%}hello world{%else%}goodbye world{%endif%}{%endif%}", { test: true, hello: true });
-  test.equals( tmpl2.render(), "hello world", "Testing nested else statements with truthy values" );
-
-  // Nested else statement with false root value
-  var tmpl3 = combyne("{%if test%}{%if hello%}hello world{%else%}goodbye world{%endif%}{%endif%}", { test: false, hello: true });
-  test.equals( tmpl3.render(), "", "Testing nested else statements with false root value" );
-
-  // Nested else statement with false nested value
-  var tmpl4 = combyne("{%if test%}{%if hello%}hello world{%else%}goodbye world{%endif%}{%endif%}", { test: true, hello: false });
-  test.equals( tmpl4.render(), "goodbye world", "Testing nested else statements with false nested value" );
-
-  // Nested if with an else
-  var tmpl5 = combyne("{%if test%}{%if hello%}hello world{%endif%} {%else%}goodbye world{%endif%}", { test: true, hello: true });
-  test.equals( tmpl5.render(), "hello world ", "Testing nested else statements with truthy nested value" );
 
   test.done();
 };
