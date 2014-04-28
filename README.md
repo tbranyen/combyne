@@ -132,7 +132,8 @@ var template = "{{lol|reverse}}";
 var context = { lol: "test" };
 
 var tmpl = combyne(template);
-tmpl.filters.add("reverse", function(val) {
+
+tmpl.registerFilter("reverse", function(val) {
   return val.split("").reverse().join("");
 });
 
@@ -161,10 +162,12 @@ var template = "{{lol|reverse|toUpper}}";
 var context = { lol: "test" };
 
 var tmpl = combyne(template);
-tmpl.filters.add("reverse", function(val) {
+
+tmpl.registerFilter("reverse", function(val) {
   return val.split("").reverse().join("");
 });
-tmpl.filters.add("toUpper", function(val) {
+
+tmpl.registerFilter("toUpper", function(val) {
   return val.toUpperCase();
 });
 
@@ -252,7 +255,7 @@ var context = { test: "hello" };
 
 var tmpl = combyne(template);
 
-tmpl.partials.add("test", "{{name}}", {
+tmpl.registerPartial("test", "{{name}}", {
   name: "you"
 });
 
