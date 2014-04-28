@@ -213,6 +213,29 @@ define(function(require, exports, module) {
       });
     });
 
+    describe("nested if statement", function() {
+      it("can evaluate nested not if with falsly value", function() {
+        var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: false });
+
+        expect(output).to.equal("hello");
+      });
+
+      it("can evaluate nested not if with truthy value", function() {
+        var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: true });
+
+        expect(output).to.equal("");
+      });
+
+      it("can evaluate two truthy nested values", function() {
+        var tmpl = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}");
+        var output = tmpl.render({ test: true, hi: true });
+
+        expect(output).to.equal("hellogoodbye");
+      });
+    });
+
     describe("array loop", function() {
       it("can iterate a simple array", function() {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
@@ -268,10 +291,10 @@ define(function(require, exports, module) {
       });
 
       it("can loop an array of objects", function() {
-        //var tmpl = combyne("{%each lol%}{{key}}{%endeach%}");
-        //var output = tmpl.render({ lol: [{key:"value"}] });
+        var tmpl = combyne("{%each lol as _%}{{_.key}}{%endeach%}");
+        var output = tmpl.render({ lol: [{key:"value"}] });
 
-        //expect(output).to.equal("value");
+        expect(output).to.equal("value");
       });
     });
 
@@ -343,67 +366,49 @@ define(function(require, exports, module) {
 
   */
     });
+
+    describe("complex loops with conditionals", function() {
+      it("can iterate with no context", function() {
+        var tmpl = combyne("{%each demo%}{%if 'lol' == 'lol'%}test{%endif%}{%endeach%}");
+        var output = tmpl.render({ demo: [ 1, 2, 3 ] });
+
+        expect(output).to.equal("testtesttest");
+      });
+
+      it("can iterate using original context", function() {
+        var tmpl = combyne("{%each demo%}{%if test == 'lol'%}{{val}}{%endif%}{%endeach%}");
+        var output = tmpl.render({ test: "lol", val: "hi", demo: [ 1, 2, 3 ] });
+
+        expect(output).to.equal("hihihi");
+      });
+
+      it("can iterate using own context", function() {
+        var tmpl = combyne("{%each demo as val key%}{%if key == 'lol'%}{{val}}{%endif%}{%endeach%}");
+        var output = tmpl.render({ demo: { lol: "hi", you: "me?", what: "test" } });
+
+        expect(output).to.equal("hi");
+      });
+
+      it("can iterate with conditionals in each loop", function() {
+        var tmpl = combyne("{%each demo%}{%each demo2%}{%if 'lol' == 'lol'%}test{%endif%}{%endeach%}{%endeach%}");
+        var output = tmpl.render({ demo: [ 1, 2, 3 ], demo2: [1] });
+
+        expect(output).to.equal("testtesttest");
+      });
+
+      it("can iterate using original context", function() {
+        var tmpl = combyne("{%each demo%}{%each demo2%}{%if test == 'lol'%}{{val}}{%endif%}{%endeach%}{%endeach%}");
+        var output = tmpl.render({ test: "lol", val: "hi", demo: [ 1, 2, 3 ], demo2: [1] });
+
+        expect(output).to.equal("hihihi");
+      });
+
+      it("can iterate in each loop using no context", function() {
+        var tmpl = combyne("{%each demo as i%}{%if i == 1%}test{%else%}{{i}}{%endif%}{%endeach%}");
+        var output = tmpl.render({ demo: [ 1, 2, 3 ], demo2: [1] });
+
+        expect(output).to.equal("test23");
+      });
+    });
   });
 });
-
-/*
-exports.nestedIfStatements = function( test ) {
-  test.expect(3);
-
-  // Nested not if, falsly value
-  var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: false });
-  test.equals( tmpl.render(), "hello", "Testing nested not conditional with falsy value" );
-
-  // Nested not if, truthy value
-  var tmpl2 = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}", { test: true });
-  test.equals( tmpl2.render(), "", "Testing nested not conditional with truthy value" );
-
-  // Testing two truthy nested values
-  var tmpl3 = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}", { test: true, hi: true });
-  test.equals( tmpl3.render(), "hellogoodbye", "Testing truthy nested conditionals" );
-
-  test.done();
-};
-
-exports.eachLoopConditional = function( test ) {
-  test.expect(3);
-
-  // Conditional in each loop using no context
-  var tmpl = combyne("{%each demo%}{%if "lol" == "lol"%}test{%endif%}{%endeach%}", { demo: [ 1, 2, 3 ] });
-  test.equals( tmpl.render(), "testtesttest", "Conditional in each loop using no context" );
-
-  // Conditional in each loop using original context
-  var tmpl2 = combyne("{%each demo%}{%if test == "lol"%}{{val}}{%endif%}{%endeach%}", { test: "lol", val: "hi", demo: [ 1, 2, 3 ] });
-  test.equals( tmpl2.render(), "hihihi", "Conditional in each loop using original context" );
-
-  // Conditional in each loop using loop context
-  var tmpl3 = combyne("{%each demo as key val%}{%if key == "lol"%}{{val}}{%endif%}{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
-  test.equals( tmpl3.render(), "hi", "Conditional in each loop using loop context" );
-
-  test.done();
-};
-
-exports.nestedEachLoopConditional = function( test ) {
-  test.expect(2);
-
-  // Conditional in each loop using no context
-  var tmpl = combyne("{%each demo%}{%each demo2%}{%if "lol" == "lol"%}test{%endif%}{%endeach%}{%endeach%}", { demo: [ 1, 2, 3 ], demo2: [1] });
-  test.equals( tmpl.render(), "testtesttest", "Conditional in each loop using no context" );
-
-  // Conditional in each loop using original context
-  var tmpl2 = combyne("{%each demo%}{%each demo2%}{%if test == "lol"%}{{val}}{%endif%}{%endeach%}{%endeach%}", { test: "lol", val: "hi", demo: [ 1, 2, 3 ], demo2: [1] });
-  test.equals( tmpl2.render(), "hihihi", "Conditional in each loop using original context" );
-
-  test.done();
-};
-
-exports.nestedIfElseInsideEachLoopConditional = function( test ) {
-  test.expect(1);
-
-  // Conditional in each loop using no context
-  var tmpl = combyne("{%each demo as i%}{%if i == 1"%}test{%else%}{{i}}{%endif%}{%endeach%}", { demo: [ 1, 2, 3 ], demo2: [1] });
-  test.equals( tmpl.render(), "test23", "Conditional if/else in each loop" );
-
-  test.done();
-};
-*/
