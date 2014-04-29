@@ -6,8 +6,8 @@ Combyne
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
 
-No dependencies.  Can be loaded as browser global, AMD module, Node module, and
-Browserify module.  Can be installed via NPM, Bower, or JamJS.
+No dependencies.  Can be loaded as a browser global, AMD module, Node module,
+and Browserify module.  Can be installed via NPM, Bower, or JamJS.
 
 ## Getting started. ##
 
@@ -15,13 +15,11 @@ Combyne can run under a variety of JavaScript engines and loaders:
 
 ### Node. ###
 
-Install via NPM:
-
 ``` bash
 npm install combyne
 ```
 
-Require in your project:
+Require in your source:
 
 ``` javascript
 var combyne = require("combyne");
@@ -29,12 +27,9 @@ var combyne = require("combyne");
 
 ### AMD. ###
 
-If you install via Bower you will need to configure the path, which is the
-first step below, however if you install with JamJS you can skip that step.
-
 ``` javascript
 // Configure the path, if necessary.
-require.config({
+require({
   paths: {
     combyne: "path/to/combyne"
   }
@@ -61,10 +56,6 @@ __Desktop:__ IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
 
 
 __Mobile:__ Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
-
-#### File size. ####
-
-Just 2.7KB when serving minfied and gzipped.
 
 ## Basic usage. ##
 
