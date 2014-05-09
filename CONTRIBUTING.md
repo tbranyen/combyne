@@ -25,11 +25,6 @@ project community instead of a sole proprietorship.
   ensure everyone is on board with the change and so you don't spend time
   writing a fantastic patch we cannot accept.
 * Provide a description of what the patch is/does.
-* Provide unit tests in the correct file:
-  + `test/comments.js` for changes related to comments.
-  + `test/common.js` for changes that affect how Combyne is run.
-  + `test/properties.js` for changes that affect how the properties feature
-    works.
 * Make sure you open the pull request onto the `wip` branch and not `master`
   for requests that break the API or add significant functionality changes.
 * Open pull requests on `master` only with bug fixes and patch related updates.

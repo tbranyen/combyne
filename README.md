@@ -3,6 +3,8 @@ Combyne
 
 > A template engine that works the way you expect.
 
+**Stable: 0.3.0**
+
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
 
@@ -47,15 +49,6 @@ in your markup:
 ``` html
 <script src="combyne.js"></script>
 ```
-
-### Additional details. ###
-
-#### Compatibility. ####
-
-__Desktop:__ IE 9+, Chrome 13+, Opera 11+, FireFox 3.6+, and Safari 5+.
-
-
-__Mobile:__ Android Browser 2.3.4+ , Opera 9.80+ , FireFox Beta, and iPad.
 
 ## Basic usage. ##
 

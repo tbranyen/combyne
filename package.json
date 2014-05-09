@@ -15,7 +15,10 @@
     "grunt-karma-coveralls": "~2.4.4",
     "karma-mocha": "~0.1.0",
     "karma-coverage": "~0.2.1",
-    "karma-phantomjs-launcher": "~0.1.4"
+    "karma-phantomjs-launcher": "~0.1.4",
+    "browserify": "~3.46.0",
+    "grunt-browserify": "~2.0.8",
+    "deamdify": "~0.1.1"
   },
   "scripts": {
     "test": "grunt test coveralls"
