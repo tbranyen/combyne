@@ -18,9 +18,11 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "browserify": "~3.46.0",
     "grunt-browserify": "~2.0.8",
-    "deamdify": "~0.1.1"
+    "deamdify": "~0.1.1",
+    "jsdoc": "~3.3.0-alpha5"
   },
   "scripts": {
-    "test": "grunt test coveralls"
+    "test": "grunt test coveralls",
+    "doc": "jsdoc -r -d docs/ lib/"
   }
 }
