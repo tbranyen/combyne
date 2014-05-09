@@ -1,7 +1,7 @@
 {
   "name": "combyne",
   "description": "A template engine that works the way you expect.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
   "devDependencies": {
@@ -16,13 +16,12 @@
     "karma-mocha": "~0.1.0",
     "karma-coverage": "~0.2.1",
     "karma-phantomjs-launcher": "~0.1.4",
-    "browserify": "~3.46.0",
-    "grunt-browserify": "~2.0.8",
-    "deamdify": "~0.1.1",
-    "jsdoc": "~3.3.0-alpha5"
+    "jsdoc": "~3.3.0-alpha5",
+    "browserify": "^3.46.0"
   },
   "scripts": {
     "test": "grunt test coveralls",
-    "doc": "jsdoc -r -d docs/ lib/"
+    "doc": "jsdoc -r -d docs/ lib/",
+    "build": "browserify -g deamdify lib/index.js --debug true --standalone combyne > dist/combyne.js"
   }
 }
