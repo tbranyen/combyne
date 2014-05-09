@@ -9,7 +9,6 @@
   },
   "ignore": [
     "build",
-    "lib",
     "test",
     ".gitignore",
     ".jscs.json",
