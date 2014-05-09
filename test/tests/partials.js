@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     it("can inject without clobbering the parent", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 
-      tmpl.registerPartial("test", "{{test}}", { test: "to you" });
+      tmpl.registerPartial("test", combyne("{{test}}", { test: "to you" }));
 
       var output = tmpl.render({ test: "hello world" });
 
@@ -17,7 +17,7 @@ define(function(require, exports, module) {
     it("can accept an object to use as context", function() {
       var tmpl = combyne("{{test}} {%partial test prop%}");
 
-      tmpl.registerPartial("test", "{{test}}");
+      tmpl.registerPartial("test", combyne("{{test}}"));
 
       var output = tmpl.render({
         test: "hello world",
@@ -32,7 +32,7 @@ define(function(require, exports, module) {
     it("can render text with an empty context", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 
-      tmpl.registerPartial("test", "prop", {});
+      tmpl.registerPartial("test", combyne("prop", {}));
 
       var output = tmpl.render({ test: "hello world" });
 
@@ -42,7 +42,7 @@ define(function(require, exports, module) {
     it("can handle partials in the middle of templates", function() {
       var tmpl = combyne("{{test}} {%partial test%} 123");
 
-      tmpl.registerPartial("test", "prop", {});
+      tmpl.registerPartial("test", combyne("prop", {}));
 
       var output = tmpl.render({ test: "hello world" });
 

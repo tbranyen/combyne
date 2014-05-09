@@ -9,7 +9,7 @@ Combyne
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
 
 No dependencies.  Can be loaded as a browser global, AMD module, Node module,
-and Browserify module.  Can be installed via NPM, Bower, or JamJS.
+and Browserify module.  Can be installed via NPM or Bower.
 
 ## Getting started. ##
 
@@ -239,9 +239,9 @@ var context = { test: "hello" };
 
 var tmpl = combyne(template);
 
-tmpl.registerPartial("test", "{{name}}", {
+tmpl.registerPartial("test", combyne("{{name}}", {
   name: "you"
-});
+}));
 
 var output = tmpl.render(context);
 /// output == "hello you"
