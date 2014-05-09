@@ -3,7 +3,7 @@ Combyne
 
 > A template engine that works the way you expect.
 
-**Stable: 0.3.1**
+**Stable: 0.3.2**
 
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
