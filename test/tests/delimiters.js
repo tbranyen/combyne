@@ -4,6 +4,12 @@ define(function(require, exports, module) {
   var combyne = require("../../lib/index");
 
   describe("Delimiters", function() {
+    it("will throw an error if not passed an object", function() {
+      var tmpl = combyne("[[test]]", { test: "prop" });
+
+      expect(tmpl.setDelimiters).to.throw(Error);
+    });
+
     it("can be changed on a template", function() {
       var tmpl = combyne("[[test]]", { test: "prop" });
 
