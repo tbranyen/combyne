@@ -17,11 +17,12 @@
     "karma-coverage": "~0.2.1",
     "karma-phantomjs-launcher": "~0.1.4",
     "jsdoc": "~3.3.0-alpha5",
-    "browserify": "^3.46.0"
+    "browserify": "~3.46.0",
+    "deamdify": "~0.1.1"
   },
   "scripts": {
     "test": "grunt test coveralls",
-    "doc": "jsdoc -r -d docs/ lib/",
-    "build": "browserify -g deamdify lib/index.js --debug true --standalone combyne > dist/combyne.js"
+    "doc": "jsdoc -r -d docs/ lib/ README.md",
+    "build": "browserify -g deamdify lib/index.js --standalone combyne > dist/combyne.js"
   }
 }
