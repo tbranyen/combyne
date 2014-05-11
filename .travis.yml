@@ -13,6 +13,9 @@ before_script:
   - npm install
   - bower install
 
+after_success:
+  - grunt karma:saucelabs
+
 branches:
   only:
     - master
@@ -22,3 +25,8 @@ matrix:
   fast_finish: true
   allow_failures:
     - node_js: 0.11
+
+env:
+  global:
+    - secure: "P+9rx4giYNr6BQH6zt7s2TxsBScsIbNXYLBMh5L/04kOq3AcYniQFA9K40jiFcjQnE3c2BK8uX7q3nojui6A+7dIblDHcdazq6jWEUchpCUIbWRaOJYkNzzN1ue/XtdRlyZlOrmvDkV/hqTkN/gX+9rtOfAyUZkQM8gHI/n1E8w="
+    - secure: "gGCSocqP0C+g+nhGmdFoLXchUDY8da44aIe/hnNoRotum7KTLt4QU9cPWoi5z8OfjaS0SNSorBGkDn1cy4Q7p8pzQidEaEtjSdL2Kp6gQ6z8it1twzx/JunbwMnvIrt/3vZsMfaK9cPnwXqWUbIbRum1xSi100aVwuWh/tFLTew="

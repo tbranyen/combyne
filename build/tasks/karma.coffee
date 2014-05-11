@@ -1,6 +1,18 @@
 module.exports = ->
   @loadNpmTasks "grunt-karma"
 
+  require "karma-sauce-launcher"
+
+  customLaunchers =
+    SL_Chrome:
+      base: "SauceLabs"
+      browserName: "chrome"
+
+    SL_Firefox:
+      base: "SauceLabs"
+      browserName: "firefox"
+      version: "26"
+
   @config "karma",
     options:
       basePath: process.cwd()
@@ -44,3 +56,20 @@ module.exports = ->
     run:
       options:
         singleRun: true
+
+    saucelabs:
+      options:
+        singleRun: true
+        customLaunchers: customLaunchers
+        browsers: Object.keys customLaunchers
+        reporters: ["dots", "saucelabs"]
+
+        plugins: [
+          "karma-mocha"
+          "karma-phantomjs-launcher"
+          "karma-sauce-launcher"
+          "karma-coverage"
+        ]
+
+        sauceLabs:
+          testName: "Combyne Unit Tests"
