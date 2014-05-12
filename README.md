@@ -100,20 +100,20 @@ tmpl.render();
 ### Replacing template variables. ###
 
 ``` javascript
-var template = "{{lol}}";
-var context = { lol: "test" };
+var template = "{{foo}}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == "test"
+/// output == "hello"
 ```
 
 ### Using filters on variables. ###
 
 ``` javascript
-var template = "{{lol|reverse}}";
-var context = { lol: "test" };
+var template = "{{foo|reverse}}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
@@ -122,7 +122,7 @@ tmpl.registerFilter("reverse", function(val) {
 });
 
 var output = tmpl.render(context);
-/// output == "tset"
+/// output == "olleh"
 ```
 
 #### Passing arguments to filters. ####
@@ -142,8 +142,8 @@ tmpl.registerFilter("highlight", function(code, language) {
 #### Chaining filters on variables. ####
 
 ``` javascript
-var template = "{{lol|reverse|toUpper}}";
-var context = { lol: "test" };
+var template = "{{foo|reverse|toUpper}}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
@@ -156,7 +156,7 @@ tmpl.registerFilter("toUpper", function(val) {
 });
 
 var output = tmpl.render(context);
-/// output == "TSET"
+/// output == "OLLEH"
 ```
 
 ### Conditionals. ###
@@ -167,8 +167,8 @@ such as `if something == somethingElse` or `if not something`.  All data
 types will be coerced to Strings except for Numbers.
 
 ``` javascript
-var template = "{%if not test%}why not?{%endif%}";
-var context = { test: false };
+var template = "{%if not foo%}why not?{%endif%}";
+var context = { foo: false };
 
 var tmpl = combyne(template);
 
@@ -179,20 +179,20 @@ var output = tmpl.render(context);
 or a more complicated example...
 
 ``` javascript
-var template = "{%if test == 'hello'%}goodbye!{%else%}hello!{%endif%}";
-var context = { test: "hello" };
+var template = "{%if foo == 'hello'%}Hi!{%else%}bye...{%endif%}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == "goodbye!"
+/// output == "Hi!"
 ```
 
 elsif is also supported:
 
 ``` javascript
-var template = "{%if test == ''%}goodbye!{%elsif test == 'hello'%}hello!{%endif%}";
-var context = { test: "hello" };
+var template = "{%if foo == ''%}goodbye!{%elsif foo == 'hello'%}hello!{%endif%}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
@@ -205,8 +205,8 @@ var output = tmpl.render(context);
 *Also works on array-like objects: arguments and NodeList.*
 
 ``` javascript
-var template = "{%each test%}{{.}} {%endeach%}";
-var context = { test: [1,2,3,4] };
+var template = "{%each foo%}{{.}} {%endeach%}";
+var context = { foo: [1,2,3,4] };
 
 var tmpl = combyne(template);
 
@@ -229,33 +229,33 @@ var output = tmpl.render(context);
 ### Iterating objects. ###
 
 ``` javascript
-var template = "{%each test as val key%}the {{key}} is {{val}}{%endeach%}";
+var template = "{%each fruits as val key%}the {{key}} is {{val}}{%endeach%}";
 var context = {
-  test: {
-    hello: "lol"
+  fruits: {
+    apple: "green"
   }
 };
 
 var tmpl = combyne(template);
 
 var output = tmpl.render(context);
-/// output == "the hello is lol"
+/// output == "the apple is green"
 ```
 
 ### Partials. ###
 
 ``` javascript
-var template = "{{test}} {%partial test%}";
-var context = { test: "hello" };
+var template = "{{foo}} {%partial bar%}";
+var context = { foo: "hello" };
 
 var tmpl = combyne(template);
 
-tmpl.registerPartial("test", combyne("{{name}}", {
-  name: "you"
+tmpl.registerPartial("bar", combyne("{{name}}", {
+  name: "john"
 }));
 
 var output = tmpl.render(context);
-/// output == "hello you"
+/// output == "hello john"
 ```
 
 ## Unit tests. ##
