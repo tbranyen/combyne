@@ -1,7 +1,4 @@
-Combyne
-=======
-
-> A template engine that works the way you expect.
+<img align="left" src="http://dl.dropboxusercontent.com/u/79007/combyne.png">
 
 **Stable: 0.3.2**
 
