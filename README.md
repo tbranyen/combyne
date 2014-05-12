@@ -75,23 +75,18 @@ tmpl.render();
 ### Custom delimiters. ###
 
 If you are not happy with the default Mustache-like syntax, you can trivially
-change the delimiters to suit your needs.  The delimiters may be changed at a
-local or global level.
+change the delimiters to suit your needs.  You may only change the delimiters
+at a global level, because templates are compiled immediately after invoking
+the `combyne` function.
 
 ``` javascript
-// This sets the delimiters, but applies to all templates.
+// This sets the delimiters, and applies to all templates.
 combyne.options.delimiters = {
   START_PROP: "[[",
   END_PROP: "]]"
 };
 
 var tmpl = combyne("[[msg]]", { msg: "hello world" });
-
-// This sets the delimiters, but only to this template.
-tmpl.setDelimiters({
-  START_PROP: "[[",
-  END_PROP: "]]"
-});
 
 tmpl.render();
 // => hello world
