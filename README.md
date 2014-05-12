@@ -8,12 +8,10 @@ Combyne
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
 
-No dependencies.  Can be loaded as a browser global, AMD module, Node module,
-and Browserify module.  Can be installed via NPM or Bower.
+No dependencies.  Can be loaded as a browser global, AMD module, and Node
+module.  Works with Browserify.  Can be installed via NPM or Bower.
 
 ## Getting started. ##
-
-Combyne can run under a variety of JavaScript engines and loaders:
 
 ### Node. ###
 
@@ -43,7 +41,7 @@ define(["combyne"], function(combyne) {});
 
 ### Browser global. ###
 
-[Include the latest stable](http://cloud.github.com/downloads/tbranyen/combyne/combyne.js)
+[Include the latest stable](https://github.com/tbranyen/combyne/releases)
 in your markup:
 
 ``` html
@@ -61,11 +59,9 @@ tmpl.render({ msg: "world" });
 
 ## Features. ##
 
-Combyne works by parsing your template into a stack and rendering data.
-
 Combyne works by parsing your template into an AST.  This provides mechanisms
 for intelligent compilation and optimization.  The template is converted to
-JavaScript and invoked upon calling render.
+JavaScript and invoked upon calling render with data.
 
 ### Comments. ###
 
@@ -86,12 +82,19 @@ change the delimiters to suit your needs.  The delimiters may be changed at a
 local or global level.
 
 ``` javascript
+// This sets the delimiters, but applies to all templates.
 combyne.options.delimiters = {
   START_PROP: "[[",
   END_PROP: "]]"
 };
 
 var tmpl = combyne("[[msg]]", { msg: "hello world" });
+
+// This sets the delimiters, but only to this template.
+tmpl.setDelimiters({
+  START_PROP: "[[",
+  END_PROP: "]]"
+});
 
 tmpl.render();
 // => hello world
@@ -188,10 +191,21 @@ var output = tmpl.render(context);
 /// output == "goodbye!"
 ```
 
+elsif is also supported:
+
+``` javascript
+var template = "{%if test == ''%}goodbye!{%elsif test == 'hello'%}hello!{%endif%}";
+var context = { test: "hello" };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == "hello!"
+```
+
 ### Iterating arrays. ###
 
-*Will not work on array-like objects, such as arguments or NodeList, coerce with
-`Array.prototype.slice.call(obj);`*
+*Also works on array-like objects: arguments and NodeList.*
 
 ``` javascript
 var template = "{%each test%}{{.}} {%endeach%}";
@@ -206,7 +220,7 @@ var output = tmpl.render(context);
 #### Change the iterated identifer within loops. ####
 
 ``` javascript
-var template = "{%each arr as _%}{{_}}{%endeach%}";
+var template = "{%each arr as val%}{{val}}{%endeach%}";
 var context = { arr: [1,2,3] };
 
 var tmpl = combyne(template);
@@ -218,7 +232,7 @@ var output = tmpl.render(context);
 ### Iterating objects. ###
 
 ``` javascript
-var template = "{%each test as key val%}the {{key}} is {{val}}{%endeach%}";
+var template = "{%each test as val key%}the {{key}} is {{val}}{%endeach%}";
 var context = {
   test: {
     hello: "lol"
