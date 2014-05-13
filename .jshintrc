@@ -9,7 +9,7 @@
   "curly": true,
   "quotmark": "double",
   "trailing": true,
-  "unused": true,
+  "unused": "vars",
   "undef": true,
   "validthis": true,
   "globals": {

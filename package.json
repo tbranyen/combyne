@@ -24,6 +24,7 @@
   "scripts": {
     "test": "grunt test coveralls",
     "doc": "jsdoc -r -d docs/ lib/ README.md",
-    "build": "browserify -g deamdify lib/index.js --standalone combyne > dist/combyne.js"
+    "build": "browserify --ignore=./lib/support/*.js -g deamdify lib -s combyne > dist/combyne.js",
+    "legacy": "browserify -g deamdify lib -s combyne > dist/combyne.legacy.js"
   }
 }
