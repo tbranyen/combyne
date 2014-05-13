@@ -14,11 +14,13 @@ module.exports = ->
       browserName: "firefox"
       version: "26"
 
-    sl_ie_6:
-      base: "SauceLabs"
-      platform: "Windows XP"
-      browserName: "internet explorer"
-      version: "6"
+    # No IE 6 test support until I swap out Chai.
+    #
+    #sl_ie_6:
+    #  base: "SauceLabs"
+    #  platform: "Windows XP"
+    #  browserName: "internet explorer"
+    #  version: "6"
 
     sl_ios_safari:
       base: "SauceLabs"

@@ -22,7 +22,7 @@
     "karma-sauce-launcher": "~0.2.8"
   },
   "scripts": {
-    "test": "grunt test coveralls karma:saucelabs",
+    "test": "grunt test coveralls",
     "doc": "jsdoc -r -d docs/ lib/ README.md",
     "build": "browserify -g deamdify lib/index.js --standalone combyne > dist/combyne.js"
   }

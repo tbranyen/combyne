@@ -13,6 +13,9 @@ before_script:
   - npm install
   - bower install
 
+script:
+  - "test $SAUCE_LABS = true && grunt karma:saucelabs || npm test"
+
 branches:
   only:
     - master
@@ -22,6 +25,9 @@ matrix:
   fast_finish: true
   allow_failures:
     - node_js: 0.11
+  include:
+    - node_js: 0.10
+      env: SAUCE_LABS=true
 
 env:
   global:
