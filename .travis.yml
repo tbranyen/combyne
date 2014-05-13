@@ -14,7 +14,7 @@ before_script:
   - bower install
 
 script:
-  - "test $SAUCE_LABS = true && grunt karma:saucelabs || npm test"
+  - "test $SAUCE_LABS = true && (grunt karma:saucelabs) || (npm test)"
 
 branches:
   only:
