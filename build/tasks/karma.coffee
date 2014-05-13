@@ -14,20 +14,6 @@ module.exports = ->
       browserName: "firefox"
       version: "26"
 
-    # No IE 6 test support until I swap out Chai.
-    #
-    #sl_ie_6:
-    #  base: "SauceLabs"
-    #  platform: "Windows XP"
-    #  browserName: "internet explorer"
-    #  version: "6"
-
-    sl_ios_safari:
-      base: "SauceLabs"
-      platform: "OS X 10.9"
-      browserName: "iphone"
-      version: "7.1"
-
   @config "karma",
     options:
       basePath: process.cwd()
@@ -55,7 +41,7 @@ module.exports = ->
         dir: "test/coverage"
 
       files: [
-        "bower_components/chai/chai.js"
+        "bower_components/assert/assert.js"
         "bower_components/requirejs/require.js"
         "test/runner.js"
 
@@ -89,3 +75,4 @@ module.exports = ->
 
         sauceLabs:
           testName: "Combyne Unit Tests"
+          takeScreenshots: false

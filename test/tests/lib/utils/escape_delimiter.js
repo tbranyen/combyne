@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   describe("Escape delimiter", function() {
     it("is a function", function() {
-      expect(escapeDelimiter).to.be.a("function"); 
+      assert.ok(typeof escapeDelimiter === "function"); 
     });
   });
 });

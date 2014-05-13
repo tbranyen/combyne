@@ -27,7 +27,7 @@
 
   // Operating within Node, setup the AMD intercept and abort.
   if (typeof module === "object") {
-    global.expect = require("chai").expect;
+    global.assert = require("assert");
     return require("amdefine/intercept");
   }
 
@@ -37,9 +37,6 @@
 
   // Prefer the BDD testing style.
   mocha.setup("bdd");
-
-  // Use chai with Mocha.
-  window.expect = window.chai.expect;
 
   // Modify the configuration to point to the correct source base.
   require.config({ baseUrl: baseUrl }); 

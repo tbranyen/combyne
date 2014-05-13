@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   describe("Type", function() {
     it("is a function", function() {
-      expect(type).to.be.a("function"); 
+      assert.ok(typeof type === "function"); 
     });
   });
 });

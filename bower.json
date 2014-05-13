@@ -4,8 +4,8 @@
   "main": "dist/combyne.js",
   "devDependencies": {
     "mocha": "~1.18.2",
-    "chai": "~1.9.1",
-    "requirejs": "~2.1.10"
+    "requirejs": "~2.1.10",
+    "assert": "~0.1.0"
   },
   "ignore": [
     "build",

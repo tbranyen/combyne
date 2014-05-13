@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   describe("Tokenizer", function() {
     it("is a constructor", function() {
-      expect(Tokenizer).to.be.a("function"); 
+      assert(typeof Tokenizer === "function"); 
     });
   });
 });

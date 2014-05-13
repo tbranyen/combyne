@@ -7,19 +7,19 @@ define(function(require, exports, module) {
     it("can ignore basic text", function() {
       var output = combyne("{%-- nothing --%}").render();
 
-      expect(output).to.equal("");
+      assert.equal(output, "");
     });
 
     it("ignores invalid comment expressions", function() {
       var output = combyne("--").render();
 
-      expect(output).to.equal("--");
+      assert.equal(output, "--");
     });
 
     it("invalid comment and broken expression", function() {
       var output = combyne("{%--").render();
 
-      expect(output).to.equal("");
+      assert.equal(output, "");
     });
 
     it("will not render nested properties", function() {
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
         test: "hello world"
       });
 
-      expect(output).to.equal("");
+      assert.equal(output, "");
     });
 
     it("will not ignore properties outside of it's block", function() {
@@ -36,13 +36,13 @@ define(function(require, exports, module) {
         hello: "goodbye"
       });
 
-      expect(output).to.equal("goodbye");
+      assert.equal(output, "goodbye");
     });
 
     it("allows nested comments", function() {
       var output = combyne("{%--{%-- lol --%}--%}har").render();
 
-      expect(output).to.equal("har");
+      assert.equal(output, "har");
     });
 
     it("allows nested comments with nested property value", function() {
@@ -50,14 +50,14 @@ define(function(require, exports, module) {
         lol: "hi"
       });
 
-      expect(output).to.equal("har");
+      assert.equal(output, "har");
     });
 
     it("can comment out end expressions", function() {
       var tmpl = combyne("{%-- %} --%}");
       var output = tmpl.render();
 
-      expect(output).to.equal("");
+      assert.equal(output, "");
     });
   });
 });

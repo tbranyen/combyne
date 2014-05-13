@@ -7,19 +7,19 @@ define(function(require, exports, module) {
     it("can replace a single value", function() {
       var output = combyne("{{test}}", { test: "hello world" }).render();
 
-      expect(output).to.equal("hello world");
+      assert.equal(output, "hello world");
     });
 
     it("ignores whitespace between the delimiters", function() {
       var output = combyne("{{ test       }}").render({ test: "hello world" });
 
-      expect(output).to.equal("hello world");
+      assert.equal(output, "hello world");
     });
 
     it("will error if the property delimiter is unterminated", function() {
-      expect(function() {
+      assert.throws(function() {
         combyne("{{ test").render({ test: "hello world" })
-      }).to.throw(Error);
+      });
     });
 
     it("can replace many values", function() {
@@ -28,7 +28,7 @@ define(function(require, exports, module) {
         test1: "to you"
       });
 
-      expect(output).to.equal("hello world to you");
+      assert.equal(output, "hello world to you");
     });
 
     it("can replace function invocations", function() {
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
         }
       });
 
-      expect(output).to.equal("hello world lol");
+      assert.equal(output, "hello world lol");
     });
 
     it("can work with null bytes", function() {
@@ -48,19 +48,19 @@ define(function(require, exports, module) {
         test1: "to you" 
       });
 
-      expect(output).to.equal("hello world\0to you");
+      assert.equal(output, "hello world\0to you");
     });
 
     it("can handle various types of whitespace", function() {
       var output = combyne("test\ttest\ntest\rtest\r\ntest   test").render();
 
-      expect(output).to.equal("test\ttest\ntest\rtest\r\ntest   test");
+      assert.equal(output, "test\ttest\ntest\rtest\r\ntest   test");
     });
 
     it("can handle unicode characters", function() {
       var output = combyne("{{test}}").render({ test: "\u2C64" });
 
-      expect(output).to.equal("\u2C64");
+      assert.equal(output, "\u2C64");
     });
 
     it("can do a simple object replace", function() {
@@ -70,7 +70,7 @@ define(function(require, exports, module) {
         }
       });
 
-      expect(output).to.equal("hello world");
+      assert.equal(output, "hello world");
     });
 
     it("can do dot notation that is invalid JavaScript", function() {
@@ -80,7 +80,7 @@ define(function(require, exports, module) {
         }
       });
 
-      expect(output).to.equal("hello world");
+      assert.equal(output, "hello world");
     });
   });
 });

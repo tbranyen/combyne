@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   describe("Grammar", function() {
     it("is a constructor", function() {
-      expect(Grammar).to.be.a("function"); 
+      assert.ok(typeof Grammar === "function"); 
     });
   });
 });
