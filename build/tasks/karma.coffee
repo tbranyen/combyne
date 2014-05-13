@@ -3,15 +3,28 @@ module.exports = ->
 
   require "karma-sauce-launcher"
 
-  customLaunchers =
-    SL_Chrome:
+  sauceLabs =
+    sl_chrome:
       base: "SauceLabs"
+      platform: "Windows 7"
       browserName: "chrome"
 
-    SL_Firefox:
+    sl_firefox:
       base: "SauceLabs"
       browserName: "firefox"
       version: "26"
+
+    sl_ie_6:
+      base: "SauceLabs"
+      platform: "Windows XP"
+      browserName: "internet explorer"
+      version: "6"
+
+    sl_ios_safari:
+      base: "SauceLabs"
+      platform: "OS X 10.9"
+      browserName: "iphone"
+      version: "7.1"
 
   @config "karma",
     options:
@@ -59,9 +72,10 @@ module.exports = ->
 
     saucelabs:
       options:
+        captureTimeout: 120000
         singleRun: true
-        customLaunchers: customLaunchers
-        browsers: Object.keys customLaunchers
+        customLaunchers: sauceLabs
+        browsers: Object.keys sauceLabs
         reporters: ["dots", "saucelabs"]
 
         plugins: [
