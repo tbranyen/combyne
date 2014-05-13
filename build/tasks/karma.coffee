@@ -38,7 +38,8 @@ module.exports = ->
       ]
 
       preprocessors:
-        "lib/**/*.js": "coverage"
+        "lib/!(support).js": "coverage"
+        "lib/!(support)/**/*.js": "coverage"
 
       coverageReporter:
         type: "lcov"
