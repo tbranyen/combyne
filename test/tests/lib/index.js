@@ -5,16 +5,16 @@ define(function(require, exports, module) {
 
   describe("The exported Combyne module", function() {
     it("is a function", function() {
-      expect(combyne).to.be.a("function");
+      assert.ok(typeof combyne === "function");
     });
 
     it("is a valid constructor", function() {
-      expect(combyne("")).to.be.an.instanceof(combyne);
-      expect(new combyne("")).to.be.an.instanceof(combyne);
+      assert.ok(combyne("") instanceof combyne);
+      assert.ok(new combyne("") instanceof combyne);
     });
 
     it("requires the template argument to be a string", function() {
-      expect(combyne).to.throw(Error);
+      assert.throws(combyne);
     });
   });
 });

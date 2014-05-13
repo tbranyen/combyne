@@ -8,162 +8,162 @@ define(function(require, exports, module) {
       var tmpl = combyne("{%    if test  %}hello world{%  endif%}");
       var output = tmpl.render({ test: true })
 
-      expect(output).to.equal("hello world");
+      assert.equal(output, "hello world");
     });
 
     it("will error when invalid expressions are used", function() {
-      expect(function() {
+      assert.throws(function() {
         var tmpl = combyne("{%error%}{%error%}");
         var output = tmpl.render();
-      }).to.throw(Error);
+      });
     });
 
     describe("if statement", function() {
       it("must have at least one condition", function() {
-        expect(function() {
+        assert.throws(function() {
           var tmpl = combyne("{%if%}{%endif%}");
           var output = tmpl.render();
-        }).to.throw(Error);
+        });
       });
 
       it("can evaluate basic truthy", function() {
         var tmpl = combyne("{%if test%}hello world{%endif%}");
         var output = tmpl.render({ test: true })
 
-        expect(output).to.equal("hello world");
+        assert.equal(output, "hello world");
       });
 
       it("can compare numbers", function() {
         var tmpl = combyne("{%if 5==test%}hello world{%endif%}");
         var output = tmpl.render({ test: 5 })
 
-        expect(output).to.equal("hello world");
+        assert.equal(output, "hello world");
       });
 
       it("can compare equal booleans", function() {
         var tmpl = combyne("{%if false==test%}hello world{%endif%}");
         var output = tmpl.render({ test: false })
 
-        expect(output).to.equal("hello world");
+        assert.equal(output, "hello world");
       });
 
       it("can evaluate basic falsy", function() {
         var tmpl = combyne("{%if test%}hello world{%endif%}");
         var output = tmpl.render({ test: false });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate missing properties", function() {
         var tmpl = combyne("{%if test%}hello world{%endif%}");
         var output = tmpl.render({});
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate nested truthy conditionals", function() {
         var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
         var output = tmpl.render({ test: true, hi: true });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate nested conditionals with falsy root value", function() {
         var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
         var output = tmpl.render({ test: false, hi: true });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate nested if statement with falsy values", function() {
         var tmpl = combyne("{%if test%}{%if hi%}hello{%endif%}{%endif%}");
         var output = tmpl.render({ test: false, hi: false });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate truthy dot notation", function() {
         var tmpl = combyne("{%if test.prop%}hello{%endif%}");
         var output = tmpl.render({ test: { prop: true } });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate falsy dot notation", function() {
         var tmpl = combyne("{%if test.prop%}hello{%endif%}");
         var output = tmpl.render({ test: { prop: false } });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate truthy deep dot notation", function() {
         var tmpl = combyne("{%if test.prop.hi%}hello{%endif%}");
         var output = tmpl.render({ test: { prop: { hi: true } } });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate falsy deep dot notation", function() {
         var tmpl = combyne("{%if test.prop.hi%}hello{%endif%}");
         var output = tmpl.render({ test: { prop: { hi: false } } });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate not conditional with falsy value", function() {
         var tmpl = combyne("{%if not test%}hello{%endif%}");
         var output = tmpl.render({ test: false });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate not conditional with truthy value", function() {
         var tmpl = combyne("{%if not test%}hello{%endif%}");
         var output = tmpl.render({ test: true });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate conditional truthy string values", function() {
         var tmpl = combyne("{%if 'test' == 'test'%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate conditional falsy string values", function() {
         var tmpl = combyne("{%if 'test' != 'test'%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate numerical greater than", function() {
         var tmpl = combyne("{%if 5 > 4%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate numerical greater than or equal", function() {
         var tmpl = combyne("{%if 5 >= 4%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate numerical less than", function() {
         var tmpl = combyne("{%if 4 < 5%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate numerical less than or equal", function() {
         var tmpl = combyne("{%if 4 <= 5%}hello{%endif%}");
         var output = tmpl.render();
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
     });
 
@@ -172,35 +172,35 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%if test%}hello{%else%}goodbye{%endif%} world");
         var output = tmpl.render({ test: false });
 
-        expect(output).to.equal("goodbye world");
+        assert.equal(output, "goodbye world");
       });
 
       it("can evaluate nested with truthy root", function() {
         var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: true, hello: true });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate nested with falsy root", function() {
         var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: false, hello: true });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate nested with falsy nested", function() {
         var tmpl = combyne("{%if test%}{%if hello%}hello{%else%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: true, hello: false });
 
-        expect(output).to.equal("goodbye");
+        assert.equal(output, "goodbye");
       });
 
       it("can evaluate nested if with an else", function() {
         var tmpl = combyne("{%if test%}{%if hello%}hello{%endif%} {%else%}goodbye{%endif%}");
         var output = tmpl.render({ test: true, hello: true });
 
-        expect(output).to.equal("hello ");
+        assert.equal(output, "hello ");
       });
     });
 
@@ -209,7 +209,7 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%if test%}good{%elsif not test%}bad{%endif%}");
         var output = tmpl.render({ test: false });
 
-        expect(output).to.equal("bad");
+        assert.equal(output, "bad");
       });
     });
 
@@ -218,21 +218,21 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: false });
 
-        expect(output).to.equal("hello");
+        assert.equal(output, "hello");
       });
 
       it("can evaluate nested not if with truthy value", function() {
         var tmpl = combyne("{%if not test%}hello{%if test%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: true });
 
-        expect(output).to.equal("");
+        assert.equal(output, "");
       });
 
       it("can evaluate two truthy nested values", function() {
         var tmpl = combyne("{%if test%}hello{%if hi%}goodbye{%endif%}{%endif%}");
         var output = tmpl.render({ test: true, hi: true });
 
-        expect(output).to.equal("hellogoodbye");
+        assert.equal(output, "hellogoodbye");
       });
     });
 
@@ -241,7 +241,7 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
         var output = tmpl.render({ test: new Array(5) });
 
-        expect(output).to.equal("hellohellohellohellohello");
+        assert.equal(output, "hellohellohellohellohello");
       });
 
       it("can iterate a moderately complicated with filter", function() {
@@ -265,14 +265,14 @@ define(function(require, exports, module) {
           ]
         });
 
-        expect(output).to.equal("Index at: 0,  1Index at: 1,  trueIndex at: 2,  31Index at: 3,  propIndex at: 4,  5");
+        assert.equal(output, "Index at: 0,  1Index at: 1,  trueIndex at: 2,  31Index at: 3,  propIndex at: 4,  5");
       });
 
       it("can have exist before iteration", function() {
         var tmpl = combyne("test {%each prop%}{{.}}{%endeach%}");
         var output = tmpl.render({ prop: [5] });
 
-        expect(output).to.equal("test 5");
+        assert.equal(output, "test 5");
       });
 
       it("can have it's delimiter changed", function() {
@@ -280,21 +280,21 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each prop as _%}{{_}}{%endeach%}");
         var output = tmpl.render({ prop: [1,2,3] });
 
-        expect(output).to.equal("123");
+        assert.equal(output, "123");
       });
 
       it("can handle a complicated nested loop", function() {
         var tmpl = combyne("{%each lol%}{%each lol2%}{{.}}{%endeach%}{%endeach%}");
         var output = tmpl.render({ lol: [1,2,3], lol2: [3,2,1] });
 
-        expect(output).to.equal("321321321");
+        assert.equal(output, "321321321");
       });
 
       it("can loop an array of objects", function() {
         var tmpl = combyne("{%each lol as _%}{{_.key}}{%endeach%}");
         var output = tmpl.render({ lol: [{key:"value"}] });
 
-        expect(output).to.equal("value");
+        assert.equal(output, "value");
       });
     });
 
@@ -310,7 +310,7 @@ define(function(require, exports, module) {
           }
         });
 
-        expect(output).to.equal("lol:hi you:me? what:test ");
+        assert.equal(output, "lol:hi you:me? what:test ");
       });
 
       it("will ignore properties on the prototype", function() {
@@ -328,7 +328,7 @@ define(function(require, exports, module) {
 
         var output = tmpl.render(context);
 
-        expect(output).to.equal("lol:hi you:me? what:test ");
+        assert.equal(output, "lol:hi you:me? what:test ");
       });
 
       it("can loop over the object keys", function() {
@@ -337,7 +337,7 @@ define(function(require, exports, module) {
           demo: { lol: "hi", you: "me?", what: "test" }
         });
 
-        expect(output).to.equal("lolyouwhat");
+        assert.equal(output, "lolyouwhat");
       });
 
       /*
@@ -372,42 +372,42 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each demo%}{%if 'lol' == 'lol'%}test{%endif%}{%endeach%}");
         var output = tmpl.render({ demo: [ 1, 2, 3 ] });
 
-        expect(output).to.equal("testtesttest");
+        assert.equal(output, "testtesttest");
       });
 
       it("can iterate using original context", function() {
         var tmpl = combyne("{%each demo%}{%if test == 'lol'%}{{val}}{%endif%}{%endeach%}");
         var output = tmpl.render({ test: "lol", val: "hi", demo: [ 1, 2, 3 ] });
 
-        expect(output).to.equal("hihihi");
+        assert.equal(output, "hihihi");
       });
 
       it("can iterate using own context", function() {
         var tmpl = combyne("{%each demo as val key%}{%if key == 'lol'%}{{val}}{%endif%}{%endeach%}");
         var output = tmpl.render({ demo: { lol: "hi", you: "me?", what: "test" } });
 
-        expect(output).to.equal("hi");
+        assert.equal(output, "hi");
       });
 
       it("can iterate with conditionals in each loop", function() {
         var tmpl = combyne("{%each demo%}{%each demo2%}{%if 'lol' == 'lol'%}test{%endif%}{%endeach%}{%endeach%}");
         var output = tmpl.render({ demo: [ 1, 2, 3 ], demo2: [1] });
 
-        expect(output).to.equal("testtesttest");
+        assert.equal(output, "testtesttest");
       });
 
       it("can iterate using original context", function() {
         var tmpl = combyne("{%each demo%}{%each demo2%}{%if test == 'lol'%}{{val}}{%endif%}{%endeach%}{%endeach%}");
         var output = tmpl.render({ test: "lol", val: "hi", demo: [ 1, 2, 3 ], demo2: [1] });
 
-        expect(output).to.equal("hihihi");
+        assert.equal(output, "hihihi");
       });
 
       it("can iterate in each loop using no context", function() {
         var tmpl = combyne("{%each demo as i%}{%if i == 1%}test{%else%}{{i}}{%endif%}{%endeach%}");
         var output = tmpl.render({ demo: [ 1, 2, 3 ], demo2: [1] });
 
-        expect(output).to.equal("test23");
+        assert.equal(output, "test23");
       });
     });
   });

@@ -8,7 +8,7 @@ define(function(require, exports, module) {
       var tmpl = combyne("<html></html>");
       var output = tmpl.render();
 
-      expect(output).to.equal("<html></html>");
+      assert.equal(output, "<html></html>");
     });
   });
 });

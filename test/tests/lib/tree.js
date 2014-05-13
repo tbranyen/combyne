@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
   describe("Tree", function() {
     it("is a constructor", function() {
-      expect(Tree).to.be.a("function"); 
+      assert(typeof Tree === "function"); 
     });
   });
 });

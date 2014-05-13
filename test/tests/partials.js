@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "hello world" });
 
-      expect(output).to.equal("hello world to you");
+      assert.equal(output, "hello world to you");
     });
 
     it("can accept an object to use as context", function() {
@@ -26,7 +26,7 @@ define(function(require, exports, module) {
         }
       });
 
-      expect(output).to.equal("hello world to you");
+      assert.equal(output, "hello world to you");
     });
 
     it("can render text with an empty context", function() {
@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "hello world" });
 
-      expect(output).to.equal("hello world prop");
+      assert.equal(output, "hello world prop");
     });
 
     it("can handle partials in the middle of templates", function() {
@@ -46,14 +46,14 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "hello world" });
 
-      expect(output).to.equal("hello world prop 123");
+      assert.equal(output, "hello world prop 123");
     });
 
     it("will error if invalid tokens are present", function() {
-      expect(function() {
+      assert.throws(function() {
         var tmpl = combyne("{%partial 5 > 4%}");
         var output = tmpl.render();
-      }).to.throw(Error);
+      });
     });
   });
 });

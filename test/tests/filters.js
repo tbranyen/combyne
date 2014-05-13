@@ -8,15 +8,15 @@ define(function(require, exports, module) {
       var tmpl = combyne("|| |    |");
       var output = tmpl.render();
 
-      expect(output).to.equal("|| |    |");
+      assert.equal(output, "|| |    |");
     });
 
     it("will error if invalid tokens are present", function() {
-      expect(function() {
+      assert.throws(function() {
         var tmpl = combyne("{{test|< 5}");
         tmpl.registerFilter("filter", function() {});
         var output = tmpl.render();
-      }).to.throw(Error);
+      });
     });
 
     it("can execute basic functions", function() {
@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: 15.5 });
 
-      expect(output).to.equal("3.5");
+      assert.equal(output, "3.5");
     });
 
     it("can execute complex functions", function() {
@@ -40,7 +40,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "tart" });
 
-      expect(output).to.equal("testing this out trat");
+      assert.equal(output, "testing this out trat");
     });
 
     it("can execute complex functions with arguments", function() {
@@ -56,7 +56,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "hmm" });
 
-      expect(output).to.equal("hmm lol hi how are you");
+      assert.equal(output, "hmm lol hi how are you");
     });
 
     it("can execute an object filter", function() {
@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: { tmp:"test" } });
 
-      expect(output).to.equal("test");
+      assert.equal(output, "test");
     });
 
 
@@ -93,7 +93,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: "prop" });
 
-      expect(output).to.equal("yrtporp");
+      assert.equal(output, "yrtporp");
     });
 
     it("supports dots in filter names", function() {
@@ -105,7 +105,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render();
 
-      expect(output).to.equal("test");
+      assert.equal(output, "test");
     });
 
     it("works with number types", function() {
@@ -117,7 +117,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ test: 1 });
 
-      expect(output).to.equal("6");
+      assert.equal(output, "6");
     });
 
     it("supports filters propagation", function() {
@@ -129,7 +129,7 @@ define(function(require, exports, module) {
 
       var output = tmpl.render({ item: [ "hi", "you", "own" ] });
 
-      expect(output).to.equal(" Name: hi  Name: you  Name: own ");
+      assert.equal(output, " Name: hi  Name: you  Name: own ");
     });
   });
 });
