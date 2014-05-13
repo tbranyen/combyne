@@ -14,6 +14,12 @@ module.exports = ->
       browserName: "firefox"
       version: "26"
 
+    sl_ie_8:
+      base: "SauceLabs"
+      platform: "Windows XP"
+      browserName: "internet explorer"
+      version: "8"
+
   @config "karma",
     options:
       basePath: process.cwd()

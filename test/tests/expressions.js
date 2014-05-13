@@ -2,6 +2,7 @@ define(function(require, exports, module) {
   "use strict";
 
   var combyne = require("../../lib/index");
+  var createObject = require("../../lib/utils/create_object");
 
   describe("Expressions", function() {
     it("can support whitespace", function() {
@@ -239,7 +240,7 @@ define(function(require, exports, module) {
     describe("array loop", function() {
       it("can iterate a simple array", function() {
         var tmpl = combyne("{%each test%}hello{%endeach%}");
-        var output = tmpl.render({ test: new Array(5) });
+        var output = tmpl.render({ test: [1, 2, 3, 4, 5] });
 
         assert.equal(output, "hellohellohellohellohello");
       });
@@ -317,14 +318,12 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each demo as v k%}{{k}}:{{v}} {%endeach%}");
 
         var context = {
-          demo: {
-            lol: "hi",
-            you: "me?",
-            what: "test"
-          }
+          demo: createObject({ me: "break" })
         };
 
-        context.demo.__proto__.me = "break";
+        context.demo.lol = "hi";
+        context.demo.you = "me?";
+        context.demo.what = "test";
 
         var output = tmpl.render(context);
 
