@@ -42,15 +42,6 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world lol");
     });
 
-    it("can work with null bytes", function() {
-      var output = combyne("{{test}}\0{{test1}}").render({
-        test: "hello world",
-        test1: "to you" 
-      });
-
-      assert.equal(output, "hello world\0to you");
-    });
-
     it("can handle various types of whitespace", function() {
       var output = combyne("test\ttest\ntest\rtest\r\ntest   test").render();
 

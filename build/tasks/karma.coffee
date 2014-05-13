@@ -6,13 +6,17 @@ module.exports = ->
   sauceLabs =
     sl_chrome:
       base: "SauceLabs"
-      platform: "Windows 7"
       browserName: "chrome"
 
     sl_firefox:
       base: "SauceLabs"
       browserName: "firefox"
-      version: "26"
+
+    sl_ie_7:
+      base: "SauceLabs"
+      platform: "Windows XP"
+      browserName: "internet explorer"
+      version: "7"
 
   @config "karma",
     options:
@@ -74,5 +78,5 @@ module.exports = ->
         ]
 
         sauceLabs:
-          testName: "Combyne Unit Tests"
+          testName: "Combyne Browser Tests"
           takeScreenshots: false

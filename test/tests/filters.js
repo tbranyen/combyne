@@ -35,7 +35,7 @@ define(function(require, exports, module) {
       var tmpl = combyne("testing this out {{test|reverse}}");
 
       tmpl.registerFilter("reverse", function(value) {
-        return Array.prototype.slice.call(value).reverse().join("");
+        return value.split("").reverse().join("");
       });
 
       var output = tmpl.render({ test: "tart" });
@@ -88,7 +88,7 @@ define(function(require, exports, module) {
       });
 
       tmpl.registerFilter("reverse", function(val) {
-        return [].slice.call(val).reverse().join("");
+        return val.split("").reverse().join("");
       });
 
       var output = tmpl.render({ test: "prop" });
