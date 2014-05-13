@@ -45,6 +45,12 @@ in your markup:
 <script src="combyne.js"></script>
 ```
 
+## Browser support. ##
+
+<a href="https://saucelabs.com/u/tbranyen">
+  <img src="https://saucelabs.com/browser-matrix/tbranyen.svg" alt="Selenium Tests Status" />
+</a>
+
 ## Basic usage. ##
 
 ``` javascript
