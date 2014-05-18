@@ -1,0 +1,11 @@
+bower_components
+node_modules
+build
+test
+.gitignore
+.jscs.json
+.jshintrc
+.npmignore
+.travis.yml
+CONTRIBUTING.md
+Gruntfile.coffee
