@@ -8,13 +8,23 @@
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
 
-## Getting started. ##
+## Install. ##
 
-### Node. ###
+Node:
 
 ``` bash
 npm install combyne
 ```
+
+Bower:
+
+``` bash
+bower install combyne
+```
+
+## Getting started. ##
+
+### Node. ###
 
 Require in your source:
 
@@ -25,7 +35,7 @@ var combyne = require("combyne");
 ### AMD. ###
 
 ``` javascript
-// Configure the path, if necessary.
+// Configure the path if necessary.
 require({
   paths: {
     combyne: "path/to/combyne"
@@ -35,6 +45,10 @@ require({
 // Use in a module.
 define(["combyne"], function(combyne) {});
 ```
+
+There is also an AMD plugin for easier consumption and building:
+
+https://github.com/tbranyen/combyne-amd-loader
 
 ### Browser global. ###
 
