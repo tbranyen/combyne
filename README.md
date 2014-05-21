@@ -59,6 +59,10 @@ in your markup:
 <script src="combyne.js"></script>
 ```
 
+#### Compatibility. ####
+
+[![Selenium Test Status](https://saucelabs.com/buildstatus/combyne)](https://saucelabs.com/u/combyne)
+
 ## Basic usage. ##
 
 ``` javascript
