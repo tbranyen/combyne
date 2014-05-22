@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Index</h1>
+
+    
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p><img align="left" src="http://dl.dropboxusercontent.com/u/79007/combyne.png"></p>
+<p><strong>Stable: 0.3.4</strong></p>
+<p><a href="https://travis-ci.org/tbranyen/combyne"><img src="https://travis-ci.org/tbranyen/combyne.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/tbranyen/combyne?branch=master"><img src="https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master" alt="Coverage Status"></a></p>
+<p>No dependencies.  Can be loaded as a browser global, AMD module, and Node
+module.  Works with Browserify.  Can be installed via NPM or Bower.</p>
+<h2>Getting started.</h2><h3>Node.</h3><pre><code class="lang-bash">npm install combyne
+</code></pre>
+<p>Require in your source:</p>
+<pre><code class="lang-javascript">var combyne = require(&quot;combyne&quot;);
+</code></pre>
+<h3>AMD.</h3><pre><code class="lang-javascript">// Configure the path, if necessary.
+require({
+  paths: {
+    combyne: &quot;path/to/combyne&quot;
+  }
+});
+
+// Use in a module.
+define([&quot;combyne&quot;], function(combyne) {});
+</code></pre>
+<h3>Browser global.</h3><p><a href="https://github.com/tbranyen/combyne/releases">Include the latest stable</a>
+in your markup:</p>
+<pre><code class="lang-html">&lt;script src=&quot;combyne.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2>Basic usage.</h2><pre><code class="lang-javascript">var tmpl = combyne(&quot;hello {{msg}}!&quot;);
+tmpl.render({ msg: &quot;world&quot; });
+
+// =&gt; hello world!
+</code></pre>
+<h2>Features.</h2><p>Combyne works by parsing your template into an AST.  This provides mechanisms
+for intelligent compilation and optimization.  The template is converted to
+JavaScript and invoked upon calling render with data.</p>
+<h3>Comments.</h3><p>Comments are useful for ignoring anything between the open and close.  They can
+be nested.</p>
+<pre><code class="lang-javascript">var tmpl = combyne(&quot;test {%-- not parsed --%}&quot;);
+tmpl.render();
+
+// =&gt; test
+</code></pre>
+<h3>Custom delimiters.</h3><p>If you are not happy with the default Mustache-like syntax, you can trivially
+change the delimiters to suit your needs.  You may only change the delimiters
+at a global level, because templates are compiled immediately after invoking
+the <code>combyne</code> function.</p>
+<pre><code class="lang-javascript">// This sets the delimiters, and applies to all templates.
+combyne.options.delimiters = {
+  START_PROP: &quot;[[&quot;,
+  END_PROP: &quot;]]&quot;
+};
+
+var tmpl = combyne(&quot;[[msg]]&quot;, { msg: &quot;hello world&quot; });
+
+tmpl.render();
+// =&gt; hello world
+</code></pre>
+<h3>Replacing template variables.</h3><pre><code class="lang-javascript">var template = &quot;{{foo}}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;hello&quot;
+</code></pre>
+<h3>Using filters on variables.</h3><pre><code class="lang-javascript">var template = &quot;{{foo|reverse}}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+tmpl.registerFilter(&quot;reverse&quot;, function(val) {
+  return val.split(&quot;&quot;).reverse().join(&quot;&quot;);
+});
+
+var output = tmpl.render(context);
+/// output == &quot;olleh&quot;
+</code></pre>
+<h4>Passing arguments to filters.</h4><p>You may find that the property value is not enough information for the filter
+function, in which case you can send additional arguments.</p>
+<pre><code class="lang-javascript">var tmpl = combyne(&quot;{{ code|highlight 'javascript' }}&quot;);
+
+tmpl.registerFilter(&quot;highlight&quot;, function(code, language) {
+  // Magic highlight function that takes code and language.
+  return highlight(code, language);
+});
+</code></pre>
+<h4>Chaining filters on variables.</h4><pre><code class="lang-javascript">var template = &quot;{{foo|reverse|toUpper}}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+tmpl.registerFilter(&quot;reverse&quot;, function(val) {
+  return val.split(&quot;&quot;).reverse().join(&quot;&quot;);
+});
+
+tmpl.registerFilter(&quot;toUpper&quot;, function(val) {
+  return val.toUpperCase();
+});
+
+var output = tmpl.render(context);
+/// output == &quot;OLLEH&quot;
+</code></pre>
+<h3>Conditionals.</h3><p>Instead of being <em>logic-less</em>, <code>combyne</code> doesn't make any assumptions and
+allows you to do things like <code>if/elsif/else</code> with simple conditionals,
+such as <code>if something == somethingElse</code> or <code>if not something</code>.  All data 
+types will be coerced to Strings except for Numbers.</p>
+<pre><code class="lang-javascript">var template = &quot;{%if not foo%}why not?{%endif%}&quot;;
+var context = { foo: false };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;why not?&quot;
+</code></pre>
+<p>or a more complicated example...</p>
+<pre><code class="lang-javascript">var template = &quot;{%if foo == 'hello'%}Hi!{%else%}bye...{%endif%}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;Hi!&quot;
+</code></pre>
+<p>elsif is also supported:</p>
+<pre><code class="lang-javascript">var template = &quot;{%if foo == ''%}goodbye!{%elsif foo == 'hello'%}hello!{%endif%}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;hello!&quot;
+</code></pre>
+<h3>Iterating arrays.</h3><p><em>Also works on array-like objects: arguments and NodeList.</em></p>
+<pre><code class="lang-javascript">var template = &quot;{%each foo%}{{.}} {%endeach%}&quot;;
+var context = { foo: [1,2,3,4] };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;1 2 3 4 &quot;
+</code></pre>
+<h4>Change the iterated identifer within loops.</h4><pre><code class="lang-javascript">var template = &quot;{%each arr as val%}{{val}}{%endeach%}&quot;;
+var context = { arr: [1,2,3] };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output = &quot;123&quot;
+</code></pre>
+<h3>Iterating objects.</h3><pre><code class="lang-javascript">var template = &quot;{%each fruits as val key%}the {{key}} is {{val}}{%endeach%}&quot;;
+var context = {
+  fruits: {
+    apple: &quot;green&quot;
+  }
+};
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == &quot;the apple is green&quot;
+</code></pre>
+<h3>Partials.</h3><pre><code class="lang-javascript">var template = &quot;{{foo}} {%partial bar%}&quot;;
+var context = { foo: &quot;hello&quot; };
+
+var tmpl = combyne(template);
+
+tmpl.registerPartial(&quot;bar&quot;, combyne(&quot;{{name}}&quot;, {
+  name: &quot;john&quot;
+}));
+
+var output = tmpl.render(context);
+/// output == &quot;hello john&quot;
+</code></pre>
+<h2>Unit tests.</h2><p>There are many ways to run the unit tests as this library can operate in
+various environments.</p>
+<h3>Browser</h3><p>Open test/index.html in your web browser.</p>
+<h3>Node</h3><p>Run the tests inside the Node runtime and within PhantomJS:</p>
+<pre><code class="lang-bash">grunt test
+</code></pre>
+<h3>Continuous testing</h3><p>To keep the PhantomJS tests running continuously, run:</p>
+<pre><code class="lang-bash">grunt karma:daemon
+</code></pre>
+<p>The tests will automatically run whenever files change.</p>
+<h4>Code coverage</h4><p>If you run the tests through Karma, a test/coverage directory will be created
+containing folders that correspond with the environment where the tests were
+run.</p>
+<p>If you are running the defaults you should see something that looks like:</p>
+<pre><code class="lang-unicode">.
+└── coverage
+    ├── Chrome 33.0.1750 (Linux)
+    └── PhantomJS 1.9.7 (Linux)
+</code></pre>
+<p>Inside PhantomJS contains the HTML output that can be opened in a browser to
+inspect the source coverage from running the tests.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-compiler.html">compiler</a></li><li><a href="module-grammar.html">grammar</a></li><li><a href="module-index.html">index</a></li><li><a href="register_filter.html">shared/register_filter</a></li><li><a href="register_partial.html">shared/register_partial</a></li><li><a href="module-tokenizer.html">tokenizer</a></li><li><a href="module-tree.html">tree</a></li><li><a href="create_object.html">utils/create_object</a></li><li><a href="defaults.html">utils/defaults</a></li><li><a href="escape_delimiter.html">utils/escape_delimiter</a></li><li><a href="map_.html">utils/map</a></li><li><a href="object_keys.html">utils/object_keys</a></li><li><a href="type.html">utils/type</a></li></ul><h3>Classes</h3><ul><li><a href="module-compiler.Compiler.html">Compiler</a></li><li><a href="module-grammar.Grammar.html">Grammar</a></li><li><a href="module-index.Combyne.html">Combyne</a></li><li><a href="module-tokenizer.Tokenizer.html">Tokenizer</a></li><li><a href="module-tree.Tree.html">Tree</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Thu May 22 2014 11:36:34 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
