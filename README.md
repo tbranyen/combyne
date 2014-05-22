@@ -78,6 +78,12 @@ Combyne works by parsing your template into an AST.  This provides mechanisms
 for intelligent compilation and optimization.  The template is converted to
 JavaScript and invoked upon calling render with data.
 
+### Encoding. ###
+
+By default all templates are encoded to avoid issues arising from XSS attacks.
+This is specifically applied to variables and you can avoid this by using the
+raw delimiters: `{{{ value }}}`.  This is very similar to Mustache.
+
 ### Comments. ###
 
 Comments are useful for ignoring anything between the open and close.  They can
@@ -108,6 +114,19 @@ var tmpl = combyne("[[msg]]", { msg: "hello world" });
 
 tmpl.render();
 // => hello world
+```
+
+Defaults:
+
+``` javascript
+START_RAW:  "{{{"
+END_RAW:    "}}}"
+START_PROP: "{{"
+END_PROP:   "}}"
+START_EXPR: "{%"
+END_EXPR:   "%}"
+COMMENT:    "--"
+FILTER:     "|"
 ```
 
 ### Replacing template variables. ###

@@ -49,7 +49,8 @@ define(function(require, exports, module) {
     });
 
     it("can handle unicode characters", function() {
-      var output = combyne("{{test}}").render({ test: "\u2C64" });
+      var tmpl = combyne("{{{test}}}");
+      var output = tmpl.render({ test: "\u2C64" });
 
       assert.equal(output, "\u2C64");
     });
