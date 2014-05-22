@@ -10,11 +10,10 @@ before_install:
 
 before_script:
   - npm install -g grunt-cli bower
-  - npm install
   - bower install
 
 script:
-  - "test $SAUCE_LABS = true && (grunt karma:saucelabs) || (npm test)"
+  - if ${SAUCE_LABS:=false}; then grunt karma:saucelabs; else npm test; fi;
 
 branches:
   only:
