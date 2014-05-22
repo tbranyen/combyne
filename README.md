@@ -61,7 +61,7 @@ in your markup:
 
 #### Compatibility. ####
 
-[![Selenium Test Status](https://saucelabs.com/buildstatus/combyne)](https://saucelabs.com/u/combyne)
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/combyne.svg)](https://saucelabs.com/u/combyne)
 
 ## Basic usage. ##
 
