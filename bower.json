@@ -5,7 +5,8 @@
   "devDependencies": {
     "mocha": "~1.18.2",
     "requirejs": "~2.1.10",
-    "assert": "~0.1.0"
+    "assert": "~0.1.0",
+    "json2": "*"
   },
   "ignore": [
     "build",
