@@ -271,6 +271,7 @@ var tmpl = combyne(template);
 
 var output = tmpl.render(context);
 /// output == "1 2 3 4 "
+```
 
 #### Change the iterated identifer within loops. ####
 
