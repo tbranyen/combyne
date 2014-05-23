@@ -371,11 +371,11 @@ define(function(require, exports, module) {
         assert.equal(output, "hihihi");
       });
 
-      it("loops over the objects repeat property funciton with a filter", function() {
+      it("loops over the objects repeat property function with a filter", function() {
         var tmpl = combyne("{%each demo%}{{demo.lol|reverse}}{%endeach%}");
 
         tmpl.registerFilter("reverse", function(val) {
-          return Array.prototype.slice.call(val).reverse().join("");
+          return val.split("").reverse().join("");
         });
 
         var output = tmpl.render({
