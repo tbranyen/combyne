@@ -6,7 +6,7 @@
     "mocha": "~1.18.2",
     "requirejs": "~2.1.10",
     "assert": "~0.1.0",
-    "json2": "*"
+    "json3": "~3.3.1"
   },
   "ignore": [
     "build",
