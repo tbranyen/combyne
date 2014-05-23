@@ -56,7 +56,7 @@ https://github.com/tbranyen/combyne-amd-loader
 in your markup:
 
 ``` html
-<script src="combyne.js"></script>
+<script src="path/to/dist/combyne.js"></script>
 ```
 
 #### Compatibility. ####
@@ -78,11 +78,21 @@ Combyne works by parsing your template into an AST.  This provides mechanisms
 for intelligent compilation and optimization.  The template is converted to
 JavaScript and invoked upon calling render with data.
 
-### Encoding. ###
+### Security. ###
 
-By default all templates are encoded to avoid issues arising from XSS attacks.
-This is specifically applied to variables and you can avoid this by using the
-raw delimiters: `{{{ value }}}`.  This is very similar to Mustache.
+By default all templates are encoded to avoid possible issues arising from XSS
+attacks.  This is specifically applied to properties and you can avoid this by
+using the raw property style: `{{{ value }}}`.  This is very similar to
+Mustache.
+
+While using this template engine in the browser, it is important to note that
+you should not trust unknown values to render unencoded.  The recommendation is
+to forget it exists while writing templates in the browser, unless you know
+what you're doing and have a valid use case.
+
+For more information:
+
+TODO ADD LINK
 
 ### Comments. ###
 
