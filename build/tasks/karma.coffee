@@ -4,6 +4,10 @@ module.exports = ->
   require "karma-sauce-launcher"
 
   sauceLabs =
+    sl_safari:
+      base: "SauceLabs"
+      browserName: "safari"
+
     sl_chrome:
       base: "SauceLabs"
       browserName: "chrome"
@@ -17,6 +21,18 @@ module.exports = ->
       platform: "Windows XP"
       browserName: "internet explorer"
       version: "7"
+
+    sl_ie_8:
+      base: "SauceLabs"
+      platform: "Windows XP"
+      browserName: "internet explorer"
+      version: "8"
+
+    sl_ie_9:
+      base: "SauceLabs"
+      platform: "Windows 7"
+      browserName: "internet explorer"
+      version: "9"
 
   @config "karma",
     options:
