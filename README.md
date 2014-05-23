@@ -90,9 +90,7 @@ you should not trust unknown values to render unencoded.  The recommendation is
 to forget it exists while writing templates in the browser, unless you know
 what you're doing and have a valid use case.
 
-For more information:
-
-TODO ADD LINK
+View this [XSS (Cross Site Scripting) Prevention Cheat Sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet) for more information.
 
 ### Comments. ###
 
