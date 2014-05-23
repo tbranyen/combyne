@@ -61,6 +61,11 @@ in your markup:
 
 #### Compatibility. ####
 
+Combyne is written in ES5 and contains polyfills to provide support back to IE
+7.  These polyfills are omitted in the **dist/combyne.js** file, but exist in
+the **dist/combyne.legacy.js** file.  Use this if you are developing/testing
+with older IE.
+
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/combyne.svg)](https://saucelabs.com/u/combyne)
 
 ## Basic usage. ##
