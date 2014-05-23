@@ -346,31 +346,46 @@ define(function(require, exports, module) {
         assert.equal(output, "lolyouwhat");
       });
 
-      /*
-  // Each loop over object do nothing, should not do anything
-  var tmpl3 = combyne("{%each demo%}key{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
-  test.equals( tmpl3.render(), "keykeykey", "Loop over an object" );
+      it("will do nothing when looping over the object", function() {
+        var tmpl = combyne("{%each demo%}key{%endeach%}");
+        var output = tmpl.render({ demo: { lol: "hi", you: "me?", what: "test" } });
 
-  // Each loop over object repeat property, 
-  var tmpl4 = combyne("{%each demo%}{{demo.lol}}{%endeach%}", { demo: { lol: "hi", you: "me?", what: "test" } });
-  test.equals( tmpl4.render(), "hihihi", "Loop over an object" );
+        assert.equal(output, "keykeykey");
+      });
 
-  // Each loop over object repeat property function
-  var tmpl5 = combyne("{%each demo%}{{demo.lol}}{%endeach%}", { demo: { lol: function() {
-    return "hi"; 
-  }, you: "me?", what: "test" } });
-  test.equals( tmpl5.render(), "hihihi", "Loop over an object property function" );
+      it("loops over the repeated object property", function() {
+        var tmpl = combyne("{%each demo%}{{demo.lol}}{%endeach%}");
+        var output = tmpl.render({ demo: { lol: "hi", you: "me?", what: "test" } });
 
-  // Each loop over object repeat property function with filter
-  var tmpl6 = combyne("{%each demo%}{{demo.lol|reverse}}{%endeach%}", { demo: { lol: function() {
-    return "hi"; 
-  }, you: "me?", what: "test" } });
-  tmpl6.filters.add("reverse", function( val ) {
-    return Array.prototype.slice.call(val).reverse().join("");
-  });
-  test.equals( tmpl6.render(), "ihihih", "Loop over an object property function and apply reverse filter" );
+        assert.equal(output, "hihihi");
+      });
 
-  */
+      it("loops over the repeat property function", function() {
+        var tmpl = combyne("{%each demo%}{{demo.lol}}{%endeach%}");
+        var output = tmpl.render({
+            demo: { lol: function() {
+            return "hi"; 
+          }, you: "me?", what: "test" }
+        });
+
+        assert.equal(output, "hihihi");
+      });
+
+      it("loops over the objects repeat property function with a filter", function() {
+        var tmpl = combyne("{%each demo%}{{demo.lol|reverse}}{%endeach%}");
+
+        tmpl.registerFilter("reverse", function(val) {
+          return val.split("").reverse().join("");
+        });
+
+        var output = tmpl.render({
+          demo: { lol: function() {
+            return "hi"; 
+          }, you: "me?", what: "test" }
+        });
+
+        assert.equal(output, "ihihih");
+      });
     });
 
     describe("complex loops with conditionals", function() {
