@@ -63,6 +63,7 @@ module.exports = ->
 
       files: [
         "bower_components/assert/assert.js"
+        "bower_components/json2/json2.js"
         "bower_components/requirejs/require.js"
         "test/runner.js"
 

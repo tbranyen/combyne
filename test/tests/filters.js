@@ -31,6 +31,30 @@ define(function(require, exports, module) {
       assert.equal(output, "3.5");
     });
 
+    it("will work with encoded properties", function() {
+      var tmpl = combyne("{{test|number}}");
+
+      tmpl.registerFilter("number", function(value) {
+        return Number(value.slice(6));
+      });
+
+      var output = tmpl.render({ test: "> 5" });
+
+      assert.equal(output, "5");
+    });
+
+    it("will work with raw properties", function() {
+      var tmpl = combyne("{{{test|number}}}");
+
+      tmpl.registerFilter("number", function(value) {
+        return Number(value.slice(1));
+      });
+
+      var output = tmpl.render({ test: "> 5" });
+
+      assert.equal(output, "5");
+    });
+
     it("can execute complex functions", function() {
       var tmpl = combyne("testing this out {{test|reverse}}");
 
