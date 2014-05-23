@@ -259,6 +259,19 @@ var output = tmpl.render(context);
 /// output == "1 2 3 4 "
 ```
 
+#### Iterating an array of objects shorthand. ####
+
+If you pass an array of objects to Combyne, you may iterate it via a shorthand:
+
+``` javascript
+var template = "{%each%}{{foo}} {%endeach%}";
+var context = [{ foo: 1 }, { foo: 2 }, { foo: 3 }, { foo: 4 }];
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == "1 2 3 4 "
+
 #### Change the iterated identifer within loops. ####
 
 ``` javascript
