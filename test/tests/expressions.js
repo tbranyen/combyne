@@ -297,6 +297,13 @@ define(function(require, exports, module) {
 
         assert.equal(output, "value");
       });
+
+      it("can scope lookups to context object", function() {
+        var tmpl = combyne("{%each%}{{key}}{%endeach%}");
+        var output = tmpl.render([{key:"value"}]);
+
+        assert.equal(output, "value");
+      });
     });
 
     describe("object loop", function() {
