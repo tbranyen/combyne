@@ -48,6 +48,13 @@ define(function(require, exports, module) {
       assert.equal(output, "test\ttest\ntest\rtest\r\ntest   test");
     });
 
+    it("does not lose data with encoding", function() {
+      var tmpl = combyne("{{test}}");
+      var output = tmpl.render({ test: "\u1D306" });
+
+      assert.equal(output, "\u1D306");
+    });
+
     it("can handle unicode characters", function() {
       var tmpl = combyne("{{{test}}}");
       var output = tmpl.render({ test: "\u2C64" });
