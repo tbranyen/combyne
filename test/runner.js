@@ -11,6 +11,7 @@
   var tests = [
     "lib/utils/escape_delimiter",
     "lib/utils/type",
+    "lib/utils/defaults",
     "lib/compiler",
     "lib/grammar",
     "lib/index",
