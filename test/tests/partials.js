@@ -4,6 +4,13 @@ define(function(require, exports, module) {
   var combyne = require("../../lib/index");
 
   describe("Partials", function() {
+    it("will error if invalid partial name is provided", function() {
+      assert.throws(function() {
+        var tmpl = combyne("{%partial%}");
+        var output = tmpl.render();
+      });
+    });
+
     it("can inject without clobbering the parent", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 
@@ -54,6 +61,16 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%partial 5 > 4%}");
         var output = tmpl.render();
       });
+    });
+
+    it("can render with reserved grammar", function() {
+      var tmpl = combyne("{{test}} {%partial partials/test%} 123");
+
+      tmpl.registerPartial("partials/test", combyne("prop", {}));
+
+      var output = tmpl.render({ test: "hello world" });
+
+      assert.equal(output, "hello world prop 123");
     });
   });
 });
