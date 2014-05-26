@@ -6,9 +6,9 @@ module.exports = ->
     "jscs"
     "browserify"
     "simplemocha"
-    "karma:source"
     "karma:modern"
     "karma:legacy"
+    "karma:source"
   ]
 
   @registerTask "default", [
