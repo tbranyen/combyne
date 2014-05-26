@@ -1,5 +1,5 @@
 (function(window) {
- "use strict";
+  "use strict";
 
   // The Karma object.
   var karma = window.__karma__;

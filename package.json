@@ -6,25 +6,23 @@
   "main": "dist/combyne.js",
   "devDependencies": {
     "amdefine": "~0.1.0",
-    "grunt": "~0.4.4",
-    "grunt-jscs-checker": "~0.4.1",
+    "browserify": "^4.1.5",
+    "deamdify": "~0.1.1",
+    "grunt": "~0.4.5",
+    "grunt-browserify": "~2.1.0",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-simple-mocha": "~0.4.0",
+    "grunt-jscs-checker": "~0.4.1",
     "grunt-karma": "~0.8.2",
     "grunt-karma-coveralls": "~2.4.4",
-    "karma-mocha": "~0.1.0",
-    "karma-coverage": "~0.2.1",
-    "karma-phantomjs-launcher": "~0.1.4",
+    "grunt-simple-mocha": "~0.4.0",
     "jsdoc": "~3.3.0-alpha5",
-    "browserify": "~3.46.0",
-    "deamdify": "~0.1.1",
+    "karma-coverage": "~0.2.1",
+    "karma-mocha": "~0.1.0",
+    "karma-phantomjs-launcher": "~0.1.4",
     "karma-sauce-launcher": "~0.2.8"
   },
   "scripts": {
     "test": "grunt test coveralls",
-    "doc": "jsdoc -r -d docs/ lib/ README.md",
-    "build": "npm run modern && npm run legacy",
-    "modern": "browserify --ignore=./lib/support/**/*.js -g deamdify lib -s combyne > dist/combyne.js",
-    "legacy": "browserify -g deamdify lib -s combyne > dist/combyne.legacy.js"
+    "doc": "jsdoc -r -d docs/ lib/ README.md"
   }
 }

@@ -72,13 +72,45 @@ module.exports = ->
         { pattern: "test/tests/**/*.js", included: false }
       ]
 
-    daemon:
+    watch:
       options:
         singleRun: false
 
-    run:
+    source:
       options:
         singleRun: true
+
+    modern:
+      options:
+        singleRun: true
+
+        files: [
+          "bower_components/assert/assert.js"
+          "bower_components/json3/lib/json3.js"
+          "bower_components/requirejs/require.js"
+          "test/run-modern.js"
+          "test/runner.js"
+
+          { pattern: "lib/**/*.*", included: false }
+          { pattern: "bower_components/**/*.*", included: false }
+          { pattern: "test/tests/**/*.js", included: false }
+        ]
+
+    legacy:
+      options:
+        singleRun: true
+
+        files: [
+          "bower_components/assert/assert.js"
+          "bower_components/json3/lib/json3.js"
+          "bower_components/requirejs/require.js"
+          "test/run-legacy.js"
+          "test/runner.js"
+
+          { pattern: "lib/**/*.*", included: false }
+          { pattern: "bower_components/**/*.*", included: false }
+          { pattern: "test/tests/**/*.js", included: false }
+        ]
 
     saucelabs:
       options:
