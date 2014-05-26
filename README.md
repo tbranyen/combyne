@@ -334,12 +334,15 @@ Run the tests inside the Node runtime and within PhantomJS:
 grunt test
 ```
 
+This will run the tests against the AMD source, the built modern
+dist/combyne.js, and the built legacy dist/combyne.legacy.js files.
+
 ### Continuous testing ###
 
 To keep the PhantomJS tests running continuously, run:
 
 ``` bash
-grunt karma:daemon
+grunt karma:watch
 ```
 
 The tests will automatically run whenever files change.

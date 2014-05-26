@@ -1,5 +1,5 @@
 (function(window) {
- "use strict";
+  "use strict";
 
   // The Karma object.
   var karma = window.__karma__;
@@ -40,7 +40,13 @@
   mocha.setup("bdd");
 
   // Modify the configuration to point to the correct source base.
-  require.config({ baseUrl: baseUrl }); 
+  require.config({
+    baseUrl: baseUrl,
+    paths: {
+      // Toggle the path to use a distribution or the source.
+      "../../lib/index": window.useDist || "../../lib/index"
+    }
+  }); 
 
   // Load all tests and start Karma.
   require(tests, karma ? karma.start : function() { mocha.run(); });
