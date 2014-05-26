@@ -50,6 +50,31 @@ There is also an AMD plugin for easier consumption and building:
 
 https://github.com/tbranyen/combyne-amd-loader
 
+### Browserify. ###
+
+[combynify](https://github.com/chesles/combynify) is a
+[browserify](https://github.com/substack/browserify) transform plugin to
+pre-compile combyne templates.
+
+In your code:
+
+``` javascript
+var template = require("./template.combyne");
+var data = { ... }
+
+template.render(data)
+```
+
+Install combynify and browserify it:
+
+``` bash
+npm install --save-dev combynify
+browserify -t combynify main.js > bundle.js
+```
+
+Once the template is precompiled, there is no dependency on the combyne
+engine.
+
 ### Browser global. ###
 
 [Include the latest stable](https://github.com/tbranyen/combyne/releases)
