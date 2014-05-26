@@ -56,6 +56,7 @@ module.exports = ->
       preprocessors:
         "lib/!(support).js": "coverage"
         "lib/!(support)/**/*.js": "coverage"
+        "dist/*.js": "coverage"
 
       coverageReporter:
         type: "lcov"
@@ -88,9 +89,10 @@ module.exports = ->
           "bower_components/assert/assert.js"
           "bower_components/json3/lib/json3.js"
           "bower_components/requirejs/require.js"
-          "test/run-modern.js"
+          "test/set-modern.js"
           "test/runner.js"
 
+          { pattern: "dist/combyne.js", included: false }
           { pattern: "lib/**/*.*", included: false }
           { pattern: "bower_components/**/*.*", included: false }
           { pattern: "test/tests/**/*.js", included: false }
@@ -104,9 +106,10 @@ module.exports = ->
           "bower_components/assert/assert.js"
           "bower_components/json3/lib/json3.js"
           "bower_components/requirejs/require.js"
-          "test/run-legacy.js"
+          "test/set-legacy.js"
           "test/runner.js"
 
+          { pattern: "dist/combyne.legacy.js", included: false }
           { pattern: "lib/**/*.*", included: false }
           { pattern: "bower_components/**/*.*", included: false }
           { pattern: "test/tests/**/*.js", included: false }

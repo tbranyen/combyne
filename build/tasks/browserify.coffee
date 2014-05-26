@@ -4,11 +4,13 @@ module.exports = ->
   @config "browserify",
     options:
       transform: ["deamdify"]
-      standalone: "combyne"
+
+      bundleOptions:
+        standalone: "combyne"
 
     modern:
       options:
-        "exclude": ["lib/support/**/*.js"]
+        "ignore": ["lib/support/**/*.js"]
 
       files:
         "dist/combyne.js": ["lib/index.js"]
