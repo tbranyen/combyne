@@ -11,9 +11,9 @@ define(function(require, exports, module) {
       assert.equal(output, "|| |    |");
     });
 
-    it("will error if invalid tokens are present", function() {
+    it("will error if invalid filter name is provided", function() {
       assert.throws(function() {
-        var tmpl = combyne("{{test|< 5}");
+        var tmpl = combyne("{{test|");
         tmpl.registerFilter("filter", function() {});
         var output = tmpl.render();
       });
@@ -154,6 +154,18 @@ define(function(require, exports, module) {
       var output = tmpl.render({ item: [ "hi", "you", "own" ] });
 
       assert.equal(output, " Name: hi  Name: you  Name: own ");
+    });
+
+    it("can render with reserved grammar", function() {
+      var tmpl = combyne("{{test|as}}");
+
+      tmpl.registerFilter("as", function(value) {
+        return value + " as";
+      });
+
+      var output = tmpl.render({ test: "hello world" });
+
+      assert.equal(output, "hello world as");
     });
   });
 });
