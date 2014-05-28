@@ -1,12 +1,12 @@
 {
   "name": "combyne",
   "description": "A template engine that works the way you expect.",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
   "devDependencies": {
     "amdefine": "~0.1.0",
-    "browserify": "^4.1.5",
+    "browserify": "~4.1.5",
     "deamdify": "~0.1.1",
     "grunt": "~0.4.5",
     "grunt-browserify": "~2.1.0",
