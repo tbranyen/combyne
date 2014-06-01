@@ -72,5 +72,29 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello world prop 123");
     });
+
+    describe("Injected partials", function() {
+      it("can inject a parent template", function() {
+        var tmpl = combyne("{%render layout as content%}{{test}}{%endrender%}");
+
+        tmpl.registerPartial("layout", combyne("<h1>{%partial content%}</h1>"));
+
+        var output = tmpl.render({ test: "hello world" });
+
+        assert.equal(output, "<h1>hello world</h1>");
+      });
+
+      it("will error if missing a template name", function() {
+        assert.throws(function() {
+          var tmpl = combyne("{%render as content%}{{test}}{%endrender%}");
+        });
+      });
+
+      it("will error if missing a partial name", function() {
+        assert.throws(function() {
+          var tmpl = combyne("{%render layout%}{{test}}{%endrender%}");
+        });
+      });
+    });
   });
 });
