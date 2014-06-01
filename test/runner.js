@@ -45,6 +45,12 @@
     paths: {
       // Toggle the path to use a distribution or the source.
       "../../lib/index": window.useDist || "../../lib/index"
+    },
+    // Make it easier to `require("combyne")` in the browser REPL.
+    map: {
+      "*": {
+        combyne: "../../lib/index"
+      }
     }
   }); 
 
