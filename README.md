@@ -370,7 +370,7 @@ structure like:
 
 ``` javascript
 var context = {
-  header: "Reserved for the layout header",
+  header: "My site",
 
   page: {
     header: "Home page"
@@ -379,9 +379,13 @@ var context = {
 
 // Pass the page object to the page template, restricting what it has access
 // to.
-var layout = "<body>{%partial content page%}</body>";
+var layout = "<title>{{header}}</title><body>{%partial content page%}</body>";
 
+// Register it in the partial. 
 page.registerPartial("layout", combyne(layout));
+
+var output = page.render(context);
+/// output == "<title>My site</title><body><h1>Home page</h1></body>"
 ```
 
 ## Unit tests. ##
