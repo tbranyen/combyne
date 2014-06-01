@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
+[![Code Climahttps://codeclimate.com/github/tbranyen/combyne/badgeste](https://codeclimate.com/github/tbranyen/combyne.png)](https://codeclimate.com/github/tbranyen/combyne)
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
