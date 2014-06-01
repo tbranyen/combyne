@@ -343,6 +343,47 @@ var output = tmpl.render(context);
 /// output == "hello john"
 ```
 
+#### Render and inject a partial. ####
+
+When using a framework that handles rendering for you and you wish to inject
+your template into a different template (maybe a layout) in a given region
+you can express this through a render expression.
+
+Illustrated below is a typical use case for this feature:
+
+``` javascript
+var template = "{%render layout as content%}<h1>{{header}}</h1>{%endrender%}";
+var context = { header: "Home page" };
+
+var page = combyne(template);
+
+// Register the layout template into the page template.
+page.registerPartial("layout", combyne("<body>{%partial content%}</body>"));
+
+var output = page.render(context);
+/// output == "<body><h1>Home page</h1></body>"
+```
+
+The context object you pass at the `page.render` line will be propagated to
+the partial template.  This means that you can optionally pass a nested object
+structure like:
+
+``` javascript
+var context = {
+  header: "Reserved for the layout header",
+
+  page: {
+    header: "Home page"
+  }
+};
+
+// Pass the page object to the page template, restricting what it has access
+// to.
+var layout = "<body>{%partial content page%}</body>";
+
+page.registerPartial("layout", combyne(layout));
+```
+
 ## Unit tests. ##
 
 There are many ways to run the unit tests as this library can operate in
