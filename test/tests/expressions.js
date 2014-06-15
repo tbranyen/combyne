@@ -304,6 +304,19 @@ define(function(require, exports, module) {
 
         assert.equal(output, "value");
       });
+
+      it("can handle nested properties with loops", function() {
+        var template = combyne("{%each header.css as val key%}{{val}}{%endeach%}");
+        var data = {
+          header: {
+            css: ["header.css"]
+          }
+        };
+
+        var output = template.render(data);
+
+        assert.equal(output, "header.css");
+      });
     });
 
     describe("object loop", function() {
