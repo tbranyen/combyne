@@ -36,6 +36,18 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world to you");
     });
 
+    it("can pass the parent's data", function() {
+      var tmpl = combyne("{{test}} {%partial test .%}");
+
+      tmpl.registerPartial("test", combyne("{{test}}"));
+
+      var output = tmpl.render({
+        test: "hello world"
+      });
+
+      assert.equal(output, "hello world hello world");
+    });
+
     it("can render text with an empty context", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 

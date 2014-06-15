@@ -343,6 +343,24 @@ var output = tmpl.render(context);
 /// output == "hello john"
 ```
 
+#### Pass template data to partial. ####
+
+If you need to pass the template's data to the partial, simply use the magic
+operator `.`.
+
+``` javascript
+var template = "{{foo}} {%partial bar .%}";
+var context = { foo: "hello", name: "carl" };
+
+var tmpl = combyne(template);
+
+tmpl.registerPartial("bar", combyne("{{name}}"));
+
+var output = tmpl.render(context);
+/// output == "hello carl"
+```
+
+
 #### Render and inject a partial. ####
 
 When using a framework that handles rendering for you and you wish to inject
