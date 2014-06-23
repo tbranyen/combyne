@@ -144,7 +144,7 @@ the `combyne` function.
 
 ``` javascript
 // This sets the delimiters, and applies to all templates.
-combyne.options.delimiters = {
+combyne.settings.delimiters = {
   START_PROP: "[[",
   END_PROP: "]]"
 };
