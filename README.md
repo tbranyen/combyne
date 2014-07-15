@@ -9,6 +9,12 @@
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
 
+Combyne works great with:
+
+- [Express](https://github.com/tbranyen/combynexpress)
+- [Browserify](https://github.com/chesles/combynify)
+- [AMD](https://github.com/tbranyen/combyne-amd-loader)
+
 ## Install. ##
 
 Node:
