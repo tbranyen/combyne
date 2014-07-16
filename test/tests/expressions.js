@@ -166,6 +166,13 @@ define(function(require, exports, module) {
 
         assert.equal(output, "hello");
       });
+
+      it("can evaluate strings containing reserved words", function() {
+        var tmpl = combyne("{%if hello == 'helloif'%}hello{%endif%}");
+        var output = tmpl.render({ hello: "helloif" });
+
+        assert.equal(output, "hello");
+      });
     });
 
     describe("else statement", function() {
