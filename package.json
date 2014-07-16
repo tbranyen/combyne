@@ -1,25 +1,25 @@
 {
   "name": "combyne",
   "description": "A template engine that works the way you expect.",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
   "devDependencies": {
     "amdefine": "~0.1.0",
-    "browserify": "~4.1.10",
+    "browserify": "~4.2.1",
     "deamdify": "~0.1.1",
     "grunt": "~0.4.5",
-    "grunt-browserify": "~2.1.0",
+    "grunt-browserify": "~2.1.3",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-jscs-checker": "~0.4.4",
+    "grunt-jscs-checker": "~0.6.1",
     "grunt-karma": "~0.8.3",
     "grunt-karma-coveralls": "~2.5.1",
     "grunt-simple-mocha": "~0.4.0",
-    "jsdoc": "~3.3.0-alpha8",
+    "jsdoc": "~3.3.0-alpha9",
     "karma-coverage": "~0.2.4",
-    "karma-mocha": "~0.1.3",
+    "karma-mocha": "~0.1.4",
     "karma-phantomjs-launcher": "~0.1.4",
-    "karma-sauce-launcher": "~0.2.8"
+    "karma-sauce-launcher": "~0.2.9"
   },
   "scripts": {
     "test": "grunt test coveralls",
