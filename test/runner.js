@@ -43,6 +43,7 @@
   // Modify the configuration to point to the correct source base.
   require.config({
     baseUrl: baseUrl,
+    urlArgs: "bust=" + +new Date(),
     paths: {
       // Toggle the path to use a distribution or the source.
       "../../lib/index": window.useDist || "../../lib/index"
