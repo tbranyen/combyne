@@ -12,6 +12,13 @@
 </head>
 
 <body>
+  <script id="test" type="template">
+  <ul>
+    {%each tests as test%}
+    <li>{{test}}</li>
+    {%endeach%}
+  </ul>
+  </script>
   <!-- Required Mocha tag. -->
   <div id="mocha"></div>
 
