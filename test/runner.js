@@ -17,6 +17,7 @@
     "lib/index",
     "lib/tokenizer",
     "lib/tree",
+    "basic",
     "comments",
     "delimiters",
     "expressions",
