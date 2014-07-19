@@ -167,5 +167,17 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello world as");
     });
+
+    it("can pass a template value to a filter as an argument", function() {
+      var tmpl = combyne("{{test|or test2}}");
+
+      tmpl.registerFilter("or", function(value, arg) {
+        return value || arg;
+      });
+
+      var output = tmpl.render({ test: false, test2: "hello" });
+
+      assert.equal(output, "hello");
+    });
   });
 });
