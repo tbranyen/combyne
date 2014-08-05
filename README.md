@@ -366,17 +366,16 @@ var output = tmpl.render(context);
 /// output == "hello carl"
 ```
 
-
-#### Render and inject a partial. ####
+#### Template inheritance. ####
 
 When using a framework that handles rendering for you and you wish to inject
 your template into a different template (maybe a layout) in a given region
-you can express this through a render expression.
+you can express this through template inheritance expressions.
 
 Illustrated below is a typical use case for this feature:
 
 ``` javascript
-var template = "{%render layout as content%}<h1>{{header}}</h1>{%endrender%}";
+var template = "{%extend layout as content%}<h1>{{header}}</h1>{%endextend%}";
 var context = { header: "Home page" };
 
 var page = combyne(template);
