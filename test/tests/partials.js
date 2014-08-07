@@ -87,7 +87,7 @@ define(function(require, exports, module) {
 
     describe("Injected partials", function() {
       it("can inject a parent template", function() {
-        var tmpl = combyne("{%render layout as content%}{{test}}{%endrender%}");
+        var tmpl = combyne("{%extend layout as content%}{{test}}{%endextend%}");
 
         tmpl.registerPartial("layout", combyne("<h1>{%partial content%}</h1>"));
 
@@ -98,13 +98,13 @@ define(function(require, exports, module) {
 
       it("will error if missing a template name", function() {
         assert.throws(function() {
-          var tmpl = combyne("{%render as content%}{{test}}{%endrender%}");
+          var tmpl = combyne("{%extend as content%}{{test}}{%endextend%}");
         });
       });
 
       it("will error if missing a partial name", function() {
         assert.throws(function() {
-          var tmpl = combyne("{%render layout%}{{test}}{%endrender%}");
+          var tmpl = combyne("{%extend layout%}{{test}}{%endextend%}");
         });
       });
     });
