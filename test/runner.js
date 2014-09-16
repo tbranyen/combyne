@@ -54,7 +54,7 @@
         combyne: "../../lib/index"
       }
     }
-  }); 
+  });
 
   // Load all tests and start Karma.
   require(tests, karma ? karma.start : function() { mocha.run(); });

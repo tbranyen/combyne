@@ -85,7 +85,7 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world prop 123");
     });
 
-    describe("Injected partials", function() {
+    describe("template inheritance", function() {
       it("can inject a parent template", function() {
         var tmpl = combyne("{%extend layout as content%}{{test}}{%endextend%}");
 

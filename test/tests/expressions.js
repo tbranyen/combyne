@@ -214,10 +214,10 @@ define(function(require, exports, module) {
 
     describe("elsif statement", function() {
       it("is supported", function() {
-        var tmpl = combyne("{%if test%}good{%elsif not test%}bad{%endif%}");
+        var tmpl = combyne("{%if test%}good{%elsif not test%}bad{%endif%} test");
         var output = tmpl.render({ test: false });
 
-        assert.equal(output, "bad");
+        assert.equal(output, "bad test");
       });
     });
 
@@ -261,8 +261,8 @@ define(function(require, exports, module) {
 
         var output = tmpl.render({
           prop: [
-            "1", 
-            "true", 
+            "1",
+            "true",
             31,
 
             function() {
@@ -384,7 +384,7 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each demo%}{{demo.lol}}{%endeach%}");
         var output = tmpl.render({
             demo: { lol: function() {
-            return "hi"; 
+            return "hi";
           }, you: "me?", what: "test" }
         });
 
@@ -400,7 +400,7 @@ define(function(require, exports, module) {
 
         var output = tmpl.render({
           demo: { lol: function() {
-            return "hi"; 
+            return "hi";
           }, you: "me?", what: "test" }
         });
 
