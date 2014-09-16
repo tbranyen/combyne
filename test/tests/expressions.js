@@ -213,7 +213,7 @@ define(function(require, exports, module) {
     });
 
     describe("elsif statement", function() {
-      it.only("is supported", function() {
+      it("is supported", function() {
         var tmpl = combyne("{%if test%}good{%elsif not test%}bad{%endif%} test");
         var output = tmpl.render({ test: false });
 
