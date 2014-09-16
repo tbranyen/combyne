@@ -5,7 +5,7 @@ module.exports = ->
     options:
       transform: ["deamdify"]
 
-      bundleOptions:
+      browserifyOptions:
         standalone: "combyne"
 
     modern:
