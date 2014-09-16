@@ -174,7 +174,8 @@ COMMENT:    "--"
 FILTER:     "|"
 ```
 
-### Replacing template variables. ###
+### Template variables. ###
+
 
 ``` javascript
 var template = "{{foo}}";
@@ -184,6 +185,21 @@ var tmpl = combyne(template);
 
 var output = tmpl.render(context);
 /// output == "hello"
+```
+
+Variables can be literal values, functions, or even objects.
+
+#### Passing arguments to a function. ####
+
+
+``` javascript
+var template = "{{toUpper 'hi'}}";
+var context = { toUpper: function(val) { return val.toUpperCase(); } };
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == "HI"
 ```
 
 ### Using filters on variables. ###
