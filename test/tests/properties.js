@@ -81,5 +81,17 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello world");
     });
+
+    it("can call a function and pass an argument", function() {
+      var output = combyne("{{test.toUpper 'test'}}").render({
+        test: {
+          toUpper: function(val) {
+            return val.toUpperCase();
+          }
+        }
+      });
+
+      assert.equal(output, "TEST");
+    });
   });
 });
