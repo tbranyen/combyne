@@ -179,5 +179,21 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello");
     });
+
+    it("can chain filters within a conditional", function() {
+      var tmpl = combyne("{%if false%}test{%else%}{{test|addWord 'try'|reverse}}{%endif%}");
+
+      tmpl.registerFilter("addWord", function(val, word) {
+        return val + word;
+      });
+
+      tmpl.registerFilter("reverse", function(val) {
+        return val.split("").reverse().join("");
+      });
+
+      var output = tmpl.render({ test: "prop" });
+
+      assert.equal(output, "yrtporp");
+    });
   });
 });
