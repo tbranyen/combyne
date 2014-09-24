@@ -93,5 +93,21 @@ define(function(require, exports, module) {
 
       assert.equal(output, "TEST");
     });
+
+    it("will not fail on leading whitespace", function( ){
+      var tmpl = combyne("{{ test.property|replace '**' '*'}}");
+
+      tmpl.registerFilter("replace", function(val, arg1, arg2) {
+        return val.replace(arg1, arg2);
+      });
+      
+      var output = tmpl.render({
+        test: {
+          property: "***"
+        }
+      });
+
+      assert.equal(output, "**");
+    });
   });
 });
