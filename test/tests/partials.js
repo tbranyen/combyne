@@ -85,6 +85,17 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world prop 123");
     });
 
+    it("can nest partials", function() {
+      var tmpl = combyne("{%partial test%}");
+
+      tmpl.registerPartial("test", combyne("{%partial nested%}", {}));
+      tmpl.registerPartial("nested", combyne("nested", {}));
+
+      var output = tmpl.render();
+
+      assert.equal(output, "nested");
+    });
+
     describe("template inheritance", function() {
       it("can inject a parent template", function() {
         var tmpl = combyne("{%extend layout as content%}{{test}}{%endextend%}");
