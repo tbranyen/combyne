@@ -1,7 +1,7 @@
 {
   "name": "combyne",
   "description": "A template engine that works the way you expect.",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "author": "Tim Branyen (@tbranyen)",
   "main": "dist/combyne.js",
   "devDependencies": {
