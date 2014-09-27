@@ -382,6 +382,30 @@ var output = tmpl.render(context);
 /// output == "hello carl"
 ```
 
+If you need to manipulate the data passed to any partial, you must create a
+function on the parent template's data that returns an object or array that
+will be used by the nested partial.
+
+You can even pass arguments along to that function to use.
+
+An example follows:
+
+``` javascript
+var template = "{%partial bar showName 'carl'%}";
+var context = {
+  showName: function(name) {
+    return { displayName: name };
+  }
+};
+
+var tmpl = combyne(template);
+
+tmpl.registerPartial("bar", combyne("hello {{displayName}}"));
+
+var output = tmpl.render(context);
+/// output == "hello carl"
+```
+
 #### Template inheritance. ####
 
 When using a framework that handles rendering for you and you wish to inject

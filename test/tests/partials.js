@@ -96,6 +96,20 @@ define(function(require, exports, module) {
       assert.equal(output, "nested");
     });
 
+    it("can use a function to provide partial data", function() {
+      var tmpl = combyne("{%partial test formatAB 1 2%}");
+
+      tmpl.registerPartial("test", combyne("{{a}} {{b}}", {}));
+
+      var output = tmpl.render({
+        formatAB: function(a, b) {
+          return { a: a, b: b };
+        }
+      });
+
+      assert.equal(output, "1 2");
+    });
+
     describe("template inheritance", function() {
       it("can inject a parent template", function() {
         var tmpl = combyne("{%extend layout as content%}{{test}}{%endextend%}");
