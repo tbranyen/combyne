@@ -22,6 +22,26 @@ define(function(require, exports, module) {
       });
     });
 
+    it("can process raw nested properties", function() {
+      var output = combyne("{{{nested.property}}}").render({
+        nested: {
+          property: "test"
+        }
+      });
+
+      assert.equal(output, "test");
+    });
+
+    it("does not print undefined properties", function() {
+      var output = combyne("{{{nested.property}}}").render({
+        nested: {
+          property: undefined
+        }
+      });
+
+      assert.equal(output, "");
+    });
+
     it("can replace many values", function() {
       var output = combyne("{{test}} {{test1}}").render({
         test: "hello world",
