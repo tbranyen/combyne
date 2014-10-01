@@ -185,6 +185,28 @@ define(function(require, exports, module) {
         assert.equal(output, "hello");
       });
 
+      it("can evaluate root with filters", function () {
+        var tmpl = combyne("{%if |upper == 'HELLO'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        var output = tmpl.render("hello");
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate root referenced by '.' with filters", function () {
+        var tmpl = combyne("{%if .|upper == 'HELLO'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        var output = tmpl.render("hello");
+        assert.equal(output, "hello");
+      });
+
       it("can evaluate statements with filters and parameters", function () {
         var tmpl = combyne("{%if hello|replace 'ello' 'ola' == 'hola'%}hello{%endif%}");
 
