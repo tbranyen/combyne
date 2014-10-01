@@ -31,6 +31,42 @@ define(function(require, exports, module) {
       assert.equal(output, "3.5");
     });
 
+    it("can ignore leading whitespace", function() {
+      var tmpl = combyne("{{test |mod6}}");
+
+      tmpl.registerFilter("mod6", function(value) {
+        return value % 6;
+      });
+
+      var output = tmpl.render({ test: 15.5 });
+
+      assert.equal(output, "3.5");
+    });
+
+    it("can ignore trailing whitespace", function() {
+      var tmpl = combyne("{{test| mod6}}");
+
+      tmpl.registerFilter("mod6", function(value) {
+        return value % 6;
+      });
+
+      var output = tmpl.render({ test: 15.5 });
+
+      assert.equal(output, "3.5");
+    });
+
+    it("can ignore leading and trailing whitespace", function() {
+      var tmpl = combyne("{{test| mod6}}");
+
+      tmpl.registerFilter("mod6", function(value) {
+        return value % 6;
+      });
+
+      var output = tmpl.render({ test: 15.5 });
+
+      assert.equal(output, "3.5");
+    });
+
     it("will work with encoded properties", function() {
       var tmpl = combyne("{{test|number}}");
 
