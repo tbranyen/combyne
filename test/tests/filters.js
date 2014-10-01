@@ -192,18 +192,6 @@ define(function(require, exports, module) {
       assert.equal(output, " Name: hi  Name: you  Name: own ");
     });
 
-    it("can render with reserved grammar", function() {
-      var tmpl = combyne("{{test|as}}");
-
-      tmpl.registerFilter("as", function(value) {
-        return value + " as";
-      });
-
-      var output = tmpl.render({ test: "hello world" });
-
-      assert.equal(output, "hello world as");
-    });
-
     it("can pass a template value to a filter as an argument", function() {
       var tmpl = combyne("{{test|or test2}}");
 
