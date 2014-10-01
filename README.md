@@ -138,7 +138,7 @@ be nested.
 var tmpl = combyne("test {%-- not parsed --%}");
 tmpl.render();
 
-// => test 
+// => test
 ```
 
 ### Custom delimiters. ###
@@ -256,7 +256,7 @@ var output = tmpl.render(context);
 
 Instead of being *logic-less*, `combyne` doesn't make any assumptions and
 allows you to do things like `if/elsif/else` with simple conditionals,
-such as `if something == somethingElse` or `if not something`.  All data 
+such as `if something == somethingElse` or `if not something`.  All data
 types will be coerced to Strings except for Numbers.
 
 ``` javascript
@@ -291,6 +291,32 @@ var tmpl = combyne(template);
 
 var output = tmpl.render(context);
 /// output == "hello!"
+```
+
+You can also pass conditionals through filters to do more complex logic:
+
+``` javascript
+var tmpl = combyne("{%if hello|upper|reverse == 'OLLEH'%}hello{%endif%}");
+
+tmpl.registerFilter('upper', function(value) {
+  return value.toUpperCase();
+});
+
+tmpl.registerFilter("reverse", function(value) {
+  return value.split("").reverse().join("");
+});
+
+var output = tmpl.render({ hello: 'hello'});
+/// output == "hello"
+```
+
+It also works with properties that need to be not encoded
+
+``` javascript
+var tmpl = combyne("{%if {{{hello}}} == '<>'%}hello{%endif%}");
+
+var output = tmpl.render({ hello: '<>'});
+/// output == "hello";
 ```
 
 ### Iterating arrays. ###
@@ -444,7 +470,7 @@ var context = {
 // to.
 var layout = "<title>{{header}}</title><body>{%partial content page%}</body>";
 
-// Register it in the partial. 
+// Register it in the partial.
 page.registerPartial("layout", combyne(layout));
 
 var output = page.render(context);
