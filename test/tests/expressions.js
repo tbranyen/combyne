@@ -173,6 +173,94 @@ define(function(require, exports, module) {
 
         assert.equal(output, "hello");
       });
+
+      it("can evaluate statements with filters", function () {
+        var tmpl = combyne("{%if hello|upper == 'HELLO'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        var output = tmpl.render({ hello: "hello"});
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate root with filters", function () {
+        var tmpl = combyne("{%if |upper == 'HELLO'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        var output = tmpl.render("hello");
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate root referenced by '.' with filters", function () {
+        var tmpl = combyne("{%if .|upper == 'HELLO'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        var output = tmpl.render("hello");
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate statements with filters and parameters", function () {
+        var tmpl = combyne("{%if hello|replace 'ello' 'ola' == 'hola'%}hello{%endif%}");
+
+        tmpl.registerFilter("replace", function(value, replaceThis, withThat) {
+          return value.replace(replaceThis, withThat);
+        });
+
+        var output = tmpl.render({ hello: "hello"});
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate statements with nested filters", function () {
+        var tmpl = combyne("{%if hello|upper|reverse == 'OLLEH'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        tmpl.registerFilter("reverse", function(value) {
+          return value.split("").reverse().join("");
+        });
+
+        var output = tmpl.render({ hello: "hello"});
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate statements with explicitly declared properties", function () {
+        var tmpl = combyne("{%if {{hello}} == 'hello'%}hello{%endif%}");
+
+        var output = tmpl.render({ hello: "hello"});
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate statements with explicitly declared properties with filters", function () {
+        var tmpl = combyne("{%if {{hello|upper|reverse}} == 'OLLEH'%}hello{%endif%}");
+
+        tmpl.registerFilter("upper", function(value) {
+          return value.toUpperCase();
+        });
+
+        tmpl.registerFilter("reverse", function(value) {
+          return value.split("").reverse().join("");
+        });
+
+        var output = tmpl.render({ hello: "hello"});
+        assert.equal(output, "hello");
+      });
+
+      it("can evaluate statements with raw properties", function () {
+        var tmpl = combyne("{%if {{{hello}}} == '<>'%}hello{%endif%}");
+
+        var output = tmpl.render({ hello: "<>"});
+        assert.equal(output, "hello");
+      });
     });
 
     describe("else statement", function() {
