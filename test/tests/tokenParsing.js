@@ -10,5 +10,12 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello");
     });
+
+    it("parses properties starting with reserved words", function() {
+      var template = combyne("{{ assignment }}");
+      var output = template.render({ assignment: "hello" });
+
+      assert.equal(output, "hello");
+    });
   });
 });
