@@ -340,6 +340,13 @@ define(function(require, exports, module) {
         assert.equal(output, "hellohellohellohellohello");
       });
 
+      it("can iterate a simple array on root", function() {
+        var tmpl = combyne("{%each%}hello{%endeach%}");
+        var output = tmpl.render([1, 2, 3, 4, 5]);
+
+        assert.equal(output, "hellohellohellohellohello");
+      });
+
       it("can iterate a moderately complicated with filter", function() {
         var tmpl = combyne("{%each prop%}{{i|toString}} {{.}}{%endeach%}");
 
@@ -411,6 +418,144 @@ define(function(require, exports, module) {
         var output = template.render(data);
 
         assert.equal(output, "header.css");
+      });
+
+      it("can loop over a property called through a filter", function() {
+        var tmpl = combyne("{%each hello|upper%}{{.}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        var output = tmpl.render({
+          hello: [
+            "hola",
+            "hallo",
+            "hello",
+            "bonjour",
+            "ahoj"
+          ]
+        });
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
+      });
+
+      it("can loop over the root called through a filter", function() {
+        var tmpl = combyne("{%each |upper%}{{.}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        var output = tmpl.render([
+            "hola",
+            "hallo",
+            "hello",
+            "bonjour",
+            "ahoj"
+          ]);
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
+      });
+
+      it("can loop over the root as '.' called through a filter", function() {
+        var tmpl = combyne("{%each .|upper%}{{.}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        var output = tmpl.render([
+            "hola",
+            "hallo",
+            "hello",
+            "bonjour",
+            "ahoj"
+          ]);
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
+      });
+
+      it("can loop over a property called through a filter and assigned a new iterator name", function() {
+        var tmpl = combyne("{%each hello|upper as val%}{{val}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        var output = tmpl.render({
+          hello: [
+            "hola",
+            "hallo",
+            "hello",
+            "bonjour",
+            "ahoj"
+          ]
+        });
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
+      });
+
+      it("can loop over a property called through many filters", function() {
+        var tmpl = combyne("{%each hello|upper|trim%}{{.}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        tmpl.registerFilter("trim", function(array) {
+          return array.map(function (entry) {
+            return entry.trim();
+          });
+        });
+
+        var output = tmpl.render({
+          hello: [
+            "  hola  ",
+            " hallo ",
+            "hello ",
+            " bonjour",
+            "ahoj"
+          ]
+        });
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
+      });
+
+      it("can loop over a property called through a filter and each item called through a filter", function() {
+        var tmpl = combyne("{%each hello|upper%}{{.|reverse}}{%endeach%}");
+
+        tmpl.registerFilter("upper", function(array) {
+          return array.map(function (entry) {
+            return entry.toUpperCase();
+          });
+        });
+
+        tmpl.registerFilter("reverse", function(value) {
+          return value.split("").reverse().join("");
+        });
+
+        var output = tmpl.render({
+          hello: [
+            "hola",
+            "hallo",
+            "hello",
+            "bonjour",
+            "ahoj"
+          ]
+        });
+
+        assert.equal(output, "ALOHOLLAHOLLEHRUOJNOBJOHA");
       });
     });
 

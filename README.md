@@ -333,6 +333,43 @@ var output = tmpl.render(context);
 /// output == "1 2 3 4 "
 ```
 
+You can also pass the value into a filter before iterating over it
+
+``` javascript
+var template = "{%each foo|upper%}{{.}} {%endeach%}";
+var context = { foo: ["a", "b", "c"] };
+
+template.registerFilter("upper", function(array) {
+  return array.map(function (entry) {
+    return entry.toUpperCase();
+  });
+});
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == "A B C"
+```
+
+You can even use filters on the root object by either specifying '.'
+or leaving it blank
+
+``` javascript
+var template = "{%each .|upper%}{{.}} {%endeach%}";
+var context = ["a", "b", "c"];
+
+template.registerFilter("upper", function(array) {
+  return array.map(function (entry) {
+    return entry.toUpperCase();
+  });
+});
+
+var tmpl = combyne(template);
+
+var output = tmpl.render(context);
+/// output == "A B C"
+```
+
 #### Iterating an array of objects shorthand. ####
 
 If you pass an array of objects to Combyne, you may iterate it via a shorthand:
