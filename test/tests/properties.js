@@ -23,13 +23,22 @@ define(function(require, exports, module) {
     });
 
     it("can process raw nested properties", function() {
-      var output = combyne("{{{nested.property}}}").render({
-        nested: {
-          property: "test"
-        }
+      var output = combyne("{{{ code }}}").render({
+        code: "\x3E"
       });
 
-      assert.equal(output, "test");
+      assert.equal(output, ">");
+    });
+
+    it("can process raw nested properties within conditional", function() {
+      var template = combyne("{%if true%}({{{ code }}}){%endif%}");
+
+      var output = template.render({
+        truthy: true,
+        code: "test"
+      });
+
+      assert.equal(output, "(test)");
     });
 
     it("does not print undefined properties", function() {
