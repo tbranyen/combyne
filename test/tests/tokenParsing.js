@@ -43,7 +43,7 @@ define(function(require, exports, module) {
       var template = combyne("'{{ hello }} world'");
       var output = template.render({ hello: 'hello' });
 
-      assert.equal(output, "hello world");
+      assert.equal(output, "'hello world'");
     });
   });
 });
