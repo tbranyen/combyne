@@ -24,5 +24,26 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello");
     });
+
+    it("ignores whitespaces inside of properties", function() {
+      var template = combyne("{{ hello }}");
+      var output = template.render({ hello: 'hello' });
+
+      assert.equal(output, "hello");
+    });
+
+    it("ignores whitespaces inside of raw properties", function() {
+      var template = combyne("{{{ hello }}}");
+      var output = template.render({ hello: 'hello' });
+
+      assert.equal(output, "hello");
+    });
+
+    it("ignores whitespaces inside of properties that are inside of strings", function() {
+      var template = combyne("'{{ hello }} world'");
+      var output = template.render({ hello: 'hello' });
+
+      assert.equal(output, "hello world");
+    });
   });
 });
