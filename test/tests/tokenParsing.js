@@ -17,5 +17,12 @@ define(function(require, exports, module) {
 
       assert.equal(output, "hello");
     });
+
+    it("parses whitespaces inside of literals", function() {
+      var template = combyne("{%if hello == 'test this'%}hello{%endif%}");
+      var output = template.render({ hello: 'test this' });
+
+      assert.equal(output, "hello");
+    });
   });
 });
