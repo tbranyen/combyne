@@ -25,7 +25,8 @@
     "html",
     "partials",
     "properties",
-    "tokenParsing"
+    "tokenParsing",
+    "whitespace"
   ];
 
   // Operating within Node, setup the AMD intercept and abort.
