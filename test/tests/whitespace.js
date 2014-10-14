@@ -39,6 +39,13 @@ define(function(require, exports, module) {
       assert.equal(output, "     ");
     });
 
+    it("is preserved between words", function() {
+      var template = combyne("test\nthis \n\n{%if true%}that{%endif%}");
+      var output = template.render();
+
+      assert.equal(output, "test\nthis \n\nthat");
+    });
+
     it("can format a simple each", function() {
       var template = combyne([
         "{%each items as item%}",
