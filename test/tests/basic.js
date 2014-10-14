@@ -49,5 +49,21 @@ define(function(require, exports, module) {
 
       assert.equal(output, "1\n2\n3\n");
     });
+
+    it("trims leading whitespace around delimiters", function() {
+      var text = [
+        "{%each items as item%}",
+        "  {%if item%}",
+        "    {{item}}",
+        "  {%endif%}",
+        "{%endeach%}",
+        "test"
+      ].join("\n");
+
+      var template = combyne(text);
+      var output = template.render({ items: [0, 1, 2, 3] });
+
+      assert.equal(output, "    1\n    2\n    3\ntest");
+    });
   });
 });
