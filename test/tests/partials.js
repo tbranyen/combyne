@@ -105,6 +105,22 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world prop 123");
     });
 
+    it("can render filters within partials", function() {
+      var tmpl = combyne("{{test}} {%partial test .%}");
+
+      tmpl.registerPartial("test", combyne("{{test|uppercase}}"));
+
+      tmpl.registerFilter("uppercase", function(prop) {
+        return prop.toUpperCase();
+      });
+
+      var output = tmpl.render({
+        test: "hello world"
+      });
+
+      assert.equal(output, "hello world HELLO WORLD");
+    });
+
     it("can nest partials", function() {
       var tmpl = combyne("{%partial test%}");
 
