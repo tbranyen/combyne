@@ -36,6 +36,26 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world to you");
     });
 
+    it("can accept a filtered context object", function() {
+      var tmpl = combyne("{{test}} {%partial test prop|append-uncertainty%}");
+
+      tmpl.registerPartial("test", combyne("{{test}}"));
+
+      tmpl.registerFilter("append-uncertainty", function(prop) {
+        prop.test += ", perhaps?";
+        return prop;
+      });
+
+      var output = tmpl.render({
+        test: "hello world",
+        prop: {
+          test: "to you"
+        }
+      });
+
+      assert.equal(output, "hello world to you, perhaps?");
+    });
+
     it("can pass the parent's data", function() {
       var tmpl = combyne("{{test}} {%partial test .%}");
 
@@ -83,6 +103,22 @@ define(function(require, exports, module) {
       var output = tmpl.render({ test: "hello world" });
 
       assert.equal(output, "hello world prop 123");
+    });
+
+    it("can render filters within partials", function() {
+      var tmpl = combyne("{{test}} {%partial test .%}");
+
+      tmpl.registerPartial("test", combyne("{{test|uppercase}}"));
+
+      tmpl.registerFilter("uppercase", function(prop) {
+        return prop.toUpperCase();
+      });
+
+      var output = tmpl.render({
+        test: "hello world"
+      });
+
+      assert.equal(output, "hello world HELLO WORLD");
     });
 
     it("can nest partials", function() {
