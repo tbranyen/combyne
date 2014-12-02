@@ -1,35 +1,28 @@
 language: node_js
-
 node_js:
-  - 0.8
-  - 0.10
-  - 0.11
-
+- 0.8
+- 0.1
+- 0.11
 before_install:
-  - npm install -g npm@~1.4.6
-
+- npm install -g npm@~1.4.6
 before_script:
-  - npm install -g grunt-cli bower
-  - bower install
-
+- npm install -g grunt-cli bower
+- bower install
 script:
-  - if ${SAUCE_LABS:=false}; then grunt karma:saucelabs; else npm test; fi;
-
+- if ${SAUCE_LABS:=false}; then grunt karma:saucelabs; else npm test; fi;
 branches:
   only:
-    - master
-    - wip
-
+  - master
+  - wip
 matrix:
   fast_finish: true
   allow_failures:
-    - node_js: 0.8
-    - node_js: 0.11
+  - node_js: 0.8
+  - node_js: 0.11
   include:
-    - node_js: 0.10
-      env: SAUCE_LABS=true
-
+  - node_js: 0.1
+    env: SAUCE_LABS=true
 env:
   global:
-    - secure: "DSRkxY6O9/N7FO8fXkqYDx97d2CFS53bADnNZMkRlD2FXG5gX+yJ6JuDn4SskxchL16B68pn/Nl25DgDljyZckU8ejQzAPC9hiaoyhGEUn1aZ2cYCkVYPor0CVbcERHi0h5bvFh2NnP0j/cpxdN7cMANvTUYrQ/2nTcMRAchi34="
-    - secure: "HPwfpHJSpEnorHHUv48TCTgcL6/uAzT9H2aEhVLNfx2G6vREr7AUWUFxn+ftKrdQ4jKiHi68SWWap6SaLgJX4kwSsY5O7wWOZLVVcxbbCJ5wyIJfGG1OuFpI4lfcH3Ynpu65ehcdb8RvYoQjojEQPdhtYl9psNgzTowgd/1bUIc="
+  - secure: VENcGY9RAiBcXlNYExUYV4aG+di1Bizp1TCmvHxfehEztQFn/6mrer8PMvgYIqcag9XnnPUJtI5YgqJsVWr6IJIFdKuZ/wzmSl6z3KNc3FmqqX3ooNPo2EW+NHwQz5FKc/8fF7OnERHlcC8k290nOWWBExDGloL2rNrDklosQJw=
+  - secure: e9YLeuu+UDhrVFnbouthkde4F5Uerhq/jeigl71BUBICSqhcAVMmAyXiiFVfyrlrZAUWBCa19C4loFQe1yC3/xZw3q57AaRsahMvVLNhkV9YcrwL5+nGcpQ9umCZZF9cBng3IaLFgw8i7R9LDuSfkbnOJN0lf/uvbeJ9SpoV84Q=

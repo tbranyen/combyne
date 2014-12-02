@@ -469,6 +469,26 @@ var output = tmpl.render(context);
 /// output == "hello carl"
 ```
 
+If you wish to filter the data passed to the partial you can supply a filter.
+
+``` javascript
+var people = { carl: { knownAs: 'Carl, the Duke' } };
+var template = "{%partial bar people|find 'carl'%}";
+var context = {
+  find: function(name) {
+    return people[name];
+  }
+};
+
+var tmpl = combyne(template);
+
+tmpl.registerPartial("bar", combyne("hello {{knownAs}}"));
+
+var output = tmpl.render(context);
+/// output == "hello Carl, the Duke"
+
+```
+
 #### Template inheritance. ####
 
 When using a framework that handles rendering for you and you wish to inject
