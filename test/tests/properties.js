@@ -123,6 +123,19 @@ define(function(require, exports, module) {
       assert.equal(output, "TEST");
     });
 
+    it("can call a function and pass a variable argument", function() {
+      var output = combyne("{{test.toUpper msg}}").render({
+        msg: "test",
+        test: {
+          toUpper: function(val) {
+            return val.toUpperCase();
+          }
+        }
+      });
+
+      assert.equal(output, "TEST");
+    });
+
     it("will not fail on leading whitespace", function( ){
       var tmpl = combyne("{{ test.property|replace '**' '*'}}");
 
