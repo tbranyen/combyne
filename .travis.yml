@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-- 0.8
 - 0.1
 - 0.11
 before_install:
@@ -17,12 +16,11 @@ branches:
 matrix:
   fast_finish: true
   allow_failures:
-  - node_js: 0.8
   - node_js: 0.11
   include:
   - node_js: 0.1
     env: SAUCE_LABS=true
 env:
   global:
-  - secure: VENcGY9RAiBcXlNYExUYV4aG+di1Bizp1TCmvHxfehEztQFn/6mrer8PMvgYIqcag9XnnPUJtI5YgqJsVWr6IJIFdKuZ/wzmSl6z3KNc3FmqqX3ooNPo2EW+NHwQz5FKc/8fF7OnERHlcC8k290nOWWBExDGloL2rNrDklosQJw=
-  - secure: e9YLeuu+UDhrVFnbouthkde4F5Uerhq/jeigl71BUBICSqhcAVMmAyXiiFVfyrlrZAUWBCa19C4loFQe1yC3/xZw3q57AaRsahMvVLNhkV9YcrwL5+nGcpQ9umCZZF9cBng3IaLFgw8i7R9LDuSfkbnOJN0lf/uvbeJ9SpoV84Q=
+  - secure: R3bM/HAisAEz4LpC35o3/FJhH8HctOluCTxB/pZXmuKPDlCpIMYVZGo+CKeWP4avOvTMdnuXaKimdNKNMflK+IwF8SLC3+Wv4sQELGJ6cbYcL4hue9pYD0rDjJCdOC72cgqA1paNcUe91VfWCjRK/OCYQ7RrRQ9BPwHX0bvxlWk=
+  - secure: IGpplkIzAMV0Uvg4wmK1RqyztHWsU49KSgA+FlcsibgBhYozay06OQAhcsbrUOGgGNw/4A3TNn2nuOaZJNGhrAEGwekodi2QOSUFlPY6K0f916iV8lz5rlhSP6CmgBZpyCEIfVCebiQ3rAiOSi2HBZ3tonat2VEwun8ddzA08LA=
