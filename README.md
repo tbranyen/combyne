@@ -103,7 +103,7 @@ Combyne is written in ES5 and contains polyfills to provide support back to IE
 the **dist/combyne.legacy.js** file.  Use this if you are developing/testing
 with older IE.
 
-[![Selenium Test Status](https://saucelabs.com/browser-matrix/combyne.svg)](https://saucelabs.com/u/combyne)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/tbranyen.svg)](https://saucelabs.com/u/tbranyen)
 
 ## Basic usage. ##
 
