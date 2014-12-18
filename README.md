@@ -4,7 +4,8 @@
 
 [![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
-[![Code Climahttps://codeclimate.com/github/tbranyen/combyne/badgeste](https://codeclimate.com/github/tbranyen/combyne.png)](https://codeclimate.com/github/tbranyen/combyne)
+[![Code Climate](https://codeclimate.com/github/tbranyen/combyne.png)](https://codeclimate.com/github/tbranyen/combyne)
+
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
@@ -14,6 +15,10 @@ Combyne works great with:
 - [Express](https://github.com/tbranyen/combynexpress)
 - [Browserify](https://github.com/chesles/combynify)
 - [AMD](https://github.com/tbranyen/combyne-amd-loader)
+
+**For when you're stuck and need help:**
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tbranyen/combyne?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Install. ##
 
