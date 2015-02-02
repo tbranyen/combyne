@@ -442,6 +442,33 @@ define(function(require, exports, module) {
         assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
       });
 
+      it("can loop over a property called through a filter with a parameter", function() {
+        var tmpl = combyne("{%each hello|case true %}{{.}}{%endeach%}{%each hello|case false %}{{.}}{%endeach%}");
+
+        tmpl.registerFilter("case", function(array, toUpperCase) {
+          return array.map(function (entry) {
+            if (toUpperCase) {
+              return entry.toUpperCase();
+            }
+            else {
+              return entry.toLowerCase();
+            }
+          });
+        });
+
+        var output = tmpl.render({
+          hello: [
+            "Hola",
+            "Hallo",
+            "Hello",
+            "bonjour",
+            "ahoj"
+          ]
+        });
+
+        assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJholahallohellobonjourahoj");
+      });
+
       it("can loop over the root called through a filter", function() {
         var tmpl = combyne("{%each |upper%}{{.}}{%endeach%}");
 
