@@ -2,9 +2,9 @@
 
 **Stable: 0.6.4**
 
-[![Build Status](https://travis-ci.org/tbranyen/combyne.png?branch=master)](https://travis-ci.org/tbranyen/combyne)
-[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.png?branch=master)](https://coveralls.io/r/tbranyen/combyne?branch=master)
-[![Code Climate](https://codeclimate.com/github/tbranyen/combyne.png)](https://codeclimate.com/github/tbranyen/combyne)
+[![Build Status](https://travis-ci.org/tbranyen/combyne.svg)](https://travis-ci.org/tbranyen/combyne)
+[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.svg)](https://coveralls.io/r/tbranyen/combyne?branch=master)
+[![Code Climate](https://codeclimate.com/github/tbranyen/combyne.svg)](https://codeclimate.com/github/tbranyen/combyne)
 
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
