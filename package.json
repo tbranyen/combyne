@@ -23,7 +23,7 @@
     "karma-sauce-launcher": "^0.2.10"
   },
   "scripts": {
-    "test": "grunt test coveralls",
+    "test": "grunt test",
     "doc": "jsdoc -r -d docs/ lib/ README.md"
   }
 }
