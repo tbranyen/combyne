@@ -446,13 +446,8 @@ define(function(require, exports, module) {
         var tmpl = combyne("{%each hello|case true %}{{.}}{%endeach%}{%each hello|case false %}{{.}}{%endeach%}");
 
         tmpl.registerFilter("case", function(array, toUpperCase) {
-          return array.map(function (entry) {
-            if (toUpperCase) {
-              return entry.toUpperCase();
-            }
-            else {
-              return entry.toLowerCase();
-            }
+          return array.map(function(entry) {
+            return toUpperCase ? entry.toUpperCase() : entry.toLowerCase();
           });
         });
 
