@@ -1,6 +1,6 @@
 <img align="left" src="http://dl.dropboxusercontent.com/u/79007/combyne.png">
 
-**Stable: 0.6.5**
+**Stable: 0.7.0**
 
 [![Build Status](https://travis-ci.org/tbranyen/combyne.svg)](https://travis-ci.org/tbranyen/combyne)
 [![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.svg)](https://coveralls.io/r/tbranyen/combyne?branch=master)
