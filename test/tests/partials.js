@@ -121,11 +121,28 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world HELLO WORLD");
     });
 
+    it("can render filters from partials, filter registered first", function() {
+      var tmpl = combyne("{{test}} {%partial test .%}");
+
+      tmpl.registerFilter("uppercase", function(prop) {
+        return prop.toUpperCase();
+      });
+
+      tmpl.registerPartial("test", combyne("{{test|uppercase}}"));
+
+      var output = tmpl.render({
+        test: "hello world"
+      });
+
+      assert.equal(output, "hello world HELLO WORLD");
+    });
+
     it("can nest partials", function() {
       var tmpl = combyne("{%partial test%}");
+      var test = combyne("{%partial nested%}", {});
 
-      tmpl.registerPartial("test", combyne("{%partial nested%}", {}));
-      tmpl.registerPartial("nested", combyne("nested", {}));
+      tmpl.registerPartial("test", test);
+      test.registerPartial("nested", combyne("nested", {}));
 
       var output = tmpl.render();
 
