@@ -11,6 +11,29 @@ define(function(require, exports, module) {
       });
     });
 
+    it("will report a meaningful error for missing partials", function() {
+      try {
+        var tmpl = combyne("{%partial name%}");
+        var output = tmpl.render();
+      }
+      catch (ex) {
+        assert.equal(ex.message, "Missing partial name");
+      }
+    });
+
+    it("nested partials are not overwritten by parent", function() {
+      var tmpl = combyne("{%partial nested%}");
+      var nested = combyne("{%partial correct%}");
+
+      nested.registerPartial("correct", combyne("Correct"));
+      tmpl.registerPartial("nested", nested);
+      tmpl.registerPartial("correct", combyne("Incorrect"));
+
+      var output = tmpl.render();
+
+      assert.equal(output, "Correct");
+    });
+
     it("can inject without clobbering the parent", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 

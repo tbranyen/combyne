@@ -19,6 +19,16 @@ define(function(require, exports, module) {
       });
     });
 
+    it("will report a meaningful error for missing partials", function() {
+      try {
+        var tmpl = combyne("{{'test'|name}}");
+        var output = tmpl.render();
+      }
+      catch (ex) {
+        assert.equal(ex.message, "Missing filter name");
+      }
+    });
+
     it("can be named after a reserved word", function() {
       var tmpl = combyne("{{'true'|as}}");
 

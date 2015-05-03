@@ -31,7 +31,7 @@ define(function(require, exports, module) {
           combyne("{%if%}{%endif%}");
         }
         catch (ex) {
-          assert.equal(ex.message, "Missing conditions to if statement.");
+          assert.equal(ex.message, "Missing conditions to if statement");
         }
       });
 
