@@ -1,7 +1,8 @@
+require "karma-sauce-launcher"
+require "karma-coverage"
+
 module.exports = ->
   @loadNpmTasks "grunt-karma"
-
-  require "karma-sauce-launcher"
 
   sauceLabs =
     sl_safari:
