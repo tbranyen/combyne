@@ -19,6 +19,18 @@ define(function(require, exports, module) {
       });
     });
 
+    it("can be named after a reserved word", function() {
+      var tmpl = combyne("{{'true'|as}}");
+
+      tmpl.registerFilter("as", function(value) {
+        return !Boolean(value);
+      });
+
+      var output = tmpl.render();
+
+      assert.equal(output, "false");
+    });
+
     it("can execute basic functions", function() {
       var tmpl = combyne("{{test|mod6}}");
 
