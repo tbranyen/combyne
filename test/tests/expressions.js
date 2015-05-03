@@ -22,9 +22,24 @@ define(function(require, exports, module) {
     describe("if statement", function() {
       it("must have at least one condition", function() {
         assert.throws(function() {
-          var tmpl = combyne("{%if%}{%endif%}");
-          var output = tmpl.render();
+          combyne("{%if%}{%endif%}");
         });
+      });
+
+      it("will report the correct error for missing conditions", function() {
+        try {
+          combyne("{%if%}{%endif%}");
+        }
+        catch (ex) {
+          assert.equal(ex.message, "Missing conditions to if statement.");
+        }
+      });
+
+      it("can contain an empty body", function() {
+        var tmpl = combyne("{%if true%}{%endif%}");
+        var output = tmpl.render()
+
+        assert.equal(output, "");
       });
 
       it("can evaluate basic truthy", function() {

@@ -56,6 +56,18 @@ define(function(require, exports, module) {
       assert.equal(output, "hello world to you, perhaps?");
     });
 
+    it("can be named after a reserved token, like ASSIGN", function() {
+      var tmpl = combyne("{{test}} {%partial as .%}");
+
+      tmpl.registerPartial("as", combyne("{{test}}"));
+
+      var output = tmpl.render({
+        test: "hello world"
+      });
+
+      assert.equal(output, "hello world hello world");
+    });
+
     it("can pass the parent's data", function() {
       var tmpl = combyne("{{test}} {%partial test .%}");
 
