@@ -1,9 +1,6 @@
 language: node_js
 node_js:
-- 0.1
-- 0.11
-before_install:
-- npm install -g npm@~1.4.6
+- 0.12
 before_script:
 - npm install -g grunt-cli bower
 - bower install
@@ -12,13 +9,9 @@ script:
 branches:
   only:
   - master
-  - wip
 matrix:
-  fast_finish: true
-  allow_failures:
-  - node_js: 0.11
   include:
-  - node_js: 0.1
+  - node_js: 0.12
     env: SAUCE_LABS=true
 env:
   global:
