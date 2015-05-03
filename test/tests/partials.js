@@ -34,6 +34,18 @@ define(function(require, exports, module) {
       assert.equal(output, "Correct");
     });
 
+    it("nested partials can lookup parent partials", function() {
+      var tmpl = combyne("{%partial nested%}");
+      var nested = combyne("{%partial correct%}");
+
+      tmpl.registerPartial("nested", nested);
+      tmpl.registerPartial("correct", combyne("Correct"));
+
+      var output = tmpl.render();
+
+      assert.equal(output, "Correct");
+    });
+
     it("can inject without clobbering the parent", function() {
       var tmpl = combyne("{{test}} {%partial test%}");
 

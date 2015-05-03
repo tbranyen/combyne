@@ -499,6 +499,14 @@ define(function(require, exports, module) {
         assert.equal(output, "HOLAHALLOHELLOBONJOURAHOJ");
       });
 
+      it("can loop over the root", function() {
+        var tmpl = combyne("{%each%}{{.}}{%endeach%}");
+
+        var output = tmpl.render({ "hi": "how are ya?" });
+
+        assert.equal(output, "how are ya?");
+      });
+
       it("can loop over the root as '.' called through a filter", function() {
         var tmpl = combyne("{%each .|upper%}{{.}}{%endeach%}");
 
