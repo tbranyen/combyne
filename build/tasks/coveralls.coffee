@@ -5,3 +5,4 @@ module.exports = ->
     options:
       coverageDir: "test/coverage/"
       force: true
+      recursive: true
