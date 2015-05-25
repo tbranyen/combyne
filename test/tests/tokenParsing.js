@@ -45,5 +45,14 @@ define(function(require, exports, module) {
 
       assert.equal(output, "'hello world'");
     });
+
+    it("will not error on large files", function() {
+      var largeFile = new Array(10000).join('<test>');
+
+      var template = combyne(largeFile);
+      var output = template.render();
+
+      assert.equal(output, largeFile);
+    });
   });
 });
