@@ -47,6 +47,10 @@ define(function(require, exports, module) {
     });
 
     it("will not error on large files", function() {
+      // Timeout increase for older browsers that may be slow at rendering a
+      // large file. *Cough IE 7*.
+      this.timeout(50000);
+
       var largeFile = new Array(10000).join('<test>');
 
       var template = combyne(largeFile);
