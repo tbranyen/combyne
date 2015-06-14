@@ -55,7 +55,7 @@ define(function(require, exports, module) {
 
       // Build up a large file to simulate.  Using a for loop instead of an
       // array since IE 8 was erroring with out-of-memory errors.
-      for (var i = 0; i < 10000; i++) {
+      for (var i = 0; i < 1000; i++) {
         largeFile += "<test>";
       }
 
