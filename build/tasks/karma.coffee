@@ -17,12 +17,6 @@ module.exports = ->
       base: "SauceLabs"
       browserName: "firefox"
 
-    sl_ie_7:
-      base: "SauceLabs"
-      platform: "Windows XP"
-      browserName: "internet explorer"
-      version: "7"
-
     sl_ie_8:
       base: "SauceLabs"
       platform: "Windows XP"
