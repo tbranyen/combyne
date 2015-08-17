@@ -45,24 +45,5 @@ define(function(require, exports, module) {
 
       assert.equal(output, "'hello world'");
     });
-
-    it("will not error on large files", function() {
-      // Timeout increase for older browsers that may be slow at rendering a
-      // large file. *Cough IE 7*.
-      this.timeout(50000);
-
-      var largeFile = "";
-
-      // Build up a large file to simulate.  Using a for loop instead of an
-      // array since IE 8 was erroring with out-of-memory errors.
-      for (var i = 0; i < 1000; i++) {
-        largeFile += "<test>";
-      }
-
-      var template = combyne(largeFile);
-      var output = template.render();
-
-      assert.equal(output, largeFile);
-    });
   });
 });
