@@ -11,6 +11,7 @@
   "main": "dist/combyne.js",
   "devDependencies": {
     "amdefine": "^1.0.0",
+    "bower": "^1.5.2",
     "browserify": "^11.0.1",
     "browserify-derequire": "^0.9.4",
     "dateformat": "^1.0.11",
@@ -32,6 +33,7 @@
     "phantomjs": "^1.9.18"
   },
   "scripts": {
+    "postinstall": "bower install",
     "test": "grunt test",
     "ci": "grunt test coveralls",
     "doc": "jsdoc -r -d docs/ lib/ README.md"
