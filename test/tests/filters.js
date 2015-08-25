@@ -253,5 +253,17 @@ define(function(require, exports, module) {
 
       assert.equal(output, "yrtporp");
     });
+
+    it('will support multiple filter arguments via issue #69', function() {
+      var tmpl = combyne("{{ property|replace '-' ' ' }}");
+
+      tmpl.registerFilter("replace", function(val, start, end) {
+        return val.replace(start, end);
+      });
+
+      var output = tmpl.render({ property: "my-prop" });
+
+      assert.equal(output, "my prop");
+    });
   });
 });
