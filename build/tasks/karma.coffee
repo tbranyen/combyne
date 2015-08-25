@@ -1,33 +1,7 @@
-require "karma-sauce-launcher"
 require "karma-coverage"
 
 module.exports = ->
   @loadNpmTasks "grunt-karma"
-
-  sauceLabs =
-    sl_safari:
-      base: "SauceLabs"
-      browserName: "safari"
-
-    sl_chrome:
-      base: "SauceLabs"
-      browserName: "chrome"
-
-    sl_firefox:
-      base: "SauceLabs"
-      browserName: "firefox"
-
-    sl_ie_8:
-      base: "SauceLabs"
-      platform: "Windows XP"
-      browserName: "internet explorer"
-      version: "8"
-
-    sl_ie_9:
-      base: "SauceLabs"
-      platform: "Windows 7"
-      browserName: "internet explorer"
-      version: "9"
 
   @config "karma",
     options:
@@ -108,22 +82,3 @@ module.exports = ->
           { pattern: "bower_components/**/*.*", included: false }
           { pattern: "test/tests/**/*.js", included: false }
         ]
-
-    saucelabs:
-      options:
-        captureTimeout: 120000
-        singleRun: true
-        customLaunchers: sauceLabs
-        browsers: Object.keys sauceLabs
-        reporters: ["dots", "saucelabs"]
-
-        plugins: [
-          "karma-mocha"
-          "karma-phantomjs-launcher"
-          "karma-sauce-launcher"
-          "karma-coverage"
-        ]
-
-        sauceLabs:
-          testName: "Combyne Browser Tests"
-          takeScreenshots: false
