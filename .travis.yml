@@ -5,16 +5,6 @@ node_js:
 before_script:
 - npm install -g grunt-cli bower
 - bower install
-script:
-- if ${SAUCE_LABS:=false}; then grunt karma:saucelabs; else npm run ci; fi;
 branches:
   only:
   - master
-matrix:
-  include:
-  - node_js: 0.12
-    env: SAUCE_LABS=true
-env:
-  global:
-  - secure: R3bM/HAisAEz4LpC35o3/FJhH8HctOluCTxB/pZXmuKPDlCpIMYVZGo+CKeWP4avOvTMdnuXaKimdNKNMflK+IwF8SLC3+Wv4sQELGJ6cbYcL4hue9pYD0rDjJCdOC72cgqA1paNcUe91VfWCjRK/OCYQ7RrRQ9BPwHX0bvxlWk=
-  - secure: IGpplkIzAMV0Uvg4wmK1RqyztHWsU49KSgA+FlcsibgBhYozay06OQAhcsbrUOGgGNw/4A3TNn2nuOaZJNGhrAEGwekodi2QOSUFlPY6K0f916iV8lz5rlhSP6CmgBZpyCEIfVCebiQ3rAiOSi2HBZ3tonat2VEwun8ddzA08LA=
