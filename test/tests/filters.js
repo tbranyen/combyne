@@ -265,5 +265,35 @@ define(function(require, exports, module) {
 
       assert.equal(output, "my prop");
     });
+
+    it('does not support mismatched quotes', function() {
+      assert.throws(function() {
+        combyne("{{{ property|replace '-' \"-' }}}");
+      });
+    });
+
+    it('allows nested quotes', function() {
+      var tmpl = combyne("{{{ property|replace '-' '\'-\'' }}}");
+
+      tmpl.registerFilter("replace", function(val, start, end) {
+        return val.replace(start, end);
+      });
+
+      var output = tmpl.render({ property: "my-prop" });
+
+      assert.equal(output, "my\'-\'prop");
+    });
+
+    it('allows nested mismatched quotes', function() {
+      var tmpl = combyne("{{{ property|replace '-' '\"-\"' }}}");
+
+      tmpl.registerFilter("replace", function(val, start, end) {
+        return val.replace(start, end);
+      });
+
+      var output = tmpl.render({ property: "my-prop" });
+
+      assert.equal(output, "my\"-\"prop");
+    });
   });
 });
