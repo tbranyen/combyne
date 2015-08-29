@@ -5,6 +5,10 @@ module.exports = ->
     options:
       transform: ["deamdify"]
 
+      plugin: [
+        [ "browserify-derequire" ]
+      ]
+
       browserifyOptions:
         standalone: "combyne"
 

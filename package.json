@@ -12,6 +12,7 @@
   "devDependencies": {
     "amdefine": "^1.0.0",
     "browserify": "^11.0.1",
+    "browserify-derequire": "^0.9.4",
     "dateformat": "^1.0.11",
     "deamdify": "^0.1.1",
     "grunt": "^0.4.5",
