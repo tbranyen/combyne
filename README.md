@@ -1,11 +1,26 @@
-<img align="left" src="http://dl.dropboxusercontent.com/u/79007/combyne.png">
+<p align="center">
+  <img alt="Combyne" src="http://dl.dropboxusercontent.com/u/79007/combyne.png">
+</p>
+
+<p align="center">
+  <a alt="Build status" href="http://travis-ci.org/tbranyen/combyne">
+    <img src="https://img.shields.io/travis/tbranyen/combyne.svg">
+  </a>
+
+  <a alt="Code coverage" href="https://coveralls.io/r/tbranyen/combyne">
+    <img src="https://img.shields.io/coveralls/tbranyen/combyne.svg">
+  </a>
+
+  <a alt="Code climate" href="https://codeclimate.com/github/tbranyen/combyne">
+    <img src="https://codeclimate.com/github/tbranyen/combyne.svg">
+  </a>
+
+  <a alt="Gitter" href="https://gitter.im/tbranyen/combyne">
+    <img src="https://img.shields.io/badge/GITTER-join%20chat-green.svg">
+  </a>
+</p>
 
 **Stable: 0.8.1**
-
-[![Build status][travis-image]][travis-url]
-[![Code coverage][coveralls-image]][coveralls-url]
-[![Code climate][codeclimate-image]][codeclimate-url]
-[![Gitter][gitter-image]][gitter-url]
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
@@ -582,12 +597,3 @@ If you are running the defaults you should see something that looks like:
 
 Inside PhantomJS contains the HTML output that can be opened in a browser to
 inspect the source coverage from running the tests.
-
-[travis-url]: http://travis-ci.org/tbranyen/combyne
-[travis-image]: https://img.shields.io/travis/tbranyen/combyne.svg
-[coveralls-url]: https://coveralls.io/r/tbranyen/combyne
-[coveralls-image]: https://img.shields.io/coveralls/tbranyen/combyne.svg
-[codeclimate-url]: https://codeclimate.com/github/tbranyen/combyne
-[codeclimate-image]: https://codeclimate.com/github/tbranyen/combyne.svg
-[gitter-url]: https://gitter.im/tbranyen/combyne
-[gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg
