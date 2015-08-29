@@ -2,10 +2,10 @@
 
 **Stable: 0.8.1**
 
-[![Build Status](https://travis-ci.org/tbranyen/combyne.svg)](https://travis-ci.org/tbranyen/combyne)
-[![Coverage Status](https://coveralls.io/repos/tbranyen/combyne/badge.svg)](https://coveralls.io/r/tbranyen/combyne?branch=master)
-[![Code Climate](https://codeclimate.com/github/tbranyen/combyne.svg)](https://codeclimate.com/github/tbranyen/combyne)
-
+[![Build status][travis-image]][travis-url]
+[![Code coverage][coveralls-image]][coveralls-url]
+[![Code climate][codeclimate-image]][codeclimate-url]
+[![Gitter][gitter-image]][gitter-url]
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
@@ -15,10 +15,6 @@ Combyne works great with:
 - [Express](https://github.com/tbranyen/combynexpress)
 - [Browserify](https://github.com/chesles/combynify)
 - [AMD](https://github.com/tbranyen/combyne-amd-loader)
-
-**For when you're stuck and need help:**
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tbranyen/combyne?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Install. ##
 
@@ -586,3 +582,12 @@ If you are running the defaults you should see something that looks like:
 
 Inside PhantomJS contains the HTML output that can be opened in a browser to
 inspect the source coverage from running the tests.
+
+[travis-url]: http://travis-ci.org/tbranyen/combyne
+[travis-image]: https://img.shields.io/travis/tbranyen/combyne.svg
+[coveralls-url]: https://coveralls.io/r/tbranyen/combyne
+[coveralls-image]: https://img.shields.io/coveralls/tbranyen/combyne.svg
+[codeclimate-url]: https://codeclimate.com/github/tbranyen/combyne
+[codeclimate-image]: https://codeclimate.com/github/tbranyen/combyne.svg
+[gitter-url]: https://gitter.im/tbranyen/combyne
+[gitter-image]: https://img.shields.io/badge/GITTER-join%20chat-green.svg
