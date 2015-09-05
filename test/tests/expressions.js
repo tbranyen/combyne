@@ -619,6 +619,18 @@ define(function(require, exports, module) {
         assert.equal(output, "lol:hi you:me? what:test ");
       });
 
+      it("can use database as a value name", function() {
+        var tmpl = combyne("{%each databases as database name%}{{name}}:{{database}}{%endeach%}");
+
+        var output = tmpl.render({
+          databases: {
+            database1: "online"
+          }
+        });
+
+        assert.equal(output, "database1:online");
+      });
+
       it("will ignore properties on the prototype", function() {
         var tmpl = combyne("{%each demo as v k%}{{k}}:{{v}} {%endeach%}");
 
