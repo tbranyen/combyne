@@ -4,11 +4,11 @@
 
 <p align="center">
   <a alt="Build status" href="http://travis-ci.org/tbranyen/combyne">
-    <img src="https://img.shields.io/travis/tbranyen/combyne.svg">
+    <img src="http://img.shields.io/travis/tbranyen/combyne.svg">
   </a>
 
   <a alt="Code coverage" href="https://coveralls.io/r/tbranyen/combyne">
-    <img src="https://img.shields.io/coveralls/tbranyen/combyne.svg">
+    <img src="http://img.shields.io/coveralls/tbranyen/combyne.svg">
   </a>
 
   <a alt="Code climate" href="https://codeclimate.com/github/tbranyen/combyne">
@@ -16,7 +16,7 @@
   </a>
 
   <a alt="Gitter" href="https://gitter.im/tbranyen/combyne">
-    <img src="https://img.shields.io/badge/GITTER-join%20chat-green.svg">
+    <img src="http://img.shields.io/badge/GITTER-join%20chat-green.svg">
   </a>
 </p>
 
