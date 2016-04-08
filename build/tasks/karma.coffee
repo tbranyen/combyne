@@ -31,13 +31,13 @@ module.exports = ->
         dir: "test/coverage"
 
       files: [
-        "bower_components/assert/assert.js"
-        "bower_components/json3/lib/json3.js"
-        "bower_components/requirejs/require.js"
+        "test/assert.js"
+        "node_modules/json3/lib/json3.js"
+        "node_modules/requirejs/require.js"
         "test/runner.js"
 
         { pattern: "lib/**/*.*", included: false }
-        { pattern: "bower_components/**/*.*", included: false }
+        { pattern: "node_modules/**/*.*", included: false }
         { pattern: "test/tests/**/*.js", included: false }
       ]
 
@@ -54,9 +54,9 @@ module.exports = ->
         singleRun: true
 
         files: [
-          "bower_components/assert/assert.js"
-          "bower_components/json3/lib/json3.js"
-          "bower_components/requirejs/require.js"
+          "test/assert.js"
+          "node_modules/json3/lib/json3.js"
+          "node_modules/requirejs/require.js"
           "test/set-modern.js"
           "test/runner.js"
 
@@ -71,9 +71,9 @@ module.exports = ->
         singleRun: true
 
         files: [
-          "bower_components/assert/assert.js"
-          "bower_components/json3/lib/json3.js"
-          "bower_components/requirejs/require.js"
+          "test/assert.js"
+          "node_modules/json3/lib/json3.js"
+          "node_modules/requirejs/require.js"
           "test/set-legacy.js"
           "test/runner.js"
 
