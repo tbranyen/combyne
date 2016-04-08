@@ -3,7 +3,6 @@ module.exports = ->
 
   @registerTask "test", [
     "jshint"
-    "jscs"
     "browserify"
     "simplemocha"
     "karma:modern"
