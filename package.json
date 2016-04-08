@@ -1,7 +1,7 @@
 {
   "name": "combyne",
   "description": "A template engine that works the way you expect.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Tim Branyen (@tbranyen)",
   "license": "MIT",
   "repository": {

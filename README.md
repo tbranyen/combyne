@@ -20,7 +20,7 @@
   </a>
 </p>
 
-**Stable: 1.0.0**
+**Stable: 2.0.0**
 
 No dependencies.  Can be loaded as a browser global, AMD module, and Node
 module.  Works with Browserify.  Can be installed via NPM or Bower.
