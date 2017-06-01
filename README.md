@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Combyne" src="http://dl.dropboxusercontent.com/u/79007/combyne.png">
+  <img alt="Combyne" src="./combyne.png">
 </p>
 
 <p align="center">
